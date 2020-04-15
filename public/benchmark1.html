@@ -5,5 +5,179 @@
 </head>
 
 <body>
-    Hello World!
+    <b>
+        <h1>Quarantine Game Design Document</h1>
+        <h2>by Jeong Uk Lee, Jimmy Xie, and Everett Yang</h2>
+
+        <h3>Introduction</h3>
+    </b>
+
+    <p>
+        This document describes our current working idea for our game, “Quarantine,” designed to raise awareness of methods that we may employ to prevent and contain outbreaks of deadly diseases. Our game will mostly employ the use of tiled backgrounds and memory management, as the focus is largely on the strategy the players employ to win the game.
+    </p>
+
+    <b><h3>Technology</h3></b>
+    <p>
+        Quarantine will be developed for web browser using the Phaser game engine, which is a free 2D game framework for making HTML5 games for desktop and mobile. Audacity will be used to compile the sound effects and music. A mix of Photoshop and MS Paint will be used to create the graphics of the game.
+    </p>
+
+    <b><h3>Backstory</h3></b>
+    <p>
+        Your city is the epicenter of the new disease, and more people seem to be catching it every day. The government is in panic, and you have recently been hired as the leader of the Pandemic Response Team of your fair city. It is your responsibility to quell the disease, make sure the population’s morale stays up, and work towards researching a cure. Can you eradicate the disease in time before the whole city gets infected?
+    </p>
+
+    <b><h3>Objective</h3></b>
+    <p>
+        The player’s task is to manage the spread of a pandemic throughout the city and prevent it from infecting/killing everyone. The disease spreads based on multiple variables, such as infectivity, lethality, and severity. In order to quell the disease, the player can take a variety of actions, such as spreading public safety announcements, quarantining certain parts of the city, and more. The player has access to a limited amount of actions each day.
+    </p>
+    
+    <p>
+        Additionally, each section of the city has a different morale based on the population, which will be influenced by the player’s actions and how they handle the pandemic. If the morale of the citizens falls below a certain point, the people will riot, and the pandemic will spread even further. The player can help boost morale by taking other actions, such as spreading propaganda or educating people on the disease. However, these actions will cut into the time it takes to cure the disease. The player must balance the management of the population’s morale and the management of the disease.
+    </p>
+
+    <b><h3>Gameplay</h3></b>
+    
+    <p>
+        Quarantine is a turn-based strategy game that has the player fighting against the spread of a disease. The core gameplay of Quarantine is simple--the player spends their turn taking actions and strategizing about how to best contain the infection. After the player’s turn ends, the computer simulates the result of the player’s actions--for example, how the virus might spread or how morale would increase or decrease based on the actions taken. The incorporation of controlled RNG will force the player to adapt their strategy from game to game as well as making sure that the challenge isn’t too frustrating for them.
+    </p>
+    
+    <p>
+        While trying to quell the disease, the player must balance two stats--morale and threat level. Morale keeps track of the overall demeanor of the population and how they feel about the pandemic--the lower the morale, the more likely they are to revolt. Morale decays slowly over time, and its decay is accelerated by other factors, such as the rate of infection or death. Threat level is calculated via a variety of factors, but mostly concerns the amount of infected and the rate at which people are infected. The player will lose if morale reaches 0%, if everyone in the population dies, or if the threat level reaches 100%. The player wins once a cure is found and the recovery rate exceeds the infectivity rate.
+    </p>
+    
+    <p>
+        Depending on the difficulty of the game, the virus has several variables that keep track of its infectivity, severity, fatality, and recovery. Infectivity affects how fast the disease spreads to other people. Severity affects morale as well as the spread of disease. Fatality affects the amount of people who die each day, as well as indirectly affecting morale. Recovery is a separate variable that helps calculate how many people recover from the virus each day. These variables can change based on the player’s choices as special random events in the game.
+    </p>
+    
+    <p>
+        The game will use a tiled map system in order to simulate the population. Each tile will have a certain morale, population, and vulnerability. More vulnerable tiles, such as those further away from a hospital or high traffic areas (transportation tiles), will be more rapidly infected by the disease. The more infected a tile is, the more likely the disease will spread to adjacent tiles. 
+    </p>
+    
+    <p>
+        When the player starts a game, the disease will have taken root in some random tile on the map, with more vulnerable tiles being prioritized for the virus to spawn. The player has a set of actions that they can take each day, with each action taking a variable amount of energy. For example, setting up a temporary health clinic in a district would take 4 energy, while distributing information pamphlets or propaganda would take 1 energy. The player has a limited pool of energy to draw upon, and thus must decide which actions would be most beneficial. Certain actions would also allow the player to interact with the map--as with the above example, the player could select the “create health clinic” action and click a map tile to place the health clinic. In order to prevent the player from spamming a certain action, more costly actions would have a cooldown period.
+    </p>
+    
+    <p>
+        The actions the player takes can have an effect on the spread of the pandemic as well as the morale of the population. Below is a list of examples of what the player can affect with their actions. Generally, the more impactful an action is, the more costly it is for the player to use.
+    </p>
+    
+    <ul>
+        <li>Temporarily/Permanently speed up cure research (research boost, hiring more medical staff)</li>
+        <li>Reduce infectivity rate (stay-at-home order, temporary health clinic, quarantine a tile)</li>
+        <li>Reduce severity (distributing medicine)</li>
+        <li>Increase morale (distributing food/supplies, propaganda, celebrity events)</li>
+    </ul>
+    
+    <p>
+        After the player has selected the actions they wish to take and ended their turn, the game begins its turn. The computer’s turn can be broken down into several steps.
+    </p>
+   
+    <ol type = "1">
+        <li>Check to see if any special events will occur. If so, apply the effects.</li>
+        <li>Check which tiles are currently infected (greater than 0% infected).</li>
+        <li>Check the number of people infected within the tile.</li>
+        <li>Calculate how many new people are infected for each tile, as well as the number of recovered people. If necessary, apply the effects of certain actions to the calculations.</li>
+        <li>Calculate how many people die within each tile, if any. If necessary, apply the effects of certain actions to the calculations.</li>
+        <li>If the percentage of infected people within a tile exceeds a certain amount (variable based on difficulty), check to see if the infection spreads to surrounding tiles. If it does, add a random number of infected to the tile.</li>
+        <li>Calculate the new morale for each tile using infection, severity, and morality. If necessary, apply the effects of certain actions to the calculations.</li>
+        <li>Calculate overall threat level based on infection, severity, and morality of the disease.</li>
+        <li>Check for losing conditions.</li>
+        <li>Increase the cure progress.</li>
+    </ol>
+
+    <p>
+        Occasionally, the player might randomly have a special event occur. These special events could either be beneficial (cure research progress boosted, receive a large donation that allows you to take one extra action that day) or harmful (an outbreak occurs in a random tile, the people begin to organize and go against your will, cure research slowed). In order to prevent the player from receiving several bad events in a row that could ruin their fun, a counter will be used to give the player a minimum amount of turns before the computer tries to pick a random event. For example, let us say that the player receives a bad event on turn 10. The computer would then wait 5 turns before checking if another event should be generated. With each turn after that, the chance of receiving a random event increases until the computer confirms the generation of a new event, in which the event countdown and chance of getting a new event is reset.
+    </p>
+
+    <p>
+        In order to win the game, the player must buy enough time for the cure to be completed before any of the losing conditions take place. At easy/normal/hard difficulty, the cure progresses approximately 4%/3%/2% each day, taking approximately 25/34/50 days for a cure to be found. Different events and effects can cause the cure progress to be slowed or sped up. For example, an increase in research staff would increase the cure progress, while an increase in infection or decrease in morale would cause progress to slow. Therefore, throughout the game, the player must continue to focus on boosting cure research to avoid it slowing down to a crawl, while still managing all other aspects of the game. After the cure is found, the player must distribute the cure, changing the rate of recovery to be greater than the rate of infectivity. Once these two conditions are met, the player wins the game and their grueling battle against the virus.
+    </p>
+
+    <p>
+        If time permits us to implement this, the game will also implement a turn timer that affects how much time a player has to make their decisions. As time goes on, the player will have less and less time to make their decisions, replicating the panic associated with the pandemic.
+    </p>
+
+    <b><h3>Controls</h3></b>
+    <p>The game will be played with a keyboard and mouse. </p>
+
+    Menus:
+    <ul><li><b>Esc</b> - To change settings or quit to main menu</li></ul>
+
+    Selection:
+    <ul>
+        <li><b>LMB</b> - Select option in menu</li>
+        <li><b>RMB</b> - Cancel action in actions menu</li>
+    </ul>
+
+    Map Navigation:
+    <ul>
+        <li><b>W</b> - Scroll Up</li>
+        <li><b>S</b> - Scroll Down</li>
+        <li><b>A</b> - Scroll Left</li>
+        <li><b>D</b> - Scroll Right</li>
+    </ul>
+
+    <b><h3>Graphical User Interface</h3></b>
+    <p>The Graphical User Interface will consist of:</p>
+    <ul>
+
+    </ul>
+
+    <b><h3>Artwork</h3></b>
+    <p>All artwork in the game will be original. The following needs to be created:</p>
+    
+    <ul>
+        <li><b>Map Tiles</b> - As this will be a primarily tile-based game, many tiles need to be created to construct the overall city, such as:</li>
+        <ul>
+            <li>Upscale residential area</li>
+            <li>Lower class residential area</li>
+            <li>Business district</li>
+            <li>Industrial Zone</li>
+            <li>Parks/Outdoors</li>
+            <li>Transportation squares (places where trains, planes, and boats frequent)</li>
+            <li>Hospital</li>
+            <li>Water</li>
+            <li>Bridge</li>
+        </ul>
+
+        <li><b>Icons</b> - Each action will have an associate icon. To simplify the process, each icon will indicate what the action effects, such as:</li>
+        <ul>
+            <li>Infectivity</li>
+            <li>Research</li>
+            <li>Morale</li>
+        </ul>
+
+        <li><b>Map Icons/Sprites</b> - After each turn ends, a variety of sprites will be animated to indicate the passage of time.</li>
+        <ul>
+            <li>Trains</li>
+            <li>Planes</li>
+            <li>Boatds</li>
+        </ul>
+
+        <li><b>Newsflash Thumbnails</b> - Every so often, the player might get a random event that can be beneficial or harmful to their efforts to stop the disease. The player will get a pop up with details about the event before they start their turn. A few planned thumbnails can be as follows:</li>
+        <ul>
+            <li>“EXTRA, EXTRA” Newspaper</li>
+            <li>Doctors working on a cure</li>
+            <li>People rioting</li>
+            <li>People happy</li>
+            <li>Streets deserted/empty</li>
+            <li>Bags of money</li>
+            <li>Hands shaking</li>
+        </ul>
+    </ul>
+
+    <b><h3>SFX</h3></b>
+    <p>All sound effects will be original or royalty free. Although there are not that many sound effects necessary for a game like this, we will need sound effects for the following:</p>
+    <ul>
+        <li>“Next turn” confirmation noise</li>
+        <li>Breaking news jingle</li>
+        <li>Click feedback sound effect</li>
+        <li>Opening menu</li>
+        <li>Game Over</li>
+        <li>Victory</li>
+    </ul>
+
+    <b><h3>Music</h3></b>
+    <p>The game music will be royalty-free music reminiscent of John Carpenter music--heavily synthesized and bass-heavy to build up the tension and serious tone of the game. An example of the tone we will be striving for is the following track:</p>
+    <a href = "https://benprunty.bandcamp.com/track/goblins-and-ghouls-division">https://benprunty.bandcamp.com/track/goblins-and-ghouls-division</a>
 </body>
