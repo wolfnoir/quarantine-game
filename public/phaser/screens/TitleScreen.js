@@ -1,6 +1,5 @@
 //AKA the main menu.
 //Will include three options: start game, controls, and help. Clicking on any of them will take you to the respective screen.
-
 class TitleScreen extends Phaser.Scene {
 
 	constructor() {
@@ -18,7 +17,25 @@ class TitleScreen extends Phaser.Scene {
 		this.add.image(this.game.config.width/2, 50, 'titleText').setScale(0.8);
 
 		//add the buttons to the title screen
-		//add functionality to the buttons
+		var startButton = new RectangleButton(this, this.game.config.width/2, 200, 300, 50, 0xFFFFFF, 1, 'START');
+		startButton.on('pointerdown', () => this.startButtonClicked());
+		
+		var helpButton = new RectangleButton(this, this.game.config.width/2, 300, 300, 50, 0xFFFFFF, 1, 'HELP');
+		helpButton.on('pointerdown', () => this.helpButtonClicked());
+
+		var controlsButton = new RectangleButton(this, this.game.config.width/2, 400, 300, 50, 0xFFFFFF, 1, 'CONTROLS');
+		controlsButton.on('pointerdown', () => this.controlsButtonClicked());
 	}
 
+	startButtonClicked(){
+		this.scene.start("difficultyScreen");
+	}
+
+	helpButtonClicked(){
+		this.scene.start("helpScreen");
+	}
+
+	controlsButtonClicked(){
+		this.scene.start("controlScreen");
+	}
 }
