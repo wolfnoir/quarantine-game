@@ -9,6 +9,18 @@ import GameScreen from "./screens/GameScreen";
 import PauseScreen from "./screens/PauseScreen";
 import EndScreen from "./screens/EndScreen";
 
+// Our various game scenes, all neatly packed up.
+var splashScreen = new SplashScreen();
+var titleScreen = new TitleScreen();
+var controlScreen = new ControlScreen();
+var helpScreen = new HelpScreen();
+var difficultyScreen = new DifficultyScreen();
+var levelScreen = new LevelScreen();
+var nameScreen = new NameScreen();
+var gameScreen = new GameScreen();
+var pauseScreen = new PauseScreen();
+var endScreen = new EndScreen();
+
 const {
     SPLASH_SCREEN = 'splashScreen',
     TITLE_SCREEN = 'titleScreen',
@@ -21,18 +33,6 @@ const {
     PAUSE_SCREEN = 'pauseScreen',
     END_SCREEN = 'endScreen'
 }
-
-// Our various game scenes, all neatly packed up.
-var splashScreen = new SplashScreen();
-var titleScreen = new TitleScreen();
-var controlScreen = new ControlScreen();
-var helpScreen = new HelpScreen();
-var difficultyScreen = new DifficultyScreen();
-var levelScreen = new LevelScreen();
-var nameScreen = new NameScreen();
-var gameScreen = new GameScreen();
-var pauseScreen = new PauseScreen();
-var endScreen = new EndScreen();
 
 var config = {
     type: Phaser.AUTO,
