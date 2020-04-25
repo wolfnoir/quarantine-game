@@ -12,9 +12,17 @@ class SplashScreen extends Phaser.Scene {
 
 	create() {
 		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
-        this.background.setOrigin(0, 0);
-		
-		var text = this.add.text(100, 100, 'Welcome To My Game!');
-	}
+		this.background.setOrigin(0, 0);
+		this.add.image(this.game.config.width/2, 50, 'titleText').setScale(0.8);
+		var shadow = this.add.text(this.game.config.width/2,552, 'CLICK ANYWHERE TO BEGIN THE INFECTION',
+			{fontFamily: '"Georgia"', fontSize: '20px', fontWeight: 900, color: 'black'});
+		var text = this.add.text(this.game.config.width/2,550, 'CLICK ANYWHERE TO BEGIN THE INFECTION',
+			{fontFamily: '"Georgia"', fontSize: '20px', fontWeight: 900});
+		text.setOrigin(0.5); //centers the text
+		shadow.setOrigin(0.5); //centers the text
 
+		//enables the user to click on the background. when clicked, change to titleScreen
+		this.background.setInteractive({ useHandCursor: true});
+		this.background.on('pointerdown', () => this.scene.start('titleScreen'));
+	}
 }

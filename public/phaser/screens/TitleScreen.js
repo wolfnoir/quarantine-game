@@ -4,13 +4,22 @@
 class TitleScreen extends Phaser.Scene {
 
 	constructor() {
-		super({key:'titleScreen'});
+		super("titleScreen");
 	}
 
 	preload() {
+		this.load.image('background', 'assets/background.png');
+		this.load.image('titleText', 'assets/quarantine-title-text.png');
+		this.load.image('virus', 'assets/blue-virus.png');
 	}
 
 	create() {
+		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
+		this.background.setOrigin(0, 0).setAlpha(0.8);
+		this.add.image(this.game.config.width/2, 50, 'titleText').setScale(0.8);
+
+		//add the buttons to the title screen
+		//add functionality to the buttons
 	}
 
 }
