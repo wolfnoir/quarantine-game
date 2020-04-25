@@ -18,5 +18,3 @@ class SplashScreen extends Phaser.Scene {
 	}
 
 }
-
-export default SplashScreen;

@@ -14,5 +14,3 @@ class TitleScreen extends Phaser.Scene {
 	}
 
 }
-
-export default TitleScreen;

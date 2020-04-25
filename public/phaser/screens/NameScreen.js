@@ -15,5 +15,3 @@ class NameScreen extends Phaser.Scene {
 	}
 
 }
-
-export default NameScreen;

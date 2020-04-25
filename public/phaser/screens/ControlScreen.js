@@ -13,5 +13,3 @@ class ControlScreen extends Phaser.Scene {
 	}
 
 }
-
-export default ControlScreen;
