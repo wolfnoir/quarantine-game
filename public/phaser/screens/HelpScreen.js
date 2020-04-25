@@ -13,5 +13,3 @@ class HelpScreen extends Phaser.Scene {
 	}
 
 }
-
-export default HelpScreen;

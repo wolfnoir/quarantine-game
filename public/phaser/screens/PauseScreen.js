@@ -15,5 +15,3 @@ class PauseScreen extends Phaser.Scene {
 	}
 
 }
-
-export default PauseScreen;

@@ -6,7 +6,7 @@
 //newsfeed that displays random bits of news. On the left side of the screen will be a menu
 //displaying all the possible actions the player will be able to take, as well as their corresponding
 //energy points. A graphic at top should update according to how many energy points the player has left
-//to spend this turn. On the bottom right is a “next turn” button for the player to progress. For special
+//to spend this turn. On the bottom right is a 'next turn' button for the player to progress. For special
 //events, a pop-up window will show up in the center of the screen. Pressing the escape key will allow the
 //player to access the in-game menu.
 
@@ -39,5 +39,3 @@ class GameScreen extends Phaser.Scene {
 	}
 
 }
-
-export default GameScreen;

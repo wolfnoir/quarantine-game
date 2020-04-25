@@ -13,5 +13,3 @@ class EndScreen extends Phaser.Scene {
 	}
 
 }
-
-export default EndScreen;
