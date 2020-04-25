@@ -2,19 +2,19 @@
 class SplashScreen extends Phaser.Scene {
 
 	constructor() {
-		super({key:'splashScreen'});
+		super("splashScreen");
 	}
 
 	preload() {
-		this.load.image('background', '../assets/background.png');
+        this.load.image('background', '../assets/background.png');
 		this.load.image('titleText', '../assets/quarantine-title-text.png');
 	}
 
 	create() {
-		var bg = this.add.sprite(0,0,'background');
-		bg.setOrigin(0,0);
+		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
+        this.background.setOrigin(0, 0);
 		
-		var text = this.add.text(100,100, 'Welcome To My Game!');
+		var text = this.add.text(100, 100, 'Welcome To My Game!');
 	}
 
 }
