@@ -6,8 +6,8 @@ class SplashScreen extends Phaser.Scene {
 	}
 
 	preload() {
-        this.load.image('background', '../assets/background.png');
-		this.load.image('titleText', '../assets/quarantine-title-text.png');
+        this.load.image('background', 'assets/background.png');
+		this.load.image('titleText', 'assets/quarantine-title-text.png');
 	}
 
 	create() {
