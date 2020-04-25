@@ -31,20 +31,20 @@
 //     GAME_SCREEN = 'game',
 //     PAUSE_SCREEN = 'pauseScreen',
 //     END_SCREEN = 'endScreen';
+window.onload = function () {
+    var config = {
+        type: Phaser.AUTO,
+        width: 1000,
+        height: 700,
+        backgroundColor: 0x000000,
+        scene: [ControlScreen, DifficultyScreen, EndScreen, GameScreen, HelpScreen, LevelScreen, NameScreen, PauseScreen, SplashScreen, TitleScreen]
+    }
 
-var config = {
-    type: Phaser.AUTO,
-    width: 1000,
-    height: 700,
-    backgroundColor: 0x000000,
-    scene: [ControlScreen, DifficultyScreen, EndScreen, GameScreen, HelpScreen, LevelScreen, NameScreen, PauseScreen, SplashScreen, TitleScreen]
-};
-
-// Create the game with our config values
-// this will also inject our canvas element into the HTML source 
-// for us
-var game = new Phaser.Game(config);
-
+    // Create the game with our config values
+    // this will also inject our canvas element into the HTML source 
+    // for us
+    var game = new Phaser.Game(config);
+}
 // Add the scenes to the game
 // game.scene.add(SPLASH_SCREEN, splashScreen);
 // game.scene.add(TITLE_SCREEN, titleScreen);
