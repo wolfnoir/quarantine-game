@@ -5,7 +5,7 @@
 class DifficultyScreen extends Phaser.Scene {
 
 	constructor() {
-		super({key:'difficultyScreen'});
+		super("difficultyScreen");
 	}
 
 	preload() {
