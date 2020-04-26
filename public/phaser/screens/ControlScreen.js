@@ -16,6 +16,22 @@ class ControlScreen extends Phaser.Scene {
 		this.background.setOrigin(0, 0).setAlpha(0.8);
 		this.add.image(this.game.config.width/2, 50, 'controlsTitle').setScale(0.8);
 
+		//add control text
+		var textBox = this.add.rectangle(this.game.config.width/2, this.game.config.height/2, 400, 350, 0x000000, 0.8).setOrigin(0.5, 0.5);
+		var controlText = this.add.text(textBox.x, textBox.y,
+			"GENERAL CONTROLS\n\n" +
+			"RIGHT CLICK - Interact\n" +
+			"LEFT CLICK - Cancel\n" +
+			"ESCAPE - Pause (in game)\n" +
+			"TAB - Access menu\n\n" +
+			"MAP NAVIGATION\n\n" +
+			"W - Scroll Up\n" +
+			"A - Scroll Right\n" +
+			"S - Scroll Down\n" +
+			"D - Scroll Left",
+			{fontFamily: '"Courier New"', fontSize: '24px', fontWeight: 900}
+			).setOrigin(0.5);
+
 		//back button
 		var backButton = new RectangleButton(this, 70, 550, 100, 50, 0xFFFFFF, 1, 'BACK');
 		backButton.on('pointerdown', () => this.scene.start('titleScreen'));
