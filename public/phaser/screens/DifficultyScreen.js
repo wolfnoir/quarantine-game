@@ -63,16 +63,29 @@ class DifficultyScreen extends Phaser.Scene {
 
 	easyMode(){
 		//put easy mode variables here
+		this.game.gameData.infectivity = 0.03;
+		this.game.gameData.severity = 0.01;
+		this.game.gameData.lethality = 0;
+		this.game.gameData.cureProgressPerDay = 0.04;
+		alert(this.game.gameData.cureProgressPerDay);
 		this.scene.start("levelScreen");
 	}
 
 	mediumMode(){
 		//put medium mode variables here
+		this.game.gameData.infectivity = 0.14;
+		this.game.gameData.severity = 0.2;
+		this.game.gameData.lethality = 0.15;
+		this.game.gameData.cureProgressPerDay = 0.03;
 		this.scene.start("levelScreen");
 	}
 
 	hardMode(){
 		//put hard mode variables here
+		this.game.gameData.infectivity = 0.25;
+		this.game.gameData.severity = 0.3;
+		this.game.gameData.lethality = 0.40;
+		this.game.gameData.cureProgressPerDay = 0.02;
 		this.scene.start("levelScreen");
 	}
 }

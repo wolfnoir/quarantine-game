@@ -5,13 +5,20 @@
 class NameScreen extends Phaser.Scene {
 
 	constructor() {
-		super({key:'nameScreen'});
+		super("nameScreen");
 	}
 
 	preload() {
 	}
 
 	create() {
+		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
+		this.background.setOrigin(0, 0).setAlpha(0.8);
+
+		var text = this.add.text(this.game.config.width/2 - 170, 150, "Please enter the name of your disease:");
+		
+		// TODO: can't get DOM elements to actually appear
+		var nameInput = this.add.dom(this.game.config.width/2 - 170, 200, 'div', 'width: 200; height: 100;', 'Hello World!');
 	}
 
 }
