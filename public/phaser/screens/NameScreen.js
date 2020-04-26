@@ -5,13 +5,17 @@
 class NameScreen extends Phaser.Scene {
 
 	constructor() {
-		super({key:'nameScreen'});
+		super("nameScreen");
 	}
 
 	preload() {
+		this.load.image('name-title', 'assets/name-title.png');
 	}
 
 	create() {
+		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
+		this.background.setOrigin(0, 0).setAlpha(0.8);
+		this.add.image(this.game.config.width/2, 50, 'name-title').setScale(0.8);
 	}
 
 }
