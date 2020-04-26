@@ -8,7 +8,7 @@ class TitleScreen extends Phaser.Scene {
 
 	preload() {
 		//this.load.image('background', 'assets/virus-bg.png');
-		this.load.image('titleText', 'assets/quarantine-title-text.png');
+		//this.load.image('titleText', 'assets/quarantine-title-text.png');
 	}
 
 	create() {
