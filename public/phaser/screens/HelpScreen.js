@@ -7,7 +7,7 @@ class HelpScreen extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.image('background', 'assets/virus-bg.png');
+		//this.load.image('background', 'assets/virus-bg.png');
 		this.load.image('helpTitle', 'assets/help-title.png');
 		this.load.image('cityPicture', 'assets/city.png');
 	}
