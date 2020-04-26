@@ -9,6 +9,7 @@ class NameScreen extends Phaser.Scene {
 	}
 
 	preload() {
+		this.load.image('name-title', 'assets/name-title.png');
 	}
 
 	create() {
@@ -19,6 +20,9 @@ class NameScreen extends Phaser.Scene {
 		
 		// TODO: can't get DOM elements to actually appear
 		var nameInput = this.add.dom(this.game.config.width/2 - 170, 200, 'div', 'width: 200; height: 100;', 'Hello World!');
+		this.add.image(this.game.config.width/2, 50, 'name-title').setScale(0.8);
+
+		this.add.image(this.game.config.width/2, 50, 'name-title').setScale(0.8);
 	}
 
 }
