@@ -4,13 +4,18 @@
 class LevelScreen extends Phaser.Scene {
 
 	constructor() {
-		super({key:'levelScreen'});
+		super("levelScreen");
 	}
 
 	preload() {
+		//this.load.image('background', 'assets/virus-bg.png');
+		this.load.image('mapSelectTitle', 'assets/map-select-title.png');
 	}
 
 	create() {
+		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
+		this.background.setOrigin(0, 0).setAlpha(0.8);
+		this.add.image(this.game.config.width/2, 50, 'mapSelectTitle').setScale(0.8);
 	}
 
 }
