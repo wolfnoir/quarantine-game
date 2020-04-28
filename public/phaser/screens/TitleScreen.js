@@ -9,6 +9,7 @@ class TitleScreen extends Phaser.Scene {
 	preload() {
 		//this.load.image('background', 'assets/virus-bg.png');
 		//this.load.image('titleText', 'assets/quarantine-title-text.png');
+		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
 	}
 
 	create() {
@@ -28,14 +29,20 @@ class TitleScreen extends Phaser.Scene {
 	}
 
 	startButtonClicked(){
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("difficultyScreen");
 	}
 
 	helpButtonClicked(){
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("helpScreen");
 	}
 
 	controlsButtonClicked(){
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("controlScreen");
 	}
 }

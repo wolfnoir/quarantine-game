@@ -67,7 +67,9 @@ class DifficultyScreen extends Phaser.Scene {
 		this.game.gameData.severity = 0.01;
 		this.game.gameData.lethality = 0;
 		this.game.gameData.cureProgressPerDay = 0.04;
-		alert(this.game.gameData.cureProgressPerDay);
+
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("levelScreen");
 	}
 
@@ -77,6 +79,9 @@ class DifficultyScreen extends Phaser.Scene {
 		this.game.gameData.severity = 0.2;
 		this.game.gameData.lethality = 0.15;
 		this.game.gameData.cureProgressPerDay = 0.03;
+
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("levelScreen");
 	}
 
@@ -86,6 +91,9 @@ class DifficultyScreen extends Phaser.Scene {
 		this.game.gameData.severity = 0.3;
 		this.game.gameData.lethality = 0.40;
 		this.game.gameData.cureProgressPerDay = 0.02;
+
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("levelScreen");
 	}
 }
