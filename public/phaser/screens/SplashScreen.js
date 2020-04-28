@@ -8,9 +8,15 @@ class SplashScreen extends Phaser.Scene {
 	preload() {
         this.load.image('background', 'assets/virus-bg.png');
 		this.load.image('titleText', 'assets/quarantine-title-text.png');
+		this.load.audio('titleMusic', 'assets/music/Purple Planet Music - Electro Zombies.mp3');
 	}
 
 	create() {
+		let titleMusic = this.sound.add('titleMusic');
+		titleMusic.setLoop(true);
+		titleMusic.setVolume(0.5);
+		titleMusic.play();
+
 		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
 		this.background.setOrigin(0, 0);
 		this.add.image(this.game.config.width/2, 50, 'titleText').setScale(0.8);

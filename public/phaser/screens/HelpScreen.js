@@ -38,7 +38,13 @@ class HelpScreen extends Phaser.Scene {
 
 		//back button
 		var backButton = new RectangleButton(this, 70, 550, 100, 50, 0xFFFFFF, 1, 'BACK');
-		backButton.on('pointerdown', () => this.scene.start('titleScreen'));
+		backButton.on('pointerdown', () => this.backClicked());
+	}
+
+	backClicked(){
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
+		this.scene.start('titleScreen');
 	}
 
 }

@@ -51,7 +51,9 @@ class LevelScreen extends Phaser.Scene {
 
 	nySelected(){
 		//change variables here
-		this.scene.start("nameScreen");
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
+		this.scene.start("gameScreen");
 	}
 
 }
