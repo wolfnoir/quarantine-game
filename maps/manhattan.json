@@ -32,7 +32,7 @@
         {
          "columns":10,
          "firstgid":1,
-         "image":"tiles\/quarantine-tiles.png",
+         "image":"tiles/quarantine-tiles.png",
          "imageheight":50,
          "imagewidth":500,
          "margin":0,
