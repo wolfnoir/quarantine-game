@@ -30,7 +30,7 @@ class GameScreen extends Phaser.Scene {
 		const map = this.make.tilemap({ key: "map" });
 		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
 	
-		const belowLayer = map.createStaticLayer("Tile Layer", tileset, 0, 0);
+		this.groundLayer = map.createStaticLayer("Tile Layer", tileset, 0, 0);
 		const camera = this.cameras.main;
 
 		const cursors = this.input.keyboard.createCursorKeys();
@@ -44,13 +44,31 @@ class GameScreen extends Phaser.Scene {
 		});
 	  
 		camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+		this.marker = this.add.graphics();
+		this.marker.lineStyle(5, 0xffffff, 1);
+		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
+		this.marker.lineStyle(3, 0xff4f78, 1);
+		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
 	}
 
 	update(time, delta) {
 		// Apply the controls to the camera each update tick of the game
 		this.controls.update(delta);
-	}
 
+		var worldPoint = this.input.activePointer.positionToCamera(this.cameras.main);
+
+		// Place the marker in world space, but snap it to the tile grid. If we convert world -> tile and
+		// then tile -> world, we end up with the position of the tile under the pointer
+		var pointerTileXY = this.groundLayer.worldToTileXY(worldPoint.x, worldPoint.y);
+		var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
+		var tile = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
+		this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
+
+	}
+	tileClicked(tile){
+		tile.setAlpha(0);
+	}
 
 	end() {
 		
