@@ -7,4 +7,40 @@ class CityTile {
         this.infectivity = obj.infectivity;
         this.recovery = obj.recovery;
     }
+
+    getPopulation(){
+        return this.population;
+    }
+
+    getInfected(){
+        return this.infected;
+    }
+
+    getDead(){
+        return this.dead;
+    }
+
+    getInfectedPercentage(){
+        return this.infected / this.population;
+    }
+
+    //increments the number of dead by num
+    //decreases the infected and population by num
+    incrementDead(num){
+        this.dead += num;
+        this.infected -= num;
+        this.population -= num;
+    }
+
+    getMorale(){
+        return this.morale;
+    }
+
+    getInfectivityRate(){
+        return this.infectivity;
+    }
+
+    getRecoveryRate(){
+        return this.recovery;
+    }
 }
