@@ -25,10 +25,10 @@ class ControlScreen extends Phaser.Scene {
 			"ESCAPE - Pause (in game)\n" +
 			"TAB - Access menu\n\n" +
 			"MAP NAVIGATION\n\n" +
-			"W - Scroll Up\n" +
-			"A - Scroll Right\n" +
-			"S - Scroll Down\n" +
-			"D - Scroll Left",
+			"Up Arrow - Scroll Up\n" +
+			"Right Arrow - Scroll Right\n" +
+			"Down Arrow - Scroll Down\n" +
+			"Left Arrow - Scroll Left",
 			{fontFamily: '"Courier New"', fontSize: '24px', fontWeight: 900}
 			).setOrigin(0.5);
 
