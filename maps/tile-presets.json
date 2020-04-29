@@ -1,0 +1,141 @@
+{
+    "1": [
+        {
+            "name": "bridge",
+            "id": 1,
+            "population": 0,
+            "infected": 0,
+            "dead": 0,
+            "morale": 0,
+            "infectivity": 0,
+            "recovery": 0,
+            "isInfectable": false
+        }
+    ],
+
+    "2": [
+        {
+            "name": "business",
+            "id": 2,
+            "population": 9000,
+            "infected": 0,
+            "dead": 0,
+            "morale": 1.0,
+            "infectivity": 0.5,
+            "recovery": 0.3,
+            "isInfectable": true
+        }
+    ],
+
+    "3": [
+        {
+            "name": "hospital",
+            "id": 3,
+            "population": 5000,
+            "infected": 0,
+            "dead": 0,
+            "morale": 1.0,
+            "infectivity": 0.2,
+            "recovery": 0.6,
+            "isInfectable": true
+        }
+    ],
+
+    "4": [
+        {
+            "name": "industry",
+            "id": 4,
+            "population": 9000,
+            "infected": 0,
+            "dead": 0,
+            "morale": 1.0,
+            "infectivity": 0.6,
+            "recovery": 0.3,
+            "isInfectable": true
+        }
+    ],
+
+    "5": [
+        {
+            "name": "lowerclass",
+            "id": 5,
+            "population": 12000,
+            "infected": 0,
+            "dead": 0,
+            "morale": 1.0,
+            "infectivity": 0.6,
+            "recovery": 0.3,
+            "isInfectable": true
+        }
+    ],
+
+    "6": [
+        {
+            "name": "park",
+            "id": 6,
+            "population": 0,
+            "infected": 0,
+            "dead": 0,
+            "morale": 0,
+            "infectivity": 0,
+            "recovery": 0,
+            "isInfectable": false
+        }
+    ],
+
+    "7": [
+        {
+            "name": "transport",
+            "id": 7,
+            "population": 10000,
+            "infected": 0,
+            "dead": 0,
+            "morale": 1,
+            "infectivity": 0.75,
+            "recovery": 0.1,
+            "isInfectable": true
+        }
+    ],
+
+    "8": [
+        {
+            "name": "upperclass",
+            "id": 8,
+            "population": 10000,
+            "infected": 0,
+            "dead": 0,
+            "morale": 1,
+            "infectivity": 0.5,
+            "recovery": 0.4,
+            "isInfectable": true
+        }
+    ],
+
+    "9": [
+        {
+            "name": "water",
+            "id": 9,
+            "population": 0,
+            "infected": 0,
+            "dead": 0,
+            "morale": 0,
+            "infectivity": 0,
+            "recovery": 0,
+            "isInfectable": false
+        }
+    ],
+
+    "10": [
+        {
+            "name": "outofbounds",
+            "id": 10,
+            "population": 0,
+            "infected": 0,
+            "dead": 0,
+            "morale": 0,
+            "infectivity": 0,
+            "recovery": 0,
+            "isInfectable": false
+        }
+    ]
+}
