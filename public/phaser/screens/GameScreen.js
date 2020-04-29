@@ -21,16 +21,34 @@ class GameScreen extends Phaser.Scene {
 	};
 
 	preload() {
-		
+		//import tileset image and map json file
+		this.load.image("tiles", "../../../maps/tiles/quarantine-tiles.png");
+		this.load.tilemapTiledJSON("map", "../../../maps/manhattan.json");
 	}
 
 	create() {
-	   
+		const map = this.make.tilemap({ key: "map" });
+		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
+	
+		const belowLayer = map.createStaticLayer("Tile Layer", tileset, 0, 0);
+		const camera = this.cameras.main;
 
+		const cursors = this.input.keyboard.createCursorKeys();
+		this.controls = new Phaser.Cameras.Controls.FixedKeyControl({
+		  camera: camera,
+		  left: cursors.left,
+		  right: cursors.right,
+		  up: cursors.up,
+		  down: cursors.down,
+		  speed: 0.5
+		});
+	  
+		camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 	}
 
-	update() {
-
+	update(time, delta) {
+		// Apply the controls to the camera each update tick of the game
+		this.controls.update(delta);
 	}
 
 

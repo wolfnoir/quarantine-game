@@ -3,7 +3,8 @@
     {
      "export":
         {
-         "target":"."
+         "format":"json",
+         "target":"lol"
         }
     },
  "height":20,
@@ -29,8 +30,17 @@
  "tileheight":50,
  "tilesets":[
         {
+         "columns":10,
          "firstgid":1,
-         "source":"QuarantineTiles.tsx"
+         "image":"tiles\/quarantine-tiles.png",
+         "imageheight":50,
+         "imagewidth":500,
+         "margin":0,
+         "name":"QuarantineTiles",
+         "spacing":0,
+         "tilecount":10,
+         "tileheight":50,
+         "tilewidth":50
         }],
  "tilewidth":50,
  "type":"map",
