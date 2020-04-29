@@ -24,9 +24,16 @@ class GameScreen extends Phaser.Scene {
 		//import tileset image and map json file
 		this.load.image("tiles", "../../../maps/tiles/quarantine-tiles.png");
 		this.load.tilemapTiledJSON("map", "../../../maps/manhattan.json");
+		this.load.json("mapjs", "../../../maps/manhattan.json");
+		this.load.json("tile-presets", "../../../maps/tile-presets.json");
 	}
 
 	create() {
+		//Set up data structure for city
+		var mapjs = this.cache.json.get('mapjs');
+		var presets = this.cache.json.get('tile-presets');
+		var city = new City(mapjs, presets);
+
 		const map = this.make.tilemap({ key: "map" });
 		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
 	

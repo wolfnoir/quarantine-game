@@ -1,0 +1,5 @@
+class Virus{
+    constructor(){
+        
+    }
+}
