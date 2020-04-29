@@ -10,10 +10,6 @@ class City{
             var key = num.toString();
             var tile = new CityTile(presets[key][0]);
             this.cityTiles.push(tile);
-
-            console.log(tile);
         }
     }
-
-    
 }
