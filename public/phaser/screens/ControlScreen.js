@@ -20,8 +20,8 @@ class ControlScreen extends Phaser.Scene {
 		var textBox = this.add.rectangle(this.game.config.width/2, this.game.config.height/2, 400, 350, 0x000000, 0.8).setOrigin(0.5, 0.5);
 		var controlText = this.add.text(textBox.x, textBox.y,
 			"GENERAL CONTROLS\n\n" +
-			"RIGHT CLICK - Interact\n" +
-			"LEFT CLICK - Cancel\n" +
+			"LEFT CLICK - Interact\n" +
+			"RIGHT CLICK - Cancel\n" +
 			"ESCAPE - Pause (in game)\n" +
 			"TAB - Access menu\n\n" +
 			"MAP NAVIGATION\n\n" +
