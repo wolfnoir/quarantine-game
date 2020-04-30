@@ -32,7 +32,7 @@ class GameScreen extends Phaser.Scene {
 		//Set up data structure for city
 		var mapjs = this.cache.json.get('mapjs');
 		var presets = this.cache.json.get('tile-presets');
-		var city = new City(mapjs, presets);
+		this.game.city = new City(mapjs, presets);
 
 		const map = this.make.tilemap({ key: "map" });
 		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
