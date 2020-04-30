@@ -32,8 +32,7 @@ window.onload = function () {
     //Values will be modified by the below values upon transition to the next turn
     game.effects = null;
 
-    //Array of all actions that player can take
-    //Will be used to change effects at end of turn
+    //Stores actions that can be taken by player
     game.actions = [];
 
     //Contains all the data for the city including population and number of infected
