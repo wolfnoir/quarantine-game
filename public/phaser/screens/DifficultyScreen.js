@@ -11,6 +11,7 @@ class DifficultyScreen extends Phaser.Scene {
 	preload() {
 		//this.load.image('background', 'assets/virus-bg.png');
 		this.load.image('newGameTitle', 'assets/new-game-title.png');
+		this.load.json("difficulty", "../../presets/difficulties.json");
 	}
 
 	create() {
@@ -62,11 +63,12 @@ class DifficultyScreen extends Phaser.Scene {
 	}
 
 	easyMode(){
-		//put easy mode variables here
-		this.game.gameData.infectivity = 0.03;
-		this.game.gameData.severity = 0.01;
-		this.game.gameData.lethality = 0;
-		this.game.gameData.cureProgressPerDay = 0.04;
+		//retrieves difficulty presets from json
+		var diffObj = this.cache.json.get('difficulty').easy;
+
+		//Sets up disease and settings
+		this.game.virus = new Virus("", diffObj);
+		this.game.gameData.cureProgressPerDay = diffObj.cureProgressPerDay;
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
@@ -74,11 +76,12 @@ class DifficultyScreen extends Phaser.Scene {
 	}
 
 	mediumMode(){
-		//put medium mode variables here
-		this.game.gameData.infectivity = 0.14;
-		this.game.gameData.severity = 0.2;
-		this.game.gameData.lethality = 0.15;
-		this.game.gameData.cureProgressPerDay = 0.03;
+		//retrieves difficulty presets from json
+		var diffObj = this.cache.json.get('difficulty').medium;
+
+		//Sets up disease and settings
+		this.game.virus = new Virus("", diffObj);
+		this.game.gameData.cureProgressPerDay = diffObj.cureProgressPerDay;
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
@@ -86,11 +89,12 @@ class DifficultyScreen extends Phaser.Scene {
 	}
 
 	hardMode(){
-		//put hard mode variables here
-		this.game.gameData.infectivity = 0.25;
-		this.game.gameData.severity = 0.3;
-		this.game.gameData.lethality = 0.40;
-		this.game.gameData.cureProgressPerDay = 0.02;
+		//retrieves difficulty presets from json
+		var diffObj = this.cache.json.get('difficulty').hard;
+
+		//Sets up disease and settings
+		this.game.virus = new Virus("", diffObj);
+		this.game.gameData.cureProgressPerDay = diffObj.cureProgressPerDay;
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();

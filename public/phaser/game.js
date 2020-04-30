@@ -18,16 +18,11 @@ window.onload = function () {
     //Stores global variable with game data
     //Values are placeholders so far
     game.gameData = {
-        diseaseName: "",
         threatLevel: 0,
-        morale: 1,
-        population: 100,
-        infected: 1,
-        infectivity: 0.05,
-        severity: 0.01,
-        lethality: 0.01,
         cure: 0,
         cureProgressPerDay: 0,
         energy: 1
     };
+    game.city = null;
+    game.virus = null;
 }
