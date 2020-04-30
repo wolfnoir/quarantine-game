@@ -16,14 +16,22 @@ window.onload = function () {
     var game = new Phaser.Game(config);
 
     //Stores global variable with game data
-    //Values are placeholders so far
     game.gameData = {
         name: "",
         threatLevel: 0,
+        moraleLevel: 5,
         cure: 0,
-        cureProgressPerDay: 0,
-        energy: 1
+        energy: 1,
+        turn: 1,
     };
+
+    //Stores effects for the current turn
+    //Values will be modified by the below values upon transition to the next turn
+    game.effects = null;
+
+    //Contains all the data for the city including population and number of infected
     game.city = null;
+
+    //Contains all variables relating to difficulty including diseaser parameters and cure progression
     game.difficulty = null;
 }

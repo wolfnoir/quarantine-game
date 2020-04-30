@@ -13,6 +13,18 @@ class TitleScreen extends Phaser.Scene {
 	}
 
 	create() {
+		//Resetting all global variables
+		this.game.gameData = {
+			name: "",
+			threatLevel: 0,
+			cure: 0,
+			energy: 1,
+			turn: 1,
+		};
+		this.game.effects = null;
+		this.game.city = null;
+		this.game.difficulty = null;
+
 		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
 		this.background.setOrigin(0, 0).setAlpha(0.8);
 		this.add.image(this.game.config.width/2, 50, 'titleText').setScale(0.8);
