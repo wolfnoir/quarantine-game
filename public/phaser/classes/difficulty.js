@@ -30,13 +30,13 @@ class Difficulty{
         return this.cureProgressPerDay;
     }
 
-    //Returns the amount of energy that the player should receive on this day
-    //If past the last day of the array, give the maximum amount of energy possible, 7
-    getEnergyToday(day){
+    //Returns the amount of energy that the player should receive on this turn
+    //If past the last turn of the array, give the maximum amount of energy possible, 7
+    getEnergyToday(turn){
         var i = 0;
         
         while(i < this.energyPerDay.length){
-            if(this.energyPerDay[i] > day)
+            if(this.energyPerDay[i] > turn)
                 return i;
             
             i++;
