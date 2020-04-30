@@ -32,6 +32,8 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	create() {
+		this.game.music.play()
+
 		//Set up data structure for city
 		var mapjs = this.cache.json.get('mapjs');
 		var presets = this.cache.json.get('tile-presets');
