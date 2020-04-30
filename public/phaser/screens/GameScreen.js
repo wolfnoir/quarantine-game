@@ -131,11 +131,6 @@ class GameScreen extends Phaser.Scene {
 		var progressBarBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarBlue.fillStyle(0x31d5fd, 1);
 		progressBarBlue.fillRoundedRect(500, 100, 33, 30, 10);
-
-		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
-		nextTurnButton.setScrollFactor(0);
-		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
 	
 		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
 		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
@@ -154,6 +149,17 @@ class GameScreen extends Phaser.Scene {
 
 		var increaseCureButton = new RectangleButton(this, 80, 480, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
 		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
+
+		//get the energy required for today
+		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
+
+		var energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
+		{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
+
+		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
+		nextTurnButton.setScrollFactor(0);
+		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText));
 	}
 
 	update(time, delta) {
@@ -176,7 +182,7 @@ class GameScreen extends Phaser.Scene {
 		tile.setAlpha(0);
 	}
 
-	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
+	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText){
 		//Sets up effects for the previous turn
 		this.game.effects = new Effects();
 		this.updateEffects();
@@ -203,6 +209,10 @@ class GameScreen extends Phaser.Scene {
 		this.end()
 
 		this.game.effects = new Effects();
+
+		//add new energy for the next day
+		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
+		energyText.setText('Energy Available: ' + this.game.gameData.energy);
 	}
 
 	
