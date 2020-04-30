@@ -149,42 +149,42 @@ class VirusAlgorithm {
         //an array of index numbers
         let surroundingTiles = [];
         //check north west
-        if (tileArray[initIndex - 21].isInfectable() && tileArray[initIndex - 21].getDead === 0 && tileArray[initIndex - 21].getInfected === 0) {
+        if (tileArray[initIndex - 21].infectable() && tileArray[initIndex - 21].getDead === 0 && tileArray[initIndex - 21].getInfected === 0) {
             surroundingTiles.push(initIndex - 21);
         }
 
         //check north
-        if (tileArray[initIndex - 20].isInfectable() && tileArray[initIndex - 20].getDead === 0 && tileArray[initIndex - 20].getInfected === 0) {
+        if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead === 0 && tileArray[initIndex - 20].getInfected === 0) {
             surroundingTiles.push(initIndex - 20);
         }
 
         //check north east
-        if (tileArray[initIndex - 19].isInfectable() && tileArray[initIndex - 19].getDead === 0 && tileArray[initIndex - 19].getInfected === 0) {
+        if (tileArray[initIndex - 19].infectable() && tileArray[initIndex - 19].getDead === 0 && tileArray[initIndex - 19].getInfected === 0) {
             surroundingTiles.push(initIndex - 19);
         }
 
         //check west
-        if (tileArray[initIndex - 1].isInfectable() && tileArray[initIndex - 1].getDead === 0 && tileArray[initIndex - 1].getInfected === 0) {
+        if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead === 0 && tileArray[initIndex - 1].getInfected === 0) {
             surroundingTiles.push(initIndex - 1);
         }
 
         //check east
-        if (tileArray[initIndex + 1].isInfectable() && tileArray[initIndex + 1].getDead === 0 && tileArray[initIndex + 1].getInfected === 0) {
+        if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead === 0 && tileArray[initIndex + 1].getInfected === 0) {
             surroundingTiles.push(initIndex + 1);
         }
 
         //check south west
-        if (tileArray[initIndex + 19].isInfectable() && tileArray[initIndex + 19].getDead === 0 && tileArray[initIndex + 10].getInfected === 0) {
+        if (tileArray[initIndex + 19].infectable() && tileArray[initIndex + 19].getDead === 0 && tileArray[initIndex + 10].getInfected === 0) {
             surroundingTiles.push(initIndex + 19);
         }
 
         //check south
-        if (tileArray[initIndex + 20].isInfectable() && tileArray[initIndex + 20].getDead === 0 && tileArray[initIndex + 20].getInfected === 0) {
+        if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead === 0 && tileArray[initIndex + 20].getInfected === 0) {
             surroundingTiles.push(initIndex + 20);
         }
 
         //check south east
-        if (tileArray[initIndex + 21].isInfectable() && tileArray[initIndex + 21].getDead === 0 && tileArray[initIndex + 21].getInfected === 0) {
+        if (tileArray[initIndex + 21].infectable() && tileArray[initIndex + 21].getDead === 0 && tileArray[initIndex + 21].getInfected === 0) {
             surroundingTiles.push(initIndex + 21);
         }
 

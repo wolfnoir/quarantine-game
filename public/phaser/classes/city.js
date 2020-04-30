@@ -22,6 +22,20 @@ class City{
         return pop;
     }
 
+    getMorale(){
+        let totalMorale = 0;
+        let numOfInfectableTiles = 0;
+
+        for(let i = 0; i < this.cityTiles.length; i++){
+            if(this.cityTiles[i].infectable()){
+                totalMorale += this.cityTiles[i].getMorale();
+                numOfInfectableTiles += 1;
+            }
+        }
+
+        return totalMorale / numOfInfectableTiles;
+    }
+
     getInfected(){
         var infected = 0;
 
