@@ -7,7 +7,7 @@ window.onload = function () {
         dom: {
             createContainer: true
         },
-        scene: [SplashScreen, ControlScreen, DifficultyScreen, EndScreen, GameScreen, HelpScreen, LevelScreen, NameScreen, PauseScreen,  TitleScreen]
+        scene: [SplashScreen, ControlScreen, DifficultyScreen, DefeatScreen, VictoryScreen, GameScreen, HelpScreen, LevelScreen, NameScreen, PauseScreen,  TitleScreen]
     }
 
     // Create the game with our config values
@@ -25,6 +25,9 @@ window.onload = function () {
         turn: 1,
     };
 
+    //Will store main track so we can start or stop it at times
+    game.music = null;
+
     //Stores effects for the current turn
     //Values will be modified by the below values upon transition to the next turn
     game.effects = null;
@@ -35,9 +38,7 @@ window.onload = function () {
     //Contains all variables relating to difficulty including diseaser parameters and cure progression
     game.difficulty = null;
 
-    game.resetData = resetData
-
-    function resetData() {
+    game.resetData = function() {
         game.gameData = {
             threatLevel: 0,
             moraleLevel: 5,
@@ -47,9 +48,7 @@ window.onload = function () {
         };
     }
 
-    game.resetAll = resetAll;
-    
-    function resetAll() {
+    game.resetAll = function() {
         game.gameData = {
             name: "",
             threatLevel: 0,

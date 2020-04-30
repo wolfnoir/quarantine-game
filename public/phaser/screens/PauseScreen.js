@@ -32,19 +32,32 @@ class PauseScreen extends Phaser.Scene {
 	}
 
 	resumeButtonClicked(){
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("gameScreen");
 	}
 
 	muteButtonClicked(){
-		this.game.sound.mute = !this.game.sound.mute;
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
+
+		if(this.game.music.isPlaying)
+			this.game.music.stop();
+
+		else
+			this.game.music.play();
 	}
 
 	restartButtonClicked(){
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.game.resetData();
 		this.scene.start("gameScreen");
 	}
 
 	quitButtonClicked(){
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("titleScreen");
 	}
 }

@@ -16,6 +16,7 @@ class SplashScreen extends Phaser.Scene {
 		titleMusic.setLoop(true);
 		titleMusic.setVolume(0.5);
 		titleMusic.play();
+		this.game.music = titleMusic;
 
 		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
 		this.background.setOrigin(0, 0);
