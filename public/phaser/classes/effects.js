@@ -8,6 +8,7 @@ class Effects {
         this.infectivity = 0;
         this.severity = 0;
         this.lethality = 0;
+        this.recovery = 0;
         this.morale = 0;
     }
 
@@ -21,6 +22,10 @@ class Effects {
 
     getLethality(){
         return this.lethality;
+    }
+
+    getRecovery(){
+        return this.recovery;
     }
 
     getMorale(){
@@ -37,6 +42,10 @@ class Effects {
 
     changeLethality(amt){
         this.lethality += amt;
+    }
+
+    changeRecovery(amt){
+        this.recovery += amt;
     }
 
     changeMorale(amt){
