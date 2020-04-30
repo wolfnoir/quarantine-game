@@ -67,8 +67,7 @@ class DifficultyScreen extends Phaser.Scene {
 		var diffObj = this.cache.json.get('difficulty').easy;
 
 		//Sets up disease and settings
-		this.game.virus = new Virus("", diffObj);
-		this.game.gameData.cureProgressPerDay = diffObj.cureProgressPerDay;
+		this.game.difficulty = new Difficulty(diffObj);
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
@@ -80,8 +79,7 @@ class DifficultyScreen extends Phaser.Scene {
 		var diffObj = this.cache.json.get('difficulty').medium;
 
 		//Sets up disease and settings
-		this.game.virus = new Virus("", diffObj);
-		this.game.gameData.cureProgressPerDay = diffObj.cureProgressPerDay;
+		this.game.difficulty = new Difficulty(diffObj);
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
@@ -93,8 +91,7 @@ class DifficultyScreen extends Phaser.Scene {
 		var diffObj = this.cache.json.get('difficulty').hard;
 
 		//Sets up disease and settings
-		this.game.virus = new Virus("", diffObj);
-		this.game.gameData.cureProgressPerDay = diffObj.cureProgressPerDay;
+		this.game.difficulty = new Difficulty(diffObj);
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
