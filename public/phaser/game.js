@@ -21,7 +21,7 @@ window.onload = function () {
         threatLevel: 0,
         moraleLevel: 5,
         cure: 0,
-        energy: 1,
+        energy: 0,
         turn: 1,
     };
 
@@ -46,7 +46,7 @@ window.onload = function () {
             threatLevel: 0,
             moraleLevel: 5,
             cure: 0,
-            energy: 1,
+            energy: 0,
             turn: 1,
         };
     }
@@ -57,7 +57,7 @@ window.onload = function () {
             threatLevel: 0,
             moraleLevel: 5,
             cure: 0,
-            energy: 1,
+            energy: 0,
             turn: 1,
         };
 
