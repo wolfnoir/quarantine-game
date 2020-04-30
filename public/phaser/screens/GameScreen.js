@@ -158,15 +158,7 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
-		//Adds all actions to events
-		for(let i = 0; i < this.game.actions.length; i++){
-			let action = this.game.actions[i];
-			
-			if(action.hasBeenTaken()){
-				this.game.effects.addAction(this.game.actions[i]);
-				action.toggleTaken();
-			}
-		}
+		this.updateEvents();
 
 		this.game.gameData.turn += 1;
 
@@ -183,9 +175,6 @@ class GameScreen extends Phaser.Scene {
 		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
 
 		this.game.gameData.moraleLevel = this.game.city.getMorale();
-		//End conditions
-		if(this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel <= 0)
-			this.scene.start("defeatScreen");
 
 		//Check end conditions
 		this.end()
@@ -201,5 +190,17 @@ class GameScreen extends Phaser.Scene {
 
 		else if(this.game.city.getInfected() == 0 || this.game.gameData.cure >= 1)
 			this.scene.start("victoryScreen");
+	}
+
+	updateEvents(){
+		//Adds all actions to events
+		for(let i = 0; i < this.game.actions.length; i++){
+			let action = this.game.actions[i];
+			
+			if(action.hasBeenTaken()){
+				this.game.effects.addAction(this.game.actions[i]);
+				action.toggleTaken();
+			}
+		}
 	}
 }
