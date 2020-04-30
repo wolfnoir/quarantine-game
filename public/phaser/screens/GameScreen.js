@@ -182,9 +182,12 @@ class GameScreen extends Phaser.Scene {
 		moralePercent.setText(Math.floor(this.game.city.getMorale() * 100) + '%');
 		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		this.game.gameData.moraleLevel = this.game.city.getMorale();
 =======
+=======
+>>>>>>> cf694cc5a907605b77307a5b8ae849c989afe5bc
 		
 		this.game.gameData.moraleLevel = this.game.city.getMorale();
 		//End conditions
