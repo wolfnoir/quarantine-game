@@ -143,27 +143,27 @@ class GameScreen extends Phaser.Scene {
 	
 		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
 		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
-		reduceInfectivityButton.on('pointerdown', () => this.takeAction(0));
+		reduceInfectivityButton.on('pointerdown', () => this.takeAction(0, reduceInfectivityButton));
 
 		var reduceSeverityButton = new RectangleButton(this, 80, 240, 150, 50, 0xFFFFFF, 1, 'REDUCE\nSEVERITY').setDepth(1).setScrollFactor(0);
 		reduceSeverityButton.buttonText.setScrollFactor(0).setDepth(1);
-		reduceSeverityButton.on('pointerdown', () => this.takeAction(1));
+		reduceSeverityButton.on('pointerdown', () => this.takeAction(1, reduceSeverityButton));
 
 		var reduceLethalityButton = new RectangleButton(this, 80, 300, 150, 50, 0xFFFFFF, 1, 'REDUCE\nLETHALITY').setDepth(1).setScrollFactor(0);
 		reduceLethalityButton.buttonText.setScrollFactor(0).setDepth(1);
-		reduceLethalityButton.on('pointerdown', () => this.takeAction(2));
+		reduceLethalityButton.on('pointerdown', () => this.takeAction(2, reduceLethalityButton));
 
 		var increaseRecoveryButton = new RectangleButton(this, 80, 360, 150, 50, 0xFFFFFF, 1, 'INCREASE\nRECOVERY').setDepth(1).setScrollFactor(0);
 		increaseRecoveryButton.buttonText.setScrollFactor(0).setDepth(1);
-		increaseRecoveryButton.on('pointerdown', () => this.takeAction(3));
+		increaseRecoveryButton.on('pointerdown', () => this.takeAction(3, increaseRecoveryButton));
 
 		var increaseMoraleButton = new RectangleButton(this, 80, 420, 150, 50, 0xFFFFFF, 1, 'BOOST\nMORALE').setDepth(1).setScrollFactor(0);
 		increaseMoraleButton.buttonText.setScrollFactor(0).setDepth(1);
-		increaseMoraleButton.on('pointerdown', () => this.takeAction(4));
+		increaseMoraleButton.on('pointerdown', () => this.takeAction(4, increaseMoraleButton));
 
 		var increaseCureButton = new RectangleButton(this, 80, 480, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
 		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
-		increaseCureButton.on('pointerdown', () => this.takeAction(5));
+		increaseCureButton.on('pointerdown', () => this.takeAction(5, increaseCureButton));
 
 		//get the energy required for today
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
@@ -174,7 +174,8 @@ class GameScreen extends Phaser.Scene {
 		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, this.energyText));
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent,
+			reduceInfectivityButton, reduceSeverityButton, reduceLethalityButton, increaseRecoveryButton, increaseMoraleButton, increaseCureButton));
 	}
 
 	update(time, delta) {
@@ -210,7 +211,8 @@ class GameScreen extends Phaser.Scene {
 		tile.setAlpha(0);
 	}
 
-	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText){
+	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent,
+		reduceInfectivityButton, reduceSeverityButton, reduceLethalityButton, increaseRecoveryButton, increaseMoraleButton, increaseCureButton){
 		//Sets up effects for the previous turn
 		this.game.effects = new Effects();
 		this.updateEffects();
@@ -241,6 +243,14 @@ class GameScreen extends Phaser.Scene {
 		//add new energy for the next day
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
 		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
+
+		//reset button colors
+		reduceInfectivityButton.fillColor = 0xFFFFFF;
+		reduceSeverityButton.fillColor = 0xFFFFFF;
+		reduceLethalityButton.fillColor = 0xFFFFFF;
+		increaseRecoveryButton.fillColor = 0xFFFFFF;
+		increaseMoraleButton.fillColor = 0xFFFFFF;
+		increaseCureButton.fillColor = 0xFFFFFF;
 	}
 
 	
@@ -275,19 +285,21 @@ class GameScreen extends Phaser.Scene {
 
 	//Marks action as taken if have enough energy
 	//If already taken, unmark it and give back energy
-	takeAction(actionNum){
+	takeAction(actionNum, button){
 		var action = this.game.actions[actionNum];
 
 		if(action.hasBeenTaken() == false){
 			if(action.getCost() <= this.game.gameData.energy){
 				action.toggleTaken();
 				this.game.gameData.energy -= action.getCost();
+				button.fillColor = 0x696969;
 			}
 		}
 
 		else{
 			action.toggleTaken();
 			this.game.gameData.energy += action.getCost();
+			button.fillColor = 0xFFFFFF;
 		}
 	}
 }
