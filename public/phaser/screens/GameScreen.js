@@ -136,6 +136,24 @@ class GameScreen extends Phaser.Scene {
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
 		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
+	
+		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
+		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
+
+		var reduceSeverityButton = new RectangleButton(this, 80, 240, 150, 50, 0xFFFFFF, 1, 'REDUCE\nSEVERITY').setDepth(1).setScrollFactor(0);
+		reduceSeverityButton.buttonText.setScrollFactor(0).setDepth(1);
+
+		var reduceLethalityButton = new RectangleButton(this, 80, 300, 150, 50, 0xFFFFFF, 1, 'REDUCE\nLETHALITY').setDepth(1).setScrollFactor(0);
+		reduceLethalityButton.buttonText.setScrollFactor(0).setDepth(1);
+
+		var increaseRecoveryButton = new RectangleButton(this, 80, 360, 150, 50, 0xFFFFFF, 1, 'INCREASE\nRECOVERY').setDepth(1).setScrollFactor(0);
+		increaseRecoveryButton.buttonText.setScrollFactor(0).setDepth(1);
+
+		var increaseMoraleButton = new RectangleButton(this, 80, 420, 150, 50, 0xFFFFFF, 1, 'BOOST\nMORALE').setDepth(1).setScrollFactor(0);
+		increaseMoraleButton.buttonText.setScrollFactor(0).setDepth(1);
+
+		var increaseCureButton = new RectangleButton(this, 80, 480, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
+		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
 	}
 
 	update(time, delta) {
