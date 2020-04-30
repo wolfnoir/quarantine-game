@@ -273,12 +273,11 @@ class GameScreen extends Phaser.Scene {
 	//If already taken, unmark it and give back energy
 	takeAction(actionNum){
 		var action = this.game.actions[actionNum];
-		console.log(action.hasBeenTaken());
 
-		if(!action.hasBeenTaken()){
-			if(action.getCost <= this.game.gameData.energy){
+		if(action.hasBeenTaken() == false){
+			if(action.getCost() <= this.game.gameData.energy){
 				action.toggleTaken();
-				this.game.energy -= action.getCost();
+				this.game.gameData.energy -= action.getCost();
 			}
 		}
 
@@ -286,7 +285,5 @@ class GameScreen extends Phaser.Scene {
 			action.toggleTaken();
 			this.game.energy += action.getCost();
 		}
-
-		console.log(action.hasBeenTaken());
 	}
 }
