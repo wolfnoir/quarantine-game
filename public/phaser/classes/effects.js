@@ -10,6 +10,7 @@ class Effects {
         this.lethality = 0;
         this.recovery = 0;
         this.morale = 0;
+        this.cure = 0;
     }
 
     getInfectivity(){

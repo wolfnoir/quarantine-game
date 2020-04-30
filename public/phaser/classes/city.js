@@ -43,4 +43,8 @@ class City{
     getInfectedPercentage(){
         return this.getInfected() / this.getPopulation();
     }
+
+    getTile(x, y){
+        return this.cityTiles[y * 20 + x];
+    }
 }
