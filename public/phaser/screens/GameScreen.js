@@ -156,8 +156,13 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm){
-		console.log("next turn");
+		this.game.gameData.turn += 1;
+		console.log("Turn #: " + this.game.gameData.turn);
 		virusAlgorithm.runVirusTurn();
+		console.log("Total Morale: " + Math.floor(this.game.city.getMorale() * 100) + "%");
+		console.log("Total Population: " + this.game.city.getPopulation());
+		console.log("Total Infected: " + this.game.city.getInfected());
+		console.log("Total Dead: " + this.game.city.getDead())
 	}
 
 	end() {
