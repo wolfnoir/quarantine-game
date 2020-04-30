@@ -66,7 +66,7 @@ class Effects {
         this.changeSeverity(action.getSeverity());
         this.changeLethality(action.getLethality());
         this.changeRecovery(action.getRecovery());
-        this.changeMorale(action.getMorale());
+        this.changeMorale(action.getMoraleChange());
         this.changeCureProgress(action.getCureProgress());
     }
 }

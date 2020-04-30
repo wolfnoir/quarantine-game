@@ -133,6 +133,8 @@ class GameScreen extends Phaser.Scene {
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0);
 		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
+
+		this.game.effects = new Effects();
 	}
 
 	update(time, delta) {
@@ -156,6 +158,16 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
+		//Adds all actions to events
+		for(let i = 0; i < this.game.actions.length; i++){
+			let action = this.game.actions[i];
+			
+			if(action.hasBeenTaken()){
+				this.game.effects.addAction(this.game.actions[i]);
+				action.toggleTaken();
+			}
+		}
+
 		this.game.gameData.turn += 1;
 		console.log("Turn #: " + this.game.gameData.turn);
 		virusAlgorithm.runVirusTurn();
@@ -171,15 +183,19 @@ class GameScreen extends Phaser.Scene {
 		moralePercent.setText(Math.floor(this.game.city.getMorale() * 100) + '%');
 		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
 
-		//End conditions
+		//Check end conditions
+		this.end()
+
+		this.game.effects = new Effects();
+	}
+
+	
+	//End conditions
+	end() {
 		if(this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel == 0)
 			this.scene.start("defeatScreen");
 
 		else if(this.game.city.getInfected() == 0 || this.game.gameData.cure >= 1)
 			this.scene.start("victoryScreen");
-	}
-
-	end() {
-		
 	}
 }
