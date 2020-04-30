@@ -27,6 +27,7 @@ class GameScreen extends Phaser.Scene {
 		this.load.json("mapjs", "../../maps/manhattan.json");
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
 		this.load.image('logo', 'assets/quarantine-logo.png');
+		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
 	}
 
 	create() {
@@ -34,6 +35,8 @@ class GameScreen extends Phaser.Scene {
 		var mapjs = this.cache.json.get('mapjs');
 		var presets = this.cache.json.get('tile-presets');
 		this.game.city = new City(mapjs, presets);
+		var initialTiles = [6, 289];
+		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
 		//Set up keyboard listener
 		let s = this.scene;
@@ -75,9 +78,9 @@ class GameScreen extends Phaser.Scene {
 			'\nConfirmed Infected: ' + this.game.city.getInfected() +
 			'\nDeaths: ' + this.game.city.getDead(),
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
-		var img = this.add.image(this.game.config.width/2 - 50, 70, 'logo');
-		img.setScale(0.1);
-		img.setScrollFactor(0);
+		var logo = this.add.image(this.game.config.width/2 - 50, 70, 'logo');
+		logo.setScale(0.1);
+		logo.setScrollFactor(0);
 		
 		var threatText = this.add.text(410, 25, 'Threat:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
@@ -118,6 +121,10 @@ class GameScreen extends Phaser.Scene {
 		progressBarBlue.fillStyle(0x31d5fd, 1);
 		progressBarBlue.fillRoundedRect(500, 100, 33, 30, 10);
 
+		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN');
+		nextTurnButton.setScrollFactor(0);
+		nextTurnButton.buttonText.setScrollFactor(0);
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm));
 	}
 
 	update(time, delta) {
@@ -132,6 +139,7 @@ class GameScreen extends Phaser.Scene {
 		if (pointerTileXY.y >= 0) {
 			var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
 			var tile = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
+			//console.log(this.game.city.getTile(tile.x, tile.y));
 			this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
 		}
 	}
@@ -139,8 +147,9 @@ class GameScreen extends Phaser.Scene {
 		tile.setAlpha(0);
 	}
 
-	nextTurn(){
-		
+	nextTurn(virusAlgorithm){
+		console.log("next turn");
+		virusAlgorithm.runVirusTurn();
 	}
 
 	end() {

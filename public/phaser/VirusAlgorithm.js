@@ -34,7 +34,9 @@ class VirusAlgorithm {
         // push the initial tiles that have been infected to the infectedTiles array.
         // assume that the tiles we've read in are infectable.
         for (let i = 0; i < initialTiles.length; i++) {
+            console.log(initialTiles[i]);
             this.infectedTiles.push(initialTiles[i]);
+            console.log(this.infectedTiles[i]);
         }
     }
 

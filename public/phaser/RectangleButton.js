@@ -4,7 +4,7 @@ class RectangleButton extends Phaser.GameObjects.Rectangle {
 
         this.setInteractive({ useHandCursor: true })
         scene.add.existing(this);
-        scene.add.text(x, y, text,
+        this.buttonText = scene.add.text(x, y, text,
             { fontFamily: '"Courier New"', fontSize: '20px', fontWeight: 900, color: '0x000000' }).setOrigin(0.5);
     }
 }
