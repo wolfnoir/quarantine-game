@@ -40,11 +40,11 @@ class GameScreen extends Phaser.Scene {
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
 		//Set up actions
-		var actionjs = this.cache.json.get('actions');
-		for(let i = 1; i <= 6; i++){
-			var obj = new Action(actionjs[i.toString()]);
-			this.game.actions.push(obj);
-		}
+		// var actionjs = this.cache.json.get('actions');
+		// for(let i = 1; i <= 6; i++){
+		// 	var obj = new Action(actionjs[i.toString()]);
+		// 	this.game.actions.push(obj);
+		// }
 
 		//Set up keyboard listener
 		let s = this.scene;
@@ -157,12 +157,11 @@ class GameScreen extends Phaser.Scene {
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
 		this.game.gameData.turn += 1;
-		console.log("Turn #: " + this.game.gameData.turn);
+
+		//run the virus turn
 		virusAlgorithm.runVirusTurn();
-		console.log("Total Morale: " + Math.floor(this.game.city.getMorale() * 100) + "%");
-		console.log("Total Population: " + this.game.city.getPopulation());
-		console.log("Total Infected: " + this.game.city.getInfected());
-		console.log("Total Dead: " + this.game.city.getDead())
+
+		//change the text on the screen
 		dayCounterText.setText('Day ' + this.game.gameData.turn + ' of outbreak');
 		populationText.setText('Population: ' + this.game.city.getPopulation() +
 		'\nConfirmed Infected: ' + this.game.city.getInfected() +
@@ -170,9 +169,10 @@ class GameScreen extends Phaser.Scene {
 		threatPercent.setText(Math.floor(this.game.gameData.threatLevel * 100) + "%");
 		moralePercent.setText(Math.floor(this.game.city.getMorale() * 100) + '%');
 		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
-
+		
+		this.game.gameData.moraleLevel = this.game.city.getMorale();
 		//End conditions
-		if(this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel == 0)
+		if(this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel <= 0)
 			this.scene.start("defeatScreen");
 
 		else if(this.game.city.getInfected() == 0 || this.game.gameData.cure >= 1)
