@@ -1,7 +1,6 @@
 class City{
     constructor(obj, presets){
         this.cityTiles = [];
-        this.infectedTiles = [];
 
         var data = obj.layers[0].data;
 

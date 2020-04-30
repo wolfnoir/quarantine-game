@@ -33,6 +33,10 @@ class Effects {
         return this.morale;
     }
 
+    getCureProgress(){
+        return this.cure;
+    }
+
     changeInfectivity(amt){
         this.infectivity += amt;
     }
@@ -51,5 +55,18 @@ class Effects {
 
     changeMorale(amt){
         this.morale += amt;
+    }
+
+    changeCureProgress(amt){
+        this.cure += amt;
+    }
+
+    addAction(action){
+        this.changeInfectivity(action.getInfectivity());
+        this.changeSeverity(action.getSeverity());
+        this.changeLethality(action.getLethality());
+        this.changeRecovery(action.getRecovery());
+        this.changeMorale(action.getMorale());
+        this.changeCureProgress(action.getCureProgress());
     }
 }

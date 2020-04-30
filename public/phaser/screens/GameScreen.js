@@ -28,6 +28,7 @@ class GameScreen extends Phaser.Scene {
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
 		this.load.image('logo', 'assets/quarantine-logo.png');
 		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
+		this.load.json("actions", "../../presets/actions.json");
 	}
 
 	create() {
@@ -37,6 +38,13 @@ class GameScreen extends Phaser.Scene {
 		this.game.city = new City(mapjs, presets);
 		var initialTiles = [6, 289];
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
+
+		//Set up actions
+		var actionjs = this.cache.json.get('actions');
+		for(let i = 1; i <= 6; i++){
+			var obj = new Action(actionjs[i.toString()]);
+			this.game.actions.push(obj);
+		}
 
 		//Set up keyboard listener
 		let s = this.scene;
