@@ -79,60 +79,60 @@ class GameScreen extends Phaser.Scene {
 
 		var group = this.add.group();
         //make the back of the message box
-		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0);
+		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0).setDepth(1);
 		rec.setOrigin(0, 0);
 		var dayCounterText = this.add.text(rec.x + 20, rec.y + 20, 'Day ' + this.game.gameData.turn + ' of outbreak',
-			{fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold'}).setScrollFactor(0).setDepth(1);
 		var populationText = this.add.text(rec.x + 20, rec.y + 50, 'Population: ' + this.game.city.getPopulation() +
 			'\nConfirmed Infected: ' + this.game.city.getInfected() +
 			'\nDeaths: ' + this.game.city.getDead(),
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var logo = this.add.image(this.game.config.width/2 - 50, 70, 'logo');
 		logo.setScale(0.1);
-		logo.setScrollFactor(0);
+		logo.setScrollFactor(0).setDepth(1);
 		
 		var threatText = this.add.text(410, 25, 'Threat:',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var threatPercent = this.add.text(720, 25, '0%',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
-		var progressBoxRed = this.add.graphics().setScrollFactor(0);
+		var progressBoxRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxRed.fillStyle(0x8c0000, 1);
 		progressBoxRed.fillRoundedRect(500, 20, 200, 30, 10);
 
-		var progressBarRed = this.add.graphics().setScrollFactor(0);
+		var progressBarRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarRed.fillStyle(0xff0000, 1);
 		progressBarRed.fillRoundedRect(500, 20, 150, 30, 10);
 
 		var moraleText = this.add.text(410, 65, 'Morale:',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var moralePercent = this.add.text(720, 65, Math.floor(this.game.city.getMorale() * 100) + '%',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
-		var progressBoxGreen = this.add.graphics().setScrollFactor(0);
+		var progressBoxGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxGreen.fillStyle(0x245f24, 1);
 		progressBoxGreen.fillRoundedRect(500, 60, 200, 30, 10);
 
-		var progressBarGreen = this.add.graphics().setScrollFactor(0);
+		var progressBarGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarGreen.fillStyle(0x00ff00, 1);
 		progressBarGreen.fillRoundedRect(500, 60, 100, 30, 10);
 
 		var cureText = this.add.text(410, 105, 'Cure:',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var curePercent = this.add.text(720, 105, Math.floor(this.game.gameData.cure * 100) + '%',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
-		var progressBoxBlue = this.add.graphics().setScrollFactor(0);
+		var progressBoxBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxBlue.fillStyle(0x034157, 1);
 		progressBoxBlue.fillRoundedRect(500, 100, 200, 30, 10);
 
-		var progressBarBlue = this.add.graphics().setScrollFactor(0);
+		var progressBarBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarBlue.fillStyle(0x31d5fd, 1);
 		progressBarBlue.fillRoundedRect(500, 100, 33, 30, 10);
 
-		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN');
+		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
-		nextTurnButton.buttonText.setScrollFactor(0);
+		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
 		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
 	}
 
@@ -177,6 +177,8 @@ class GameScreen extends Phaser.Scene {
 
 		this.game.gameData.moraleLevel = this.game.city.getMorale();
 
+		this.updateInfectedTint(virusAlgorithm);
+
 		//Check end conditions
 		this.end()
 
@@ -202,6 +204,14 @@ class GameScreen extends Phaser.Scene {
 				this.game.effects.addAction(this.game.actions[i]);
 				action.toggleTaken();
 			}
+		}
+	}
+
+	updateInfectedTint(virusAlgorithm){
+		let infectedTiles = virusAlgorithm.infectedTiles;
+		for(let i = 0; i < infectedTiles.length; i++){
+			let index = infectedTiles[i];
+			this.add.rectangle(index%20 * 50, Math.floor(index/20) * 50 + 150, 50, 50, 0xff0000, 0.2).setOrigin(0, 0).setDepth(0);
 		}
 	}
 }
