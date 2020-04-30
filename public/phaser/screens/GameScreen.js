@@ -135,6 +135,7 @@ class GameScreen extends Phaser.Scene {
 		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
 
 		this.game.effects = new Effects();
+		console.log(this.game.effects);
 	}
 
 	update(time, delta) {

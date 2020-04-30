@@ -16,7 +16,6 @@ class VirusAlgorithm {
         this.city = game.city;
         this.cityTiles = game.city.cityTiles;
         this.difficulty = game.difficulty;
-        this.effects = game.effects;
 
         this.tempInfectivity = 0;
         this.tempSeverity = 0;
@@ -59,13 +58,13 @@ class VirusAlgorithm {
             let deadPeople = this.cityTiles[index].getDead();
 
             //virus statistics
-            let infectivity = this.difficulty.getInfectivity() + this.effects.getInfectivity() + this.tempInfectivity;
-            let severity = this.difficulty.getSeverity() + this.effects.getSeverity() + this.tempSeverity;
-            let lethality = this.difficulty.getLethality() + this.effects.getLethality() + this.tempLethality;
+            let infectivity = this.difficulty.getInfectivity() + this.game.effects.getInfectivity() + this.tempInfectivity;
+            let severity = this.difficulty.getSeverity() + this.game.effects.getSeverity() + this.tempSeverity;
+            let lethality = this.difficulty.getLethality() + this.game.effects.getLethality() + this.tempLethality;
 
             //individual tile statistics, with the effects taking place
-            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.effects.getRecoveryRate() + this.tempRecovery;
-            let newMorale = this.cityTiles[index].getMorale() + this.effects.getMorale();
+            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + this.tempRecovery;
+            let newMorale = this.cityTiles[index].getMorale() + this.game.effects.getMorale();
 
             // Calculate how many new people are infected for each tile
             let newInfected = 0;
@@ -139,7 +138,7 @@ class VirusAlgorithm {
         // * Calculate overall threat level based on infection, severity, morality of the disease, and the city-wide morale
 
         // Increase the cure progress.
-        this.game.gameData.cure = this.game.gameData.cure + this.game.difficulty.getDailyCureProgress() + this.effects.getCureProgress();
+        this.game.gameData.cure = this.game.gameData.cure + this.game.difficulty.getDailyCureProgress() + this.game.effects.getCureProgress();
         // Randomly pick infectivity, severity, or morality to increase.
         // The different chances of values being increased are weighed in favor of infectivity > severity > morality.
         let pick = Math.floor(Math.random() * 7);
@@ -152,9 +151,9 @@ class VirusAlgorithm {
         else { //1/6 chance of lehtality increasing
             this.tempLethality += 0.05;
         }
-        console.log("Infectivity: " + this.difficulty.infectivity + this.tempInfectivity);
-        console.log("Severity: " + this.difficulty.severity + this.tempSeverity);
-        console.log("Lethality: " + this.difficulty.lethality + this.tempLethality);
+        console.log("Infectivity: " + (this.difficulty.infectivity + this.tempInfectivity + this.game.effects.getInfectivity()));
+        console.log("Severity: " + (this.difficulty.severity + this.tempSeverity + this.game.effects.getSeverity()));
+        console.log("Lethality: " + (this.difficulty.lethality + this.tempLethality + this.game.effects.getLethality()));
         console.log("Cure Progress: " + Math.floor(this.game.gameData.cure * 100) + "%");
     }
 

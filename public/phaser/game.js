@@ -60,9 +60,5 @@ window.onload = function () {
             energy: 1,
             turn: 1,
         };
-    
-        game.effects = null;
-        game.city = null;
-        game.difficulty = null;
     }
 }
