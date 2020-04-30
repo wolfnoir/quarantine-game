@@ -132,7 +132,7 @@ class GameScreen extends Phaser.Scene {
 		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN');
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm));
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
 	}
 
 	update(time, delta) {
@@ -155,7 +155,7 @@ class GameScreen extends Phaser.Scene {
 		tile.setAlpha(0);
 	}
 
-	nextTurn(virusAlgorithm){
+	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
 		this.game.gameData.turn += 1;
 		console.log("Turn #: " + this.game.gameData.turn);
 		virusAlgorithm.runVirusTurn();
@@ -163,6 +163,13 @@ class GameScreen extends Phaser.Scene {
 		console.log("Total Population: " + this.game.city.getPopulation());
 		console.log("Total Infected: " + this.game.city.getInfected());
 		console.log("Total Dead: " + this.game.city.getDead())
+		dayCounterText.setText('Day ' + this.game.gameData.turn + ' of outbreak');
+		populationText.setText('Population: ' + this.game.city.getPopulation() +
+		'\nConfirmed Infected: ' + this.game.city.getInfected() +
+		'\nDeaths: ' + this.game.city.getDead(),);
+		threatPercent.setText(Math.floor(this.game.gameData.threatLevel * 100) + "%");
+		moralePercent.setText(Math.floor(this.game.city.getMorale() * 100) + '%');
+		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
 	}
 
 	end() {
