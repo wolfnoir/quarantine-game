@@ -34,6 +34,12 @@ class GameScreen extends Phaser.Scene {
 		var presets = this.cache.json.get('tile-presets');
 		this.game.city = new City(mapjs, presets);
 
+		//Set up keyboard listener
+		let s = this.scene;
+		this.input.keyboard.on("keydown-ESC", function(event){
+			s.start("pauseScreen");
+		});
+
 		const map = this.make.tilemap({ key: "map" });
 		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
 	
@@ -80,5 +86,4 @@ class GameScreen extends Phaser.Scene {
 	end() {
 		
 	}
-
 }

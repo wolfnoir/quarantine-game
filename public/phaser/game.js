@@ -34,4 +34,33 @@ window.onload = function () {
 
     //Contains all variables relating to difficulty including diseaser parameters and cure progression
     game.difficulty = null;
+
+    game.resetData = resetData
+
+    function resetData() {
+        game.gameData = {
+            threatLevel: 0,
+            moraleLevel: 5,
+            cure: 0,
+            energy: 1,
+            turn: 1,
+        };
+    }
+
+    game.resetAll = resetAll;
+    
+    function resetAll() {
+        game.gameData = {
+            name: "",
+            threatLevel: 0,
+            moraleLevel: 5,
+            cure: 0,
+            energy: 1,
+            turn: 1,
+        };
+    
+        game.effects = null;
+        game.city = null;
+        game.difficulty = null;
+    }
 }
