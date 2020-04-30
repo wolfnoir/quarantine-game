@@ -170,6 +170,12 @@ class GameScreen extends Phaser.Scene {
 		threatPercent.setText(Math.floor(this.game.gameData.threatLevel * 100) + "%");
 		moralePercent.setText(Math.floor(this.game.city.getMorale() * 100) + '%');
 		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
+
+		if(this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel == 0)
+			this.scene.start("defeatScreen");
+
+		else if(this.game.city.getInfected() == 0 || this.game.gameData.cure >= 1)
+			this.scene.start("victoryScreen");
 	}
 
 	end() {
