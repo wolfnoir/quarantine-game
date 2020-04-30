@@ -78,6 +78,7 @@ class GameScreen extends Phaser.Scene {
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
 		this.marker.lineStyle(3, 0xff4f78, 1);
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
+		this.marker.setDepth(1);
 
 		var group = this.add.group();
         //make the back of the message box
