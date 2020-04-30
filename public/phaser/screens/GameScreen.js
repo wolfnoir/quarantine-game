@@ -40,11 +40,11 @@ class GameScreen extends Phaser.Scene {
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
 		//Set up actions
-		var actionjs = this.cache.json.get('actions');
-		for(let i = 1; i <= 6; i++){
-			var obj = new Action(actionjs[i.toString()]);
-			this.game.actions.push(obj);
-		}
+		// var actionjs = this.cache.json.get('actions');
+		// for(let i = 1; i <= 6; i++){
+		// 	var obj = new Action(actionjs[i.toString()]);
+		// 	this.game.actions.push(obj);
+		// }
 
 		//Set up keyboard listener
 		let s = this.scene;
@@ -181,8 +181,16 @@ class GameScreen extends Phaser.Scene {
 		threatPercent.setText(Math.floor(this.game.gameData.threatLevel * 100) + "%");
 		moralePercent.setText(Math.floor(this.game.city.getMorale() * 100) + '%');
 		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
+<<<<<<< HEAD
 
 		this.game.gameData.moraleLevel = this.game.city.getMorale();
+=======
+		
+		this.game.gameData.moraleLevel = this.game.city.getMorale();
+		//End conditions
+		if(this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel <= 0)
+			this.scene.start("defeatScreen");
+>>>>>>> cf694cc5a907605b77307a5b8ae849c989afe5bc
 
 		//Check end conditions
 		this.end()
