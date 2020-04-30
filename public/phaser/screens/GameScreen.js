@@ -189,8 +189,6 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText){
-		console.log(this.game.actions);
-
 		//Sets up effects for the previous turn
 		this.game.effects = new Effects();
 		this.updateEffects();
@@ -257,6 +255,7 @@ class GameScreen extends Phaser.Scene {
 	//If already taken, unmark it and give back energy
 	takeAction(actionNum){
 		var action = this.game.actions[actionNum];
+		console.log(action.hasBeenTaken());
 
 		if(!action.hasBeenTaken()){
 			if(action.getCost <= this.game.gameData.energy){
@@ -269,5 +268,7 @@ class GameScreen extends Phaser.Scene {
 			action.toggleTaken();
 			this.game.energy += action.getCost();
 		}
+
+		console.log(action.hasBeenTaken());
 	}
 }
