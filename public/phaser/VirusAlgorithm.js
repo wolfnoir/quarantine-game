@@ -41,6 +41,10 @@ class VirusAlgorithm {
         }
     }
 
+    getInfectedTiles(){
+        return this.infectedTiles;
+    }
+
     runVirusTurn() {
         // Check to see if any special events will occur. If so, apply the effects.
         // Check which tiles are currently infected (greater than 0% infected).
