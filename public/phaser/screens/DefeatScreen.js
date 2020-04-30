@@ -18,29 +18,31 @@ class DefeatScreen extends Phaser.Scene {
 
 		this.game.music.stop();
 
-		let gameovermusic = this.sound.add('gameover');
-		gameovermusic.setLoop(false);
-		gameovermusic.setVolume(0.5);
-		gameovermusic.play();
+		let gameover = this.sound.add('gameover');
+		gameover.setLoop(false);
+		gameover.setVolume(0.5);
+		gameover.play();
 
 		// TODO: add message
 		this.add.image(this.game.config.width/2, 250, 'defeatImage').setScale(0.8);
 
 		var restartButton = new RectangleButton(this, this.game.config.width/2 - 125, 500, 150, 50, 0xFFFFFF, 1, 'RESTART');
-		restartButton.on('pointerdown', () => this.restartButtonClicked());
+		restartButton.on('pointerdown', () => this.restartButtonClicked(gameover));
 
 		var quitButton = new RectangleButton(this, this.game.config.width/2 + 125, 500, 150, 50, 0xFFFFFF, 1, 'QUIT');
-		quitButton.on('pointerdown', () => this.quitButtonClicked());
+		quitButton.on('pointerdown', () => this.quitButtonClicked(gameover));
 	}
 
-	restartButtonClicked(){
+	restartButtonClicked(sound){
+		sound.stop();
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 		this.game.resetData();
 		this.scene.start("gameScreen");
 	}
 
-	quitButtonClicked(){
+	quitButtonClicked(sound){
+		sound.stop();
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 		this.scene.start("titleScreen");

@@ -21,7 +21,7 @@ window.onload = function () {
         threatLevel: 0,
         moraleLevel: 5,
         cure: 0,
-        energy: 1,
+        energy: 0,
         turn: 1,
     };
 
@@ -46,7 +46,7 @@ window.onload = function () {
             threatLevel: 0,
             moraleLevel: 5,
             cure: 0,
-            energy: 1,
+            energy: 0,
             turn: 1,
         };
     }
@@ -57,8 +57,14 @@ window.onload = function () {
             threatLevel: 0,
             moraleLevel: 5,
             cure: 0,
-            energy: 1,
+            energy: 0,
             turn: 1,
         };
+
+        //Will store main track so we can start or stop it at times
+        game.effects = null;
+        game.actions = [];
+        game.city = null;
+        game.difficulty = null;
     }
 }

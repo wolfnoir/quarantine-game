@@ -32,6 +32,8 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	create() {
+		this.game.music.play()
+
 		//Set up data structure for city
 		var mapjs = this.cache.json.get('mapjs');
 		var presets = this.cache.json.get('tile-presets');
@@ -79,68 +81,98 @@ class GameScreen extends Phaser.Scene {
 
 		var group = this.add.group();
         //make the back of the message box
-		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0);
+		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0).setDepth(1);
 		rec.setOrigin(0, 0);
 		var dayCounterText = this.add.text(rec.x + 20, rec.y + 20, 'Day ' + this.game.gameData.turn + ' of outbreak',
-			{fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold'}).setScrollFactor(0).setDepth(1);
 		var populationText = this.add.text(rec.x + 20, rec.y + 50, 'Population: ' + this.game.city.getPopulation() +
 			'\nConfirmed Infected: ' + this.game.city.getInfected() +
 			'\nDeaths: ' + this.game.city.getDead(),
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var logo = this.add.image(this.game.config.width/2 - 50, 70, 'logo');
 		logo.setScale(0.1);
-		logo.setScrollFactor(0);
+		logo.setScrollFactor(0).setDepth(1);
 		
 		var threatText = this.add.text(410, 25, 'Threat:',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var threatPercent = this.add.text(720, 25, '0%',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
-		var progressBoxRed = this.add.graphics().setScrollFactor(0);
+		var progressBoxRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxRed.lineStyle(4, 0xeeeeee, 1.0);
 		progressBoxRed.fillStyle(0x8c0000, 1);
 		progressBoxRed.strokeRect(500, 20, 200, 30);
 		progressBoxRed.fillRect(500, 20, 200, 30);
 
-		var progressBarRed = this.game.gameData.progressBarRed = this.add.graphics().setScrollFactor(0);
+		var progressBarRed = this.game.gameData.progressBarRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarRed.fillStyle(0xff0000, 1);
 		progressBarRed.fillRect(500, 20, 150, 30);
 
 
 		var moraleText = this.add.text(410, 65, 'Morale:',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var moralePercent = this.add.text(720, 65, Math.floor(this.game.city.getMorale() * 100) + '%',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
-		var progressBoxGreen = this.add.graphics().setScrollFactor(0);
+		var progressBoxGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxGreen.lineStyle(4, 0xeeeeee, 1);
 		progressBoxGreen.fillStyle(0x245f24, 1);
 		progressBoxGreen.strokeRect(500, 60, 200, 30);
 		progressBoxGreen.fillRect(500, 60, 200, 30);
 		
-		var progressBarGreen = this.game.gameData.progressBarGreen = this.add.graphics().setScrollFactor(0);
+		var progressBarGreen = this.game.gameData.progressBarGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarGreen.fillStyle(0x00ff00, 1);
 		progressBarGreen.fillRect(500, 60, Math.floor(this.game.city.getMorale() * 200), 30);
 
 		var cureText = this.add.text(410, 105, 'Cure:',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 		var curePercent = this.add.text(720, 105, Math.floor(this.game.gameData.cure * 100) + '%',
-			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
-		var progressBoxBlue = this.add.graphics().setScrollFactor(0);
+		var progressBoxBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxBlue.lineStyle(4, 0xeeeeee, 1);
 		progressBoxBlue.fillStyle(0x034157, 1);
 		progressBoxBlue.strokeRect(500, 100, 200, 30);
 		progressBoxBlue.fillRect(500, 100, 200, 30);
 
-		var progressBarBlue = this.game.gameData.progressBarBlue = this.add.graphics().setScrollFactor(0);
+		var progressBarBlue = this.game.gameData.progressBarBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarBlue.fillStyle(0x31d5fd, 1);
 		progressBarBlue.fillRect(500, 100, Math.floor(this.game.gameData.cure * 200), 30, 10);
+	
+		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
+		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
+		reduceInfectivityButton.on('pointerdown', () => this.game.actions[0].toggleTaken());
 
-		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN');
+		var reduceSeverityButton = new RectangleButton(this, 80, 240, 150, 50, 0xFFFFFF, 1, 'REDUCE\nSEVERITY').setDepth(1).setScrollFactor(0);
+		reduceSeverityButton.buttonText.setScrollFactor(0).setDepth(1);
+		reduceSeverityButton.on('pointerdown', () => this.game.actions[1].toggleTaken());
+
+		var reduceLethalityButton = new RectangleButton(this, 80, 300, 150, 50, 0xFFFFFF, 1, 'REDUCE\nLETHALITY').setDepth(1).setScrollFactor(0);
+		reduceLethalityButton.buttonText.setScrollFactor(0).setDepth(1);
+		reduceLethalityButton.on('pointerdown', () => this.game.actions[2].toggleTaken());
+
+		var increaseRecoveryButton = new RectangleButton(this, 80, 360, 150, 50, 0xFFFFFF, 1, 'INCREASE\nRECOVERY').setDepth(1).setScrollFactor(0);
+		increaseRecoveryButton.buttonText.setScrollFactor(0).setDepth(1);
+		increaseRecoveryButton.on('pointerdown', () => this.game.actions[3].toggleTaken());
+
+		var increaseMoraleButton = new RectangleButton(this, 80, 420, 150, 50, 0xFFFFFF, 1, 'BOOST\nMORALE').setDepth(1).setScrollFactor(0);
+		increaseMoraleButton.buttonText.setScrollFactor(0).setDepth(1);
+		increaseMoraleButton.on('pointerdown', () => this.game.actions[4].toggleTaken());
+
+		var increaseCureButton = new RectangleButton(this, 80, 480, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
+		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
+		increaseCureButton.on('pointerdown', () => this.game.actions[5].toggleTaken());
+
+		//get the energy required for today
+		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
+
+		var energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
+		{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
+
+		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
-		nextTurnButton.buttonText.setScrollFactor(0);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
+		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText));
 	}
 
 	update(time, delta) {
@@ -174,7 +206,9 @@ class GameScreen extends Phaser.Scene {
 		tile.setAlpha(0);
 	}
 
-	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
+	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText){
+		console.log(this.game.actions);
+
 		//Sets up effects for the previous turn
 		this.game.effects = new Effects();
 		this.updateEffects();
@@ -195,10 +229,16 @@ class GameScreen extends Phaser.Scene {
 
 		this.game.gameData.moraleLevel = this.game.city.getMorale();
 
+		this.updateInfectedTint(virusAlgorithm);
+
 		//Check end conditions
 		this.end()
 
 		this.game.effects = new Effects();
+
+		//add new energy for the next day
+		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
+		energyText.setText('Energy Available: ' + this.game.gameData.energy);
 	}
 
 	
@@ -220,6 +260,14 @@ class GameScreen extends Phaser.Scene {
 				this.game.effects.addAction(this.game.actions[i]);
 				action.toggleTaken();
 			}
+		}
+	}
+
+	updateInfectedTint(virusAlgorithm){
+		let infectedTiles = virusAlgorithm.infectedTiles;
+		for(let i = 0; i < infectedTiles.length; i++){
+			let index = infectedTiles[i];
+			this.add.rectangle(index%20 * 50, Math.floor(index/20) * 50 + 150, 50, 50, 0xff0000, 0.2).setOrigin(0, 0).setDepth(0);
 		}
 	}
 }
