@@ -34,9 +34,8 @@ class VirusAlgorithm {
         // push the initial tiles that have been infected to the infectedTiles array.
         // assume that the tiles we've read in are infectable.
         for (let i = 0; i < initialTiles.length; i++) {
-            console.log(initialTiles[i]);
             this.infectedTiles.push(initialTiles[i]);
-            console.log(this.infectedTiles[i]);
+            console.log("Pushed Index #'s: " + this.infectedTiles[i]);
         }
     }
 
@@ -44,7 +43,7 @@ class VirusAlgorithm {
         // Check to see if any special events will occur. If so, apply the effects.
         // Check which tiles are currently infected (greater than 0% infected).
         for (let i = 0; i < this.infectedTiles.length; i++) {
-            let index = infectedTiles[i];
+            let index = this.infectedTiles[i];
             //calculates the total original population of the tile
             let totalPopulation = this.cityTiles[index].getPopulation() + this.cityTiles[index].getDead();
             //reads in the current population (including those infected)
@@ -57,13 +56,21 @@ class VirusAlgorithm {
             let deadPeople = this.cityTiles[index].getDead();
 
             //virus statistics, with the effects taking place
-            let infectivity = this.difficulty.getInfectivity() + this.effects.getInfectivity();
-            let severity = this.difficulty.getSeverity() + this.effects.getSeverity();
-            let lethality = this.difficulty.getLethality() + this.effects.getLethality();
+            // let infectivity = this.difficulty.getInfectivity() + this.effects.getInfectivity();
+            // let severity = this.difficulty.getSeverity() + this.effects.getSeverity();
+            // let lethality = this.difficulty.getLethality() + this.effects.getLethality();
+
+            // //individual tile statistics, with the effects taking place
+            // let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.effects.getRecovery();
+            // let newMorale = this.cityTiles[index].getMorale() + this.effects.getMorale();
+
+            let infectivity = this.difficulty.getInfectivity();
+            let severity = this.difficulty.getSeverity();
+            let lethality = this.difficulty.getLethality();
 
             //individual tile statistics, with the effects taking place
-            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.effects.getRecovery();
-            let newMorale = this.cityTiles[index].getMorale() + this.effects.getMorale();
+            let recoveryRate = this.cityTiles[index].getRecoveryRate();
+            let newMorale = this.cityTiles[index].getMorale();
 
             // Calculate how many new people are infected for each tile
             let newInfected = 0;
@@ -94,9 +101,15 @@ class VirusAlgorithm {
             }
             infectedPeople = infectedPeople + newInfected - died;
             currentPopulation = currentPopulation - died;
+            if(infectedPeople > currentPopulation){
+                infectedPeople = currentPopulation;
+            }
 
             // Calculate the new morale for the tile using severity and morality.
-            newMorale = newMorale - (severity + deadPeople / totalPopulation) * 2;
+            newMorale = newMorale - (severity + deadPeople / totalPopulation);
+            if(newMorale < 0){
+                newMorale = 0;
+            }
 
             // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
             if (this.cityTiles[index].getInfectedPercentage() > this.difficultyRatio) {
@@ -118,12 +131,16 @@ class VirusAlgorithm {
             }
 
             // Apply the new numbers to the tile.
+            console.log("Population: " + currentPopulation);
+            console.log("Infected: " + infectedPeople);
+            console.log("Dead: " + died);
+            console.log("Morale: " + newMorale*100 + "%");
             this.cityTiles[index].population = currentPopulation;
             this.cityTiles[index].infected = infectedPeople;
             this.cityTiles[index].dead = died;
             this.cityTiles[index].morale = newMorale;
         }
-
+        console.log("Tiles infected: " + this.infectedTiles.length);
         // @TODO
         // * Calculate overall morale for the WHOLE city
         // * Calculate overall threat level based on infection, severity, morality of the disease, and the city-wide morale
