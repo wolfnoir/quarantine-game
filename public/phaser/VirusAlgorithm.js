@@ -62,7 +62,7 @@ class VirusAlgorithm {
             // //individual tile statistics, with the effects taking place
             // let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.effects.getRecovery();
             // let newMorale = this.cityTiles[index].getMorale() + this.effects.getMorale();
-            
+
             //virus statistics
             let infectivity = this.difficulty.getInfectivity();
             let severity = this.difficulty.getSeverity();
@@ -104,42 +104,44 @@ class VirusAlgorithm {
             }
 
             // Calculate the new morale for the tile using severity and morality.
-            newMorale = newMorale - (severity * (newInfected + currentInfected)/totalPopulation + deadPeople / totalPopulation);
+            newMorale = newMorale - (severity * (newInfected + currentInfected) / totalPopulation + deadPeople / totalPopulation);
             if (newMorale < 0) {
                 newMorale = 0;
             }
 
             // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
-            if(this.cityTiles[index].getInfectedPercentage () >= this.difficultyRatio){
-                let randomNumber = Math.random();
-                let numberArray = [-21, -20, -19, -1, 1, 19, 20, 21];
-                // If the random # is equal to or less than the infected tile's infectivity rate,
-                // pick a random tile next to the infected tile, and add a random number of infected to the new tile.
-                if(random <= this.cityTiles[index].getInfectivityRate()){
-                    randomNumber = Math.floor(Math.random() * 9);
-                }
-            }
-
-            // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
-            // if (this.cityTiles[index].getInfectedPercentage() > this.difficultyRatio) {
-            //     random = Math.random();
+            // if (this.cityTiles[index].getInfectedPercentage() >= this.difficultyRatio) {
+            //     let randomNumber = Math.random();
+            //     let numberArray = [-21, -20, -19, -1, 1, 19, 20, 21];
             //     // If the random # is equal to or less than the infected tile's infectivity rate,
-            //     // pick a random tile and add a random number of infected to the tile.
+            //     // pick a random tile next to the infected tile, and add a random number of infected to the new tile.
             //     if (random <= this.cityTiles[index].getInfectivityRate()) {
-            //         // get the surrounding tiles and place it in an array
-            //         let surroundingTileArray = this.getSurroundingTiles(this.cityTiles, index);
-            //         console.log(surroundingTileArray);
-            //         // pick a random tile to infect from the surrounding tiles.
-            //         let num = Math.floor(Math.random() * surroundingTileArray.length)
-            //         let newTileIndex = surroundingTileArray[num];
-            //         // pick a random number of people to be infected (between 1,000-2,000 * virus infectivity)
-            //         let numberOfNewInfected = Math.floor(Math.random() * 1000 * this.difficulty.getInfectivity()) + 1000;
-            //         //infect the new tile with the new number of infected
-            //         this.cityTiles[newTileIndex].infected = numberOfNewInfected;
-            //         //add the new tile index to the array of infectedTiles
-            //         this.infectedTiles.push(newTileIndex);
+            //         randomNumber = Math.floor(Math.random() * 9);
             //     }
             // }
+
+            // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
+            if (this.cityTiles[index].getInfectedPercentage() > this.difficultyRatio) {
+                random = Math.random();
+                // If the random # is equal to or less than the infected tile's infectivity rate,
+                // pick a random tile and add a random number of infected to the tile.
+                if (random <= this.cityTiles[index].getInfectivityRate()) {
+                    // get the surrounding tiles and place it in an array
+                    let surroundingTileArray = [];
+                    surroundingTileArray = this.getSurroundingTiles(this.cityTiles, index);
+                    // pick a random tile to infect from the surrounding tiles.
+                    if (surroundingTileArray.length > 0) {
+                        let num = Math.floor(Math.random() * surroundingTileArray.length)
+                        let newTileIndex = surroundingTileArray[num];
+                        // pick a random number of people to be infected (between 1,000-2,000 * virus infectivity)
+                        let numberOfNewInfected = Math.floor(Math.random() * 1000 * this.difficulty.getInfectivity()) + 1000;
+                        //infect the new tile with the new number of infected
+                        this.cityTiles[newTileIndex].infected = numberOfNewInfected;
+                        //add the new tile index to the array of infectedTiles
+                        this.infectedTiles.push(newTileIndex);
+                    }
+                }
+            }
 
             // Apply the new numbers to the tile.
             this.cityTiles[index].population = currentPopulation;
@@ -179,51 +181,51 @@ class VirusAlgorithm {
         let surroundingTiles = [];
         //check north west
         if (initIndex - 21 >= 0) {
-            if (tileArray[initIndex - 21].infectable() && tileArray[initIndex - 21].getDead === 0 && tileArray[initIndex - 21].getInfected === 0) {
+            if (tileArray[initIndex - 21].infectable() && tileArray[initIndex - 21].getDead() === 0 && tileArray[initIndex - 21].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 21);
             }
         }
 
         //check north
         if (initIndex - 20 >= 0) {
-            if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead === 0 && tileArray[initIndex - 20].getInfected === 0) {
+            if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 && tileArray[initIndex - 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 20);
             }
         }
         //check north east
         if (initIndex - 19 >= 0) {
-            if (tileArray[initIndex - 19].infectable() && tileArray[initIndex - 19].getDead === 0 && tileArray[initIndex - 19].getInfected === 0) {
+            if (tileArray[initIndex - 19].infectable() && tileArray[initIndex - 19].getDead() === 0 && tileArray[initIndex - 19].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 19);
             }
         }
 
         //check west
         if (initIndex - 1 >= 0) {
-            if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead === 0 && tileArray[initIndex - 1].getInfected === 0) {
+            if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 && tileArray[initIndex - 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 1);
             }
         }
         //check east
         if (initIndex + 1 <= 400) {
-            if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead === 0 && tileArray[initIndex + 1].getInfected === 0) {
+            if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 && tileArray[initIndex + 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 1);
             }
         }
         //check south west
         if (initIndex + 19 <= 400) {
-            if (tileArray[initIndex + 19].infectable() && tileArray[initIndex + 19].getDead === 0 && tileArray[initIndex + 10].getInfected === 0) {
+            if (tileArray[initIndex + 19].infectable() && tileArray[initIndex + 19].getDead() === 0 && tileArray[initIndex + 10].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 19);
             }
         }
         //check south
         if (initIndex + 20 <= 400) {
-            if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead === 0 && tileArray[initIndex + 20].getInfected === 0) {
+            if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 && tileArray[initIndex + 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 20);
             }
         }
         //check south east
         if (initIndex + 21 <= 400) {
-            if (tileArray[initIndex + 21].infectable() && tileArray[initIndex + 21].getDead === 0 && tileArray[initIndex + 21].getInfected === 0) {
+            if (tileArray[initIndex + 21].infectable() && tileArray[initIndex + 21].getDead() === 0 && tileArray[initIndex + 21].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 21);
             }
         }
