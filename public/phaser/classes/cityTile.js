@@ -45,7 +45,7 @@ class CityTile {
         return this.recovery;
     }
 
-    isInfectable(){
+    infectable(){
         return this.isInfectable;
     }
 }

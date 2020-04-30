@@ -27,6 +27,7 @@ class GameScreen extends Phaser.Scene {
 		this.load.json("mapjs", "../../maps/manhattan.json");
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
 		this.load.image('logo', 'assets/quarantine-logo.png');
+		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
 	}
 
 	create() {
@@ -34,6 +35,8 @@ class GameScreen extends Phaser.Scene {
 		var mapjs = this.cache.json.get('mapjs');
 		var presets = this.cache.json.get('tile-presets');
 		this.game.city = new City(mapjs, presets);
+		var initialTiles = [6, 289];
+		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
 		//Set up keyboard listener
 		let s = this.scene;
@@ -69,15 +72,17 @@ class GameScreen extends Phaser.Scene {
         //make the back of the message box
 		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0);
 		rec.setOrigin(0, 0);
-		var text = this.add.text(rec.x + 20, rec.y + 20, 'Day 10 of outbreak',
+		var dayCounterText = this.add.text(rec.x + 20, rec.y + 20, 'Day ' + this.game.gameData.turn + ' of outbreak',
 			{fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold'}).setScrollFactor(0);
-		var text1 = this.add.text(rec.x + 20, rec.y + 50, 'Population: 0\nConfirmed Infected: 0\nDeats: 0',
+		var populationText = this.add.text(rec.x + 20, rec.y + 50, 'Population: ' + this.game.city.getPopulation() +
+			'\nConfirmed Infected: ' + this.game.city.getInfected() +
+			'\nDeaths: ' + this.game.city.getDead(),
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
-		var img = this.add.image(this.game.config.width/2 - 50, 70, 'logo');
-		img.setScale(0.1);
-		img.setScrollFactor(0);
+		var logo = this.add.image(this.game.config.width/2 - 50, 70, 'logo');
+		logo.setScale(0.1);
+		logo.setScrollFactor(0);
 		
-		var threat = this.add.text(410, 25, 'Threat:',
+		var threatText = this.add.text(410, 25, 'Threat:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
 		var threatPercent = this.add.text(720, 25, '0%',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
@@ -90,9 +95,9 @@ class GameScreen extends Phaser.Scene {
 		progressBarRed.fillStyle(0xff0000, 1);
 		progressBarRed.fillRoundedRect(500, 20, 150, 30, 10);
 
-		var morale = this.add.text(410, 65, 'Morale:',
+		var moraleText = this.add.text(410, 65, 'Morale:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
-		var moralePercent = this.add.text(720, 65, '0%',
+		var moralePercent = this.add.text(720, 65, Math.floor(this.game.city.getMorale() * 100) + '%',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
 
 		var progressBoxGreen = this.add.graphics().setScrollFactor(0);
@@ -103,9 +108,9 @@ class GameScreen extends Phaser.Scene {
 		progressBarGreen.fillStyle(0x00ff00, 1);
 		progressBarGreen.fillRoundedRect(500, 60, 100, 30, 10);
 
-		var cure = this.add.text(410, 105, 'Cure:',
+		var cureText = this.add.text(410, 105, 'Cure:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
-		var curePercent = this.add.text(720, 105, '0%',
+		var curePercent = this.add.text(720, 105, Math.floor(this.game.gameData.cure * 100) + '%',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
 
 		var progressBoxBlue = this.add.graphics().setScrollFactor(0);
@@ -116,6 +121,10 @@ class GameScreen extends Phaser.Scene {
 		progressBarBlue.fillStyle(0x31d5fd, 1);
 		progressBarBlue.fillRoundedRect(500, 100, 33, 30, 10);
 
+		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN');
+		nextTurnButton.setScrollFactor(0);
+		nextTurnButton.buttonText.setScrollFactor(0);
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm));
 	}
 
 	update(time, delta) {
@@ -130,12 +139,17 @@ class GameScreen extends Phaser.Scene {
 		if (pointerTileXY.y >= 0) {
 			var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
 			var tile = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
+			//console.log(this.game.city.getTile(tile.x, tile.y));
 			this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
 		}
-
 	}
 	tileClicked(tile){
 		tile.setAlpha(0);
+	}
+
+	nextTurn(virusAlgorithm){
+		console.log("next turn");
+		virusAlgorithm.runVirusTurn();
 	}
 
 	end() {
