@@ -14,6 +14,7 @@ class GameScreen extends Phaser.Scene {
 
 	constructor() {
 		super({key : 'gameScreen'});
+		this.energyText;
 	}
 
 	init() {
@@ -32,8 +33,8 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	create() {
-		this.game.music.play()
-
+		this.game.music.play();
+		this.currentEnergy = this.game.gameData.energy;
 		//Set up data structure for city
 		var mapjs = this.cache.json.get('mapjs');
 		var presets = this.cache.json.get('tile-presets');
@@ -78,6 +79,7 @@ class GameScreen extends Phaser.Scene {
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
 		this.marker.lineStyle(3, 0xff4f78, 1);
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
+		this.marker.setDepth(1);
 
 		var group = this.add.group();
         //make the back of the message box
@@ -166,13 +168,13 @@ class GameScreen extends Phaser.Scene {
 		//get the energy required for today
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
 
-		var energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
+		this.energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
 		{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
 		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText));
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, this.energyText));
 	}
 
 	update(time, delta) {
@@ -200,6 +202,8 @@ class GameScreen extends Phaser.Scene {
 		blueBar.clear();
 		blueBar.fillStyle(0x31d5fd, 1);
 		blueBar.fillRect(500, 100, Math.floor(this.game.gameData.cure * 200), 30);
+
+		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
 
 	}
 	tileClicked(tile){
@@ -236,7 +240,7 @@ class GameScreen extends Phaser.Scene {
 
 		//add new energy for the next day
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
-		energyText.setText('Energy Available: ' + this.game.gameData.energy);
+		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
 	}
 
 	
@@ -283,7 +287,7 @@ class GameScreen extends Phaser.Scene {
 
 		else{
 			action.toggleTaken();
-			this.game.energy += action.getCost();
+			this.game.gameData.energy += action.getCost();
 		}
 	}
 }
