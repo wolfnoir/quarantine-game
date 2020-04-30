@@ -174,7 +174,8 @@ class GameScreen extends Phaser.Scene {
 		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, this.energyText));
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent,
+			reduceInfectivityButton, reduceSeverityButton, reduceLethalityButton, increaseRecoveryButton, increaseMoraleButton, increaseCureButton));
 	}
 
 	update(time, delta) {
@@ -210,7 +211,8 @@ class GameScreen extends Phaser.Scene {
 		tile.setAlpha(0);
 	}
 
-	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent, energyText){
+	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent,
+		reduceInfectivityButton, reduceSeverityButton, reduceLethalityButton, increaseRecoveryButton, increaseMoraleButton, increaseCureButton){
 		//Sets up effects for the previous turn
 		this.game.effects = new Effects();
 		this.updateEffects();
@@ -241,6 +243,14 @@ class GameScreen extends Phaser.Scene {
 		//add new energy for the next day
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
 		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
+
+		//reset button colors
+		reduceInfectivityButton.fillColor = 0xFFFFFF;
+		reduceSeverityButton.fillColor = 0xFFFFFF;
+		reduceLethalityButton.fillColor = 0xFFFFFF;
+		increaseRecoveryButton.fillColor = 0xFFFFFF;
+		increaseMoraleButton.fillColor = 0xFFFFFF;
+		increaseCureButton.fillColor = 0xFFFFFF;
 	}
 
 	
