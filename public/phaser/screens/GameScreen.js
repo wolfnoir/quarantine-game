@@ -133,9 +133,6 @@ class GameScreen extends Phaser.Scene {
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0);
 		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
-
-		this.game.effects = new Effects();
-		console.log(this.game.effects);
 	}
 
 	update(time, delta) {
@@ -159,7 +156,9 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
-		this.updateEvents();
+		//Sets up effects for the previous turn
+		this.game.effects = new Effects();
+		this.updateEffects();
 
 		this.game.gameData.turn += 1;
 
@@ -193,8 +192,8 @@ class GameScreen extends Phaser.Scene {
 			this.scene.start("victoryScreen");
 	}
 
-	updateEvents(){
-		//Adds all actions to events
+	updateEffects(){
+		//Adds all actions to effects
 		for(let i = 0; i < this.game.actions.length; i++){
 			let action = this.game.actions[i];
 			
