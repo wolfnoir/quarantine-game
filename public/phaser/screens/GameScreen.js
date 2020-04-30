@@ -99,12 +99,15 @@ class GameScreen extends Phaser.Scene {
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
 		var progressBoxRed = this.add.graphics().setScrollFactor(0).setDepth(1);
+		progressBoxRed.lineStyle(4, 0xeeeeee, 1.0);
 		progressBoxRed.fillStyle(0x8c0000, 1);
-		progressBoxRed.fillRoundedRect(500, 20, 200, 30, 10);
+		progressBoxRed.strokeRect(500, 20, 200, 30);
+		progressBoxRed.fillRect(500, 20, 200, 30);
 
-		var progressBarRed = this.add.graphics().setScrollFactor(0).setDepth(1);
+		var progressBarRed = this.game.gameData.progressBarRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarRed.fillStyle(0xff0000, 1);
-		progressBarRed.fillRoundedRect(500, 20, 150, 30, 10);
+		progressBarRed.fillRect(500, 20, 150, 30);
+
 
 		var moraleText = this.add.text(410, 65, 'Morale:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
@@ -112,12 +115,14 @@ class GameScreen extends Phaser.Scene {
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
 		var progressBoxGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
+		progressBoxGreen.lineStyle(4, 0xeeeeee, 1);
 		progressBoxGreen.fillStyle(0x245f24, 1);
-		progressBoxGreen.fillRoundedRect(500, 60, 200, 30, 10);
-
-		var progressBarGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
+		progressBoxGreen.strokeRect(500, 60, 200, 30);
+		progressBoxGreen.fillRect(500, 60, 200, 30);
+		
+		var progressBarGreen = this.game.gameData.progressBarGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarGreen.fillStyle(0x00ff00, 1);
-		progressBarGreen.fillRoundedRect(500, 60, 100, 30, 10);
+		progressBarGreen.fillRect(500, 60, Math.floor(this.game.city.getMorale() * 200), 30);
 
 		var cureText = this.add.text(410, 105, 'Cure:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
@@ -125,12 +130,14 @@ class GameScreen extends Phaser.Scene {
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
 		var progressBoxBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
+		progressBoxBlue.lineStyle(4, 0xeeeeee, 1);
 		progressBoxBlue.fillStyle(0x034157, 1);
-		progressBoxBlue.fillRoundedRect(500, 100, 200, 30, 10);
+		progressBoxBlue.strokeRect(500, 100, 200, 30);
+		progressBoxBlue.fillRect(500, 100, 200, 30);
 
-		var progressBarBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
+		var progressBarBlue = this.game.gameData.progressBarBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarBlue.fillStyle(0x31d5fd, 1);
-		progressBarBlue.fillRoundedRect(500, 100, 33, 30, 10);
+		progressBarBlue.fillRect(500, 100, Math.floor(this.game.gameData.cure * 200), 30, 10);
 	
 		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
 		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
@@ -183,6 +190,17 @@ class GameScreen extends Phaser.Scene {
 			//console.log(this.game.city.getTile(tile.x, tile.y));
 			this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
 		}
+		
+		var greenBar = this.game.gameData.progressBarGreen;
+		greenBar.clear();
+		greenBar.fillStyle(0x00ff00, 1);
+		greenBar.fillRect(500, 60, Math.floor(this.game.city.getMorale() * 200), 30);
+
+		var blueBar = this.game.gameData.progressBarBlue;
+		blueBar.clear();
+		blueBar.fillStyle(0x31d5fd, 1);
+		blueBar.fillRect(500, 100, Math.floor(this.game.gameData.cure * 200), 30);
+
 	}
 	tileClicked(tile){
 		tile.setAlpha(0);
