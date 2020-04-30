@@ -157,12 +157,11 @@ class GameScreen extends Phaser.Scene {
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent){
 		this.game.gameData.turn += 1;
-		console.log("Turn #: " + this.game.gameData.turn);
+
+		//run the virus turn
 		virusAlgorithm.runVirusTurn();
-		console.log("Total Morale: " + Math.floor(this.game.city.getMorale() * 100) + "%");
-		console.log("Total Population: " + this.game.city.getPopulation());
-		console.log("Total Infected: " + this.game.city.getInfected());
-		console.log("Total Dead: " + this.game.city.getDead())
+
+		//change the text on the screen
 		dayCounterText.setText('Day ' + this.game.gameData.turn + ' of outbreak');
 		populationText.setText('Population: ' + this.game.city.getPopulation() +
 		'\nConfirmed Infected: ' + this.game.city.getInfected() +
@@ -170,6 +169,15 @@ class GameScreen extends Phaser.Scene {
 		threatPercent.setText(Math.floor(this.game.gameData.threatLevel * 100) + "%");
 		moralePercent.setText(Math.floor(this.game.city.getMorale() * 100) + '%');
 		curePercent.setText(Math.floor(this.game.gameData.cure * 100) + '%');
+
+		//console.log stuff - delete this when done debugging
+		console.log("Total Morale: " + Math.floor(this.game.city.getMorale() * 100) + "%");
+		console.log("Total Population: " + this.game.city.getPopulation());
+		console.log("Total Infected: " + this.game.city.getInfected());
+		console.log("Total Dead: " + this.game.city.getDead())
+
+		// @TODO
+		// * Check for losing conditions (if threat level == 1.0, OR if morale = 0, OR total infected == total population)
 	}
 
 	end() {

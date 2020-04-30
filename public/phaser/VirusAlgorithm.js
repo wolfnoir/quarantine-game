@@ -110,6 +110,17 @@ class VirusAlgorithm {
             }
 
             // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
+            if(this.cityTiles[index].getInfectedPercentage () >= this.difficultyRatio){
+                let randomNumber = Math.random();
+                let numberArray = [-21, -20, -19, -1, 1, 19, 20, 21];
+                // If the random # is equal to or less than the infected tile's infectivity rate,
+                // pick a random tile next to the infected tile, and add a random number of infected to the new tile.
+                if(random <= this.cityTiles[index].getInfectivityRate()){
+                    randomNumber = Math.floor(Math.random() * 9);
+                }
+            }
+
+            // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
             // if (this.cityTiles[index].getInfectedPercentage() > this.difficultyRatio) {
             //     random = Math.random();
             //     // If the random # is equal to or less than the infected tile's infectivity rate,
@@ -135,17 +146,11 @@ class VirusAlgorithm {
             this.cityTiles[index].infected = currentInfected + newInfected;
             this.cityTiles[index].dead += died;
             this.cityTiles[index].morale = newMorale;
-
-            // console.log("Population: " + this.cityTiles[index].getPopulation());
-            // console.log("Infected: " + this.cityTiles[index].getInfected());
-            // console.log("Dead: " + this.cityTiles[index].getDead());
-            // console.log("Morale: " + Math.floor(this.cityTiles[index].getMorale() * 100) + "%");
         }
         console.log("Tiles infected: " + this.infectedTiles.length);
-        // @TODO
-        // * Calculate overall morale for the WHOLE city
+
+        //@TODO:
         // * Calculate overall threat level based on infection, severity, morality of the disease, and the city-wide morale
-        // * Check for losing conditions (if threat level == 1.0, OR if morale = 0, OR total infected == total population)
 
         // Increase the cure progress.
         this.game.gameData.cure += this.difficulty.getDailyCureProgress();
@@ -173,7 +178,7 @@ class VirusAlgorithm {
         //an array of index numbers
         let surroundingTiles = [];
         //check north west
-        if (initIndex - 21 > 0) {
+        if (initIndex - 21 >= 0) {
             if (tileArray[initIndex - 21].infectable() && tileArray[initIndex - 21].getDead === 0 && tileArray[initIndex - 21].getInfected === 0) {
                 surroundingTiles.push(initIndex - 21);
             }
