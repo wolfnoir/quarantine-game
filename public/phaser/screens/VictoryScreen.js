@@ -18,7 +18,7 @@ class VictoryScreen extends Phaser.Scene {
 
 		this.game.music.stop();
 
-        let victorymusic = this.sound.add('victory');
+        var victorymusic = this.sound.add('victory');
         victorymusic.setLoop(false);
         victorymusic.setVolume(0.5);
         victorymusic.play();
@@ -27,18 +27,24 @@ class VictoryScreen extends Phaser.Scene {
         this.add.image(this.game.config.width/2, 250, 'victoryImage').setScale(0.8);
 
 		var restartButton = new RectangleButton(this, this.game.config.width/2 - 125, 500, 150, 50, 0xFFFFFF, 1, 'RESTART');
-		restartButton.on('pointerdown', () => this.restartButtonClicked());
+		restartButton.on('pointerdown', () => this.restartButtonClicked(victorymusic));
 
 		var quitButton = new RectangleButton(this, this.game.config.width/2 + 125, 500, 150, 50, 0xFFFFFF, 1, 'QUIT');
-		quitButton.on('pointerdown', () => this.quitButtonClicked());
+		quitButton.on('pointerdown', () => this.quitButtonClicked(victorymusic));
 	}
 
-	restartButtonClicked(){
+	restartButtonClicked(music){
+		music.stop();
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.game.resetData();
 		this.scene.start("gameScreen");
 	}
 
-	quitButtonClicked(){
+	quitButtonClicked(music){
+		music.stop();
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
 		this.scene.start("titleScreen");
 	}
 }

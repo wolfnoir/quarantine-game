@@ -60,5 +60,11 @@ window.onload = function () {
             energy: 1,
             turn: 1,
         };
+
+        //Will store main track so we can start or stop it at times
+        game.effects = null;
+        game.actions = [];
+        game.city = null;
+        game.difficulty = null;
     }
 }

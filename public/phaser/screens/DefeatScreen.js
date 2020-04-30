@@ -34,6 +34,7 @@ class DefeatScreen extends Phaser.Scene {
 	}
 
 	restartButtonClicked(){
+		gameovermusic.stop();
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 		this.game.resetData();
@@ -41,6 +42,7 @@ class DefeatScreen extends Phaser.Scene {
 	}
 
 	quitButtonClicked(){
+		gameovermusic.stop();
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 		this.scene.start("titleScreen");
