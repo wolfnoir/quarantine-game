@@ -26,6 +26,7 @@ class GameScreen extends Phaser.Scene {
 		this.load.tilemapTiledJSON("map", "../../maps/manhattan.json");
 		this.load.json("mapjs", "../../maps/manhattan.json");
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
+		this.load.image('logo', 'assets/quarantine-logo.png');
 	}
 
 	create() {
@@ -43,7 +44,7 @@ class GameScreen extends Phaser.Scene {
 		const map = this.make.tilemap({ key: "map" });
 		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
 	
-		this.groundLayer = map.createStaticLayer("Tile Layer", tileset, 0, 0);
+		this.groundLayer = map.createStaticLayer("Tile Layer", tileset, 0, 150);
 		const camera = this.cameras.main;
 
 		const cursors = this.input.keyboard.createCursorKeys();
@@ -56,13 +57,65 @@ class GameScreen extends Phaser.Scene {
 		  speed: 0.5
 		});
 	  
-		camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+		camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels + 150);
 
 		this.marker = this.add.graphics();
 		this.marker.lineStyle(5, 0xffffff, 1);
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
 		this.marker.lineStyle(3, 0xff4f78, 1);
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
+
+		var group = this.add.group();
+        //make the back of the message box
+		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0);
+		rec.setOrigin(0, 0);
+		var text = this.add.text(rec.x + 20, rec.y + 20, 'Day 10 of outbreak',
+			{fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold'}).setScrollFactor(0);
+		var text1 = this.add.text(rec.x + 20, rec.y + 50, 'Population: 0\nConfirmed Infected: 0\nDeats: 0',
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+		var img = this.add.image(this.game.config.width/2 - 50, 70, 'logo');
+		img.setScale(0.1);
+		img.setScrollFactor(0);
+		
+		var threat = this.add.text(410, 25, 'Threat:',
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+		var threatPercent = this.add.text(720, 25, '0%',
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+
+		var progressBoxRed = this.add.graphics().setScrollFactor(0);
+		progressBoxRed.fillStyle(0x8c0000, 1);
+		progressBoxRed.fillRoundedRect(500, 20, 200, 30, 10);
+
+		var progressBarRed = this.add.graphics().setScrollFactor(0);
+		progressBarRed.fillStyle(0xff0000, 1);
+		progressBarRed.fillRoundedRect(500, 20, 150, 30, 10);
+
+		var morale = this.add.text(410, 65, 'Morale:',
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+		var moralePercent = this.add.text(720, 65, '0%',
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+
+		var progressBoxGreen = this.add.graphics().setScrollFactor(0);
+		progressBoxGreen.fillStyle(0x245f24, 1);
+		progressBoxGreen.fillRoundedRect(500, 60, 200, 30, 10);
+
+		var progressBarGreen = this.add.graphics().setScrollFactor(0);
+		progressBarGreen.fillStyle(0x00ff00, 1);
+		progressBarGreen.fillRoundedRect(500, 60, 100, 30, 10);
+
+		var cure = this.add.text(410, 105, 'Cure:',
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+		var curePercent = this.add.text(720, 105, '0%',
+			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0);
+
+		var progressBoxBlue = this.add.graphics().setScrollFactor(0);
+		progressBoxBlue.fillStyle(0x034157, 1);
+		progressBoxBlue.fillRoundedRect(500, 100, 200, 30, 10);
+
+		var progressBarBlue = this.add.graphics().setScrollFactor(0);
+		progressBarBlue.fillStyle(0x31d5fd, 1);
+		progressBarBlue.fillRoundedRect(500, 100, 33, 30, 10);
+
 	}
 
 	update(time, delta) {
@@ -74,9 +127,11 @@ class GameScreen extends Phaser.Scene {
 		// Place the marker in world space, but snap it to the tile grid. If we convert world -> tile and
 		// then tile -> world, we end up with the position of the tile under the pointer
 		var pointerTileXY = this.groundLayer.worldToTileXY(worldPoint.x, worldPoint.y);
-		var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
-		var tile = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
-		this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
+		if (pointerTileXY.y >= 0) {
+			var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
+			var tile = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
+			this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
+		}
 
 	}
 	tileClicked(tile){
