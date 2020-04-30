@@ -25,6 +25,20 @@ class CityTile {
         return this.infected / this.population;
     }
 
+    //Infects num people in this tile
+    addInfected(num){
+        this.infected += num;
+    }
+
+    //num infected people will recover from the virus
+    //If there are less infected than num, infected will be set to 0
+    recover(num){
+        this.infected -= num;
+        
+        if(this.infected < 0)
+            this.infected = 0;
+    }
+
     //increments the number of dead by num
     //decreases the infected and population by num
     incrementDead(num){
