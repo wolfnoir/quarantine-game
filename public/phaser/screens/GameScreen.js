@@ -40,11 +40,11 @@ class GameScreen extends Phaser.Scene {
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
 		//Set up actions
-		// var actionjs = this.cache.json.get('actions');
-		// for(let i = 1; i <= 6; i++){
-		// 	var obj = new Action(actionjs[i.toString()]);
-		// 	this.game.actions.push(obj);
-		// }
+		var actionjs = this.cache.json.get('actions');
+		for(let i = 1; i <= 6; i++){
+			var obj = new Action(actionjs[i.toString()]);
+			this.game.actions.push(obj);
+		}
 
 		//Set up keyboard listener
 		let s = this.scene;
@@ -135,6 +135,7 @@ class GameScreen extends Phaser.Scene {
 		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent));
 
 		this.game.effects = new Effects();
+		console.log(this.game.effects);
 	}
 
 	update(time, delta) {
