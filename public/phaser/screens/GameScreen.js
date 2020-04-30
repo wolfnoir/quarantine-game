@@ -154,7 +154,10 @@ class GameScreen extends Phaser.Scene {
 
 		var increaseCureButton = new RectangleButton(this, 80, 480, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
 		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
+<<<<<<< HEAD
 		increaseCureButton.on('pointerdown', () => this.game.actions[5].toggleTaken());
+=======
+>>>>>>> 674787c9b625e0ce23d1842a622fdf1ef1c0e4ed
 
 		//get the energy required for today
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
