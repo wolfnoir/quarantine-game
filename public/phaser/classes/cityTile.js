@@ -26,8 +26,12 @@ class CityTile {
     }
 
     //Infects num people in this tile
+    //If all people are infected, cap it
     addInfected(num){
         this.infected += num;
+
+        if(this.infected > this.population)
+            this.infected = this.population;
     }
 
     //num infected people will recover from the virus
