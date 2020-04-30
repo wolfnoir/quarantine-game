@@ -1,47 +1,115 @@
 class VirusAlgorithm {
+    
     /*
-    * Takes in a value initialTiles to initialize the virus algorithm.
-    * initialTiles : Tile array
-    * tileArray : Tile array, the whole map.
+    * initialTiles : Array that has the indicies of the initially infected tiles.
     * difficultyRatio : the % at which the algorithm checks if the disease spreads to another tile. Based on game difficulty.
-    * game : Game. Contains important global game data for this algorithm to use.
-    * Adds the initialTiles to an array of infectedTiles
+    * game : Game. Contains important global game data for this algorithm to use, such as the city we're using.
+    * 
+    * The constructor adds the initialTiles to an array of infectedTiles.
+    * !!!IMPORTANT NOTE!!!
+    * infectedTiles[] stores the INDEX of EACH INFECTED TILE, NOT THE ACTUAL TILE ITSELF.
     */
-    constructor(initialTiles, tileArray, difficultyRatio, game){
+
+    constructor(initialTiles, game){
         this.game = game;
         this.infectedTiles = [];
-        this.map = tileArray;
-        this.difficultyRatio = difficultyRatio;
+        this.city = game.city;
+        this.cityTiles = game.city.cityTiles;
+        this.difficulty = game.difficulty;
+        this.effects = game.effects;
+
+        // the difficulty ratio
+        // determines how many people must be infected in a tile before the algorithm checks if the virus spreads
+        this.difficultyRatio = 0;
+        if(this.difficulty.name === "easy"){
+            this.difficultyRatio = 0.75
+        }
+        else if(this.difficulty.name === "medium"){
+            this.difficultyRatio = 0.6
+        }
+        else{
+            this.difficultyRatio = 0.5;
+        }
+
+        // push the initial tiles that have been infected to the infectedTiles array.
+        // assume that the tiles we've read in are infectable.
         for(let i = 0; i < initialTiles.length; i++){
             this.infectedTiles.push(initialTiles[i]);
         }
-        //@TODO
+
         //calculate the tiles surrounding the infected tiles and adds them to a list.
         //if the tile is not infectable, do NOT add it to the list.
-        this.surroundingTiles = [];
+        // this.surroundingTiles = [];
+        // for(let i = 0; i < this.infectedTiles.length; i++){
+        //     let index = this.infectedTiles[i]; // the index of the infected tile we're checking
+
+        //     //check north west
+        //     if(this.cityTiles[index - 21].isInfectable()){
+        //         this.surroundingTiles.push(index - 21);
+        //     }
+
+        //     //check north
+        //     if(this.cityTiles[index - 20].isInfectable()){
+        //         this.surroundingTiles.push(index - 20);
+        //     }
+
+        //     //check north east
+        //     if(this.cityTiles[index - 19].isInfectable()){
+        //         this.surroundingTiles.push(index - 19);
+        //     }
+
+        //     //check west
+        //     if(this.cityTiles[index - 1].isInfectable()){
+        //         this.surroundingTiles.push(index - 1);
+        //     }
+
+        //     //check east
+        //     if(this.cityTiles[index + 1].isInfectable()){
+        //         this.surroundingTiles.push(index + 1);
+        //     }
+
+        //     //check south west
+        //     if(this.cityTiles[index + 19].isInfectable()){
+        //         this.surroundingTiles.push(index + 19);
+        //     }
+
+        //     //check south
+        //     if(this.cityTiles[index + 20].isInfectable()){
+        //         this.surroundingTiles.push(index + 20);
+        //     }
+
+        //     //check south east
+        //     if(this.cityTiles[index + 21].isInfectable()){
+        //         this.surroundingTiles.push(index + 21);
+        //     }
+        // }
     }
 
     runVirusTurn(){
         // Check to see if any special events will occur. If so, apply the effects.
         // Check which tiles are currently infected (greater than 0% infected).
-        var newInfectedTiles = [];
+        let newInfectedTiles = [];
         for(let i = 0; i < this.infectedTiles.length; i++){
+            let index = infectedTiles[i];
             //calculates the total original population of the tile
-            var totalPopulation = this.infectedTiles[i].population + this.infectedTiles[i].dead;
+            let totalPopulation = this.cityTiles[index].population + this.cityTiles[index].dead;
             //reads in the current population (including those infected)
-            var currentPopulation = this.infectedTiles[i].population;
+            let currentPopulation = this.cityTiles[index].population;
             //reads in the current amount of infected people in the tile
-            var infectedPeople = this.infectedTiles[i].infected;
+            let infectedPeople = this.cityTiles[index].infected;
             //calculates the number of healthy people in the tile
-            var healthyPeople = currentPopulation - infectedPeople;
+            let healthyPeople = currentPopulation - infectedPeople;
             //reads in the current amount of dead people in the tile
-            var deadPeople = this.infectedTiles[i].dead;
+            let deadPeople = this.cityTiles[index].dead;
 
-            var infectivity = this.game.gameData.infectivity;
-            var severity = this.game.gameData.severity;
-            var lethality = this.game.gameData.lethality;
-            var recoveryRate = this.infectedTiles[i].recovery;
-            var newMorale = this.infectedTiles[i].morale;
+            //virus statistics
+            var infectivity = this.difficulty.infectivity + this.effects.infectivity;
+            var severity = this.difficulty.severity + this.effects.severity;
+            var lethality = this.difficulty.lethality + this.effects.lethality;
+
+            //individual tile statistics
+            var recoveryRate = this.cityTiles[index].recovery + this.effects.recovery;
+            var newMorale = this.cityTiles[index].morale + this.effects.morale;
 
             // @TODO
             // add temporary action effects for infectivity, recoveryRate, morale, etc
@@ -103,7 +171,6 @@ class VirusAlgorithm {
             this.infectedTiles[i].dead = died;
             this.infectedTiles[i].morale = newMorale;
         }
-        // loop end.
         // Calculate overall threat level based on infection, severity, and morality of the disease.
         // Check for losing conditions.
         // Increase the cure progress.
