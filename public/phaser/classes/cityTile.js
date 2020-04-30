@@ -6,6 +6,7 @@ class CityTile {
         this.morale = obj.morale;
         this.infectivity = obj.infectivity;
         this.recovery = obj.recovery;
+        this.isInfectable = obj.isInfectable;
     }
 
     getPopulation(){
@@ -42,5 +43,9 @@ class CityTile {
 
     getRecoveryRate(){
         return this.recovery;
+    }
+
+    isInfectable(){
+        return this.isInfectable;
     }
 }
