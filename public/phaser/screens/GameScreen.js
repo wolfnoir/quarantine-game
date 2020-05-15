@@ -29,7 +29,7 @@ class GameScreen extends Phaser.Scene {
 		this.load.tilemapTiledJSON("Manhattan", "../../maps/manhattan.json");
 		this.load.tilemapTiledJSON("London", "../../maps/london.json");
 		this.load.tilemapTiledJSON("Seoul", "../../maps/seoul.json");
-		
+
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
 		this.load.image('logo', 'assets/quarantine-logo.png');
 		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
@@ -64,7 +64,7 @@ class GameScreen extends Phaser.Scene {
 		const map = this.make.tilemap({ key: this.game.cityName });
 		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
 
-		this.groundLayer = map.createStaticLayer("Tile Layer", tileset, 0, 150);
+		this.groundLayer = map.createStaticLayer("Tile Layer", tileset, 200, 150);
 		const camera = this.cameras.main;
 
 		const cursors = this.input.keyboard.createCursorKeys();
@@ -77,7 +77,7 @@ class GameScreen extends Phaser.Scene {
 			speed: 0.5
 		});
 
-		camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels + 150);
+		camera.setBounds(0, 0, map.widthInPixels + 200, map.heightInPixels + 150);
 
 		//creates the marker to indicate where the player is hovering over tiles
 		this.marker = this.add.graphics();
@@ -95,6 +95,9 @@ class GameScreen extends Phaser.Scene {
 		//makes the top bar displaying information about threat, morale, and cure
 		this.createTopBar();
 
+		//make the side bar displaying actions
+		this.createSideBar();
+
 		//create action buttons on the side
 		this.createActionButtons();
 
@@ -107,8 +110,7 @@ class GameScreen extends Phaser.Scene {
 		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent,
-			reduceInfectivityButton, reduceSeverityButton, reduceLethalityButton, increaseRecoveryButton, increaseMoraleButton, increaseCureButton));
+		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, this.dayCounterText, this.populationText, this.threatPercent, this.moralePercent, this.curePercent));
 	}
 
 	update(time, delta) {
@@ -125,22 +127,31 @@ class GameScreen extends Phaser.Scene {
 			var tilePos = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
 
 			//displays information about the tile the mouse is currently hovering over
-			var tile = this.game.city.getTile(tilePos.x, tilePos.y);
+			if (tilePos !== null) {
+				var tile = this.game.city.getTile(tilePos.x, tilePos.y);
+			}
 
-			if (tile.isInfectable) {
-				if (snappedWorldPoint.x + 250 > this.game.config.width) {
-					this.infoBox.setPosition(snappedWorldPoint.x - 148, snappedWorldPoint.y + 25);
-					this.infoText.setPosition(snappedWorldPoint.x - 146, snappedWorldPoint.y + 3);
+			if (tile !== undefined && tilePos !== null) {
+				if (tile.isInfectable) {
+					if (snappedWorldPoint.x + 250 > this.game.config.width) {
+						this.infoBox.setPosition(snappedWorldPoint.x - 148, snappedWorldPoint.y + 25);
+						this.infoText.setPosition(snappedWorldPoint.x - 146, snappedWorldPoint.y + 3);
+					}
+					else {
+						this.infoBox.setPosition(snappedWorldPoint.x + 60, snappedWorldPoint.y + 25);
+						this.infoText.setPosition(snappedWorldPoint.x + 62, snappedWorldPoint.y + 3);
+					}
+
+					this.infoText.setText("Population: " + tile.population + "\nInfected: " + tile.infected + "\nDead: " + tile.dead);
+					//show the infobox
+					this.infoBox.setAlpha(1);
+					this.infoText.setAlpha(1);
 				}
 				else {
-					this.infoBox.setPosition(snappedWorldPoint.x + 60, snappedWorldPoint.y + 25);
-					this.infoText.setPosition(snappedWorldPoint.x + 62, snappedWorldPoint.y + 3);
+					//hide the infobox
+					this.infoBox.setAlpha(0);
+					this.infoText.setAlpha(0);
 				}
-
-				this.infoText.setText("Population: " + tile.population + "\nInfected: " + tile.infected + "\nDead: " + tile.dead);
-				//show the infobox
-				this.infoBox.setAlpha(1);
-				this.infoText.setAlpha(1);
 			}
 			else {
 				//hide the infobox
@@ -168,8 +179,7 @@ class GameScreen extends Phaser.Scene {
 		tile.setAlpha(0);
 	}
 
-	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent,
-		reduceInfectivityButton, reduceSeverityButton, reduceLethalityButton, increaseRecoveryButton, increaseMoraleButton, increaseCureButton) {
+	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
 		//Sets up effects for the previous turn
 		this.game.effects = new Effects();
 		this.updateEffects();
@@ -202,15 +212,10 @@ class GameScreen extends Phaser.Scene {
 		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
 
 		//reset button colors
-		reduceInfectivityButton.fillColor = 0xFFFFFF;
-		reduceSeverityButton.fillColor = 0xFFFFFF;
-		reduceLethalityButton.fillColor = 0xFFFFFF;
-		increaseRecoveryButton.fillColor = 0xFFFFFF;
-		increaseMoraleButton.fillColor = 0xFFFFFF;
-		increaseCureButton.fillColor = 0xFFFFFF;
+		//@TODO: Add code
 	}
 
-	createActionButtons(){
+	createActionButtons() {
 		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
 		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
 		reduceInfectivityButton.on('pointerdown', () => this.takeAction(0, reduceInfectivityButton));
@@ -241,9 +246,9 @@ class GameScreen extends Phaser.Scene {
 		//make the back of the message box
 		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0).setDepth(1);
 		rec.setOrigin(0, 0);
-		var dayCounterText = this.add.text(rec.x + 20, rec.y + 20, 'Day ' + this.game.gameData.turn + ' of outbreak',
+		this.dayCounterText = this.add.text(rec.x + 20, rec.y + 20, 'Day ' + this.game.gameData.turn + ' of outbreak',
 			{ fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold' }).setScrollFactor(0).setDepth(1);
-		var populationText = this.add.text(rec.x + 20, rec.y + 50, 'Population: ' + this.game.city.getPopulation() +
+		this.populationText = this.add.text(rec.x + 20, rec.y + 50, 'Population: ' + this.game.city.getPopulation() +
 			'\nConfirmed Infected: ' + this.game.city.getInfected() +
 			'\nDeaths: ' + this.game.city.getDead(),
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
@@ -253,7 +258,7 @@ class GameScreen extends Phaser.Scene {
 
 		var threatText = this.add.text(this.game.config.width - 380, 25, 'Threat:',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
-		var threatPercent = this.add.text(this.game.config.width - 80, 25, '0%',
+		this.threatPercent = this.add.text(this.game.config.width - 80, 25, '0%',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 
 		var progressBoxRed = this.add.graphics().setScrollFactor(0).setDepth(1);
@@ -269,7 +274,7 @@ class GameScreen extends Phaser.Scene {
 
 		var moraleText = this.add.text(this.game.config.width - 380, 65, 'Morale:',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
-		var moralePercent = this.add.text(this.game.config.width - 80, 65, Math.floor(this.game.city.getMorale() * 100) + '%',
+		this.moralePercent = this.add.text(this.game.config.width - 80, 65, Math.floor(this.game.city.getMorale() * 100) + '%',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 
 		var progressBoxGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
@@ -284,7 +289,7 @@ class GameScreen extends Phaser.Scene {
 
 		var cureText = this.add.text(this.game.config.width - 380, 105, 'Cure:',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
-		var curePercent = this.add.text(this.game.config.width - 80, 105, Math.floor(this.game.gameData.cure * 100) + '%',
+		this.curePercent = this.add.text(this.game.config.width - 80, 105, Math.floor(this.game.gameData.cure * 100) + '%',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 
 		var progressBoxBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
@@ -298,14 +303,9 @@ class GameScreen extends Phaser.Scene {
 		progressBarBlue.fillRect(this.game.config.width - 300, 100, Math.floor(this.game.gameData.cure * 200), 30, 10);
 	}
 
-
-	//End conditions
-	end() {
-		if (this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel <= 0)
-			this.scene.start("defeatScreen");
-
-		else if (this.game.city.getInfected() == 0 || this.game.gameData.cure >= 1)
-			this.scene.start("victoryScreen");
+	createSideBar() {
+		let sidebar = this.add.rectangle(0, 150, 200, this.game.config.height, 0x354b59).setScrollFactor(0).setDepth(1);
+		sidebar.setOrigin(0, 0);
 	}
 
 	updateEffects() {
@@ -325,7 +325,7 @@ class GameScreen extends Phaser.Scene {
 		let infectedTiles = virusAlgorithm.infectedTiles;
 		for (let i = 0; i < infectedTiles.length; i++) {
 			let index = infectedTiles[i];
-			this.add.rectangle(index % 20 * 50, Math.floor(index / 20) * 50 + 150, 50, 50, 0xff0000, 0.2).setOrigin(0, 0).setDepth(0);
+			this.add.rectangle(index % 20 * 50 + 200, Math.floor(index / 20) * 50 + 150, 50, 50, 0xff0000, 0.2).setOrigin(0, 0).setDepth(0);
 		}
 	}
 
@@ -347,5 +347,14 @@ class GameScreen extends Phaser.Scene {
 			this.game.gameData.energy += action.getCost();
 			button.fillColor = 0xFFFFFF;
 		}
+	}
+
+	//End conditions
+	end() {
+		if (this.game.city.getPopulation() == 0 || this.game.gameData.moraleLevel <= 0)
+			this.scene.start("defeatScreen");
+
+		else if (this.game.city.getInfected() == 0 || this.game.gameData.cure >= 1)
+			this.scene.start("victoryScreen");
 	}
 }
