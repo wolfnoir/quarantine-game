@@ -38,6 +38,9 @@ window.onload = function () {
     //Contains all the data for the city including population and number of infected
     game.city = null;
 
+    //saves the city name of the game
+    game.cityName = "";
+
     //Contains all variables relating to difficulty including diseaser parameters and cure progression
     game.difficulty = null;
 
