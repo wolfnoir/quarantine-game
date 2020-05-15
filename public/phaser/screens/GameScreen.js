@@ -90,6 +90,9 @@ class GameScreen extends Phaser.Scene {
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
 		this.marker.setDepth(1);
 
+		this.infoBox = this.add.rectangle(0, 0, 140, 50, 0xffffff).setOrigin(0, 0.5).setDepth(1);
+		this.infoText = this.add.text(0, 0, "", {fontFamily: '"Courier New"', fontSize: '14px', fontWeight: 'bold', color: '#000000'}).setDepth(1);;
+
 		var group = this.add.group();
         //make the back of the message box
 		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0).setDepth(1);
@@ -198,8 +201,33 @@ class GameScreen extends Phaser.Scene {
 		var pointerTileXY = this.groundLayer.worldToTileXY(worldPoint.x, worldPoint.y);
 		if (pointerTileXY.y >= 0) {
 			var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
-			var tile = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
-			//console.log(this.game.city.getTile(tile.x, tile.y));
+			var tilePos = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
+
+			//displays information about the tile the mouse is currently hovering over
+			var tile = this.game.city.getTile(tilePos.x, tilePos.y);
+			
+			if(tile.isInfectable){
+				console.log(tile);
+				if(snappedWorldPoint.x + 50 > this.game.config.width){
+					this.infoBox.setPosition(snappedWorldPoint.x - 148, snappedWorldPoint.y + 25);
+					this.infoText.setPosition(snappedWorldPoint.x - 146, snappedWorldPoint.y + 3);
+				}
+				else{
+					this.infoBox.setPosition(snappedWorldPoint.x + 60, snappedWorldPoint.y + 25);
+					this.infoText.setPosition(snappedWorldPoint.x + 62, snappedWorldPoint.y + 3);
+				}
+				
+				this.infoText.setText("Population: " + tile.population + "\nInfected: " + tile.infected + "\nDead: " + tile.dead);
+				//show the infobox
+				this.infoBox.setAlpha(1);
+				this.infoText.setAlpha(1);
+			}
+			else{
+				//hide the infobox
+				this.infoBox.setAlpha(0);
+				this.infoText.setAlpha(0);
+			}
+			
 			this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
 		}
 		

@@ -45,7 +45,7 @@ class LevelScreen extends Phaser.Scene {
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
 			.setOrigin(0.5);
 
-		var seoulButton = new RectangleButton(this, 400, seoulImg.y - 50, 200, 50, 0x696969, 1, 'SEOUL');
+		var seoulButton = new RectangleButton(this, 400, seoulImg.y - 50, 200, 50, 0xFFFFFF, 1, 'SEOUL');
 		seoulButton.on('pointerdown', () => this.seoulSelected());
 
 		var seoulText = this.add.text(seoulButton.x, seoulButton.y + 50,
