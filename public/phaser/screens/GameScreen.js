@@ -208,7 +208,7 @@ class GameScreen extends Phaser.Scene {
 			var tile = this.game.city.getTile(tilePos.x, tilePos.y);
 			
 			if(tile.isInfectable){
-				if(snappedWorldPoint.x + 50 > this.game.config.width){
+				if(snappedWorldPoint.x + 250 > this.game.config.width){
 					this.infoBox.setPosition(snappedWorldPoint.x - 148, snappedWorldPoint.y + 25);
 					this.infoText.setPosition(snappedWorldPoint.x - 146, snappedWorldPoint.y + 3);
 				}
