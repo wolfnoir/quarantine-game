@@ -27,7 +27,7 @@ class LevelScreen extends Phaser.Scene {
 
 		var newYorkImg = this.add.image(150, 170, 'newYork').setOrigin(0.5).setScale(0.5);
 		var londonImg = this.add.image(150, this.game.config.height/2+40, 'london').setOrigin(0.5).setScale(0.5);
-		var seoulImg = this.add.image(150, 510, 'seoul').setOrigin(0.5).setScale(0.5);
+		var seoulImg = this.add.image(150, this.game.config.height - 100, 'seoul').setOrigin(0.5).setScale(0.5);
 
 		var nyButton = new RectangleButton(this, 400, newYorkImg.y - 50, 200, 50, 0xFFFFFF, 1, 'NEW YORK');
 		nyButton.on('pointerdown', () => this.nySelected());

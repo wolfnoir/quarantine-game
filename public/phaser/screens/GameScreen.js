@@ -48,6 +48,7 @@ class GameScreen extends Phaser.Scene {
 		this.game.music.play();
 		this.currentEnergy = this.game.gameData.energy;
 		
+		//@TODO: add actual randomly generated starting positions based on the map
 		var initialTiles = [6, 289];
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
@@ -107,51 +108,51 @@ class GameScreen extends Phaser.Scene {
 		logo.setScale(0.1);
 		logo.setScrollFactor(0).setDepth(1);
 		
-		var threatText = this.add.text(410, 25, 'Threat:',
+		var threatText = this.add.text(this.game.config.width - 380, 25, 'Threat:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
-		var threatPercent = this.add.text(720, 25, '0%',
+		var threatPercent = this.add.text(this.game.config.width - 80, 25, '0%',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
 		var progressBoxRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxRed.lineStyle(4, 0xeeeeee, 1.0);
 		progressBoxRed.fillStyle(0x8c0000, 1);
-		progressBoxRed.strokeRect(500, 20, 200, 30);
-		progressBoxRed.fillRect(500, 20, 200, 30);
+		progressBoxRed.strokeRect(this.game.config.width - 300, 20, 200, 30);
+		progressBoxRed.fillRect(this.game.config.width - 300, 20, 200, 30);
 
 		var progressBarRed = this.game.gameData.progressBarRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarRed.fillStyle(0xff0000, 1);
-		progressBarRed.fillRect(500, 20, 150, 30);
+		progressBarRed.fillRect(this.game.config.width - 300, 20, 150, 30);
 
 
-		var moraleText = this.add.text(410, 65, 'Morale:',
+		var moraleText = this.add.text(this.game.config.width - 380, 65, 'Morale:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
-		var moralePercent = this.add.text(720, 65, Math.floor(this.game.city.getMorale() * 100) + '%',
+		var moralePercent = this.add.text(this.game.config.width - 80, 65, Math.floor(this.game.city.getMorale() * 100) + '%',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
 		var progressBoxGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxGreen.lineStyle(4, 0xeeeeee, 1);
 		progressBoxGreen.fillStyle(0x245f24, 1);
-		progressBoxGreen.strokeRect(500, 60, 200, 30);
-		progressBoxGreen.fillRect(500, 60, 200, 30);
+		progressBoxGreen.strokeRect(this.game.config.width - 300, 60, 200, 30);
+		progressBoxGreen.fillRect(this.game.config.width - 300, 60, 200, 30);
 		
 		var progressBarGreen = this.game.gameData.progressBarGreen = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarGreen.fillStyle(0x00ff00, 1);
-		progressBarGreen.fillRect(500, 60, Math.floor(this.game.city.getMorale() * 200), 30);
+		progressBarGreen.fillRect(this.game.config.width - 300, 60, Math.floor(this.game.city.getMorale() * 200), 30);
 
-		var cureText = this.add.text(410, 105, 'Cure:',
+		var cureText = this.add.text(this.game.config.width - 380, 105, 'Cure:',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
-		var curePercent = this.add.text(720, 105, Math.floor(this.game.gameData.cure * 100) + '%',
+		var curePercent = this.add.text(this.game.config.width - 80, 105, Math.floor(this.game.gameData.cure * 100) + '%',
 			{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
 		var progressBoxBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBoxBlue.lineStyle(4, 0xeeeeee, 1);
 		progressBoxBlue.fillStyle(0x034157, 1);
-		progressBoxBlue.strokeRect(500, 100, 200, 30);
-		progressBoxBlue.fillRect(500, 100, 200, 30);
+		progressBoxBlue.strokeRect(this.game.config.width - 300, 100, 200, 30);
+		progressBoxBlue.fillRect(this.game.config.width - 300, 100, 200, 30);
 
 		var progressBarBlue = this.game.gameData.progressBarBlue = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarBlue.fillStyle(0x31d5fd, 1);
-		progressBarBlue.fillRect(500, 100, Math.floor(this.game.gameData.cure * 200), 30, 10);
+		progressBarBlue.fillRect(this.game.config.width - 300, 100, Math.floor(this.game.gameData.cure * 200), 30, 10);
 	
 		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
 		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
@@ -183,7 +184,7 @@ class GameScreen extends Phaser.Scene {
 		this.energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
 		{fontFamily: '"Georgia"', fontSize: '20px'}).setScrollFactor(0).setDepth(1);
 
-		var nextTurnButton = new RectangleButton(this, 700, 550, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
+		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
 		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent,
@@ -233,12 +234,12 @@ class GameScreen extends Phaser.Scene {
 		var greenBar = this.game.gameData.progressBarGreen;
 		greenBar.clear();
 		greenBar.fillStyle(0x00ff00, 1);
-		greenBar.fillRect(500, 60, Math.floor(this.game.city.getMorale() * 200), 30);
+		greenBar.fillRect(this.game.config.width - 300, 60, Math.floor(this.game.city.getMorale() * 200), 30);
 
 		var blueBar = this.game.gameData.progressBarBlue;
 		blueBar.clear();
 		blueBar.fillStyle(0x31d5fd, 1);
-		blueBar.fillRect(500, 100, Math.floor(this.game.gameData.cure * 200), 30);
+		blueBar.fillRect(this.game.config.width - 300, 100, Math.floor(this.game.gameData.cure * 200), 30);
 
 		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
 
