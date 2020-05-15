@@ -26,18 +26,10 @@ class GameScreen extends Phaser.Scene {
 		this.load.image("tiles", "../../maps/tiles/quarantine-tiles.png");
 
 		//@TODO: add code that loads the appropriate map based on what the player has selected
-		if (this.game.cityName === "Manhattan") {
-			this.load.tilemapTiledJSON("map", "../../maps/manhattan.json");
-			this.load.json("mapjs", "../../maps/manhattan.json");
-		}
-		else if (this.game.cityName === "London") {
-			this.load.tilemapTiledJSON("map", "../../maps/london.json");
-			this.load.json("mapjs", "../../maps/london.json");
-		}
-		else {
-			this.load.tilemapTiledJSON("map", "../../maps/seoul.json");
-			this.load.json("mapjs", "../../maps/seoul.json");
-		}
+		this.load.tilemapTiledJSON("Manhattan", "../../maps/manhattan.json");
+		this.load.tilemapTiledJSON("London", "../../maps/london.json");
+		this.load.tilemapTiledJSON("Seoul", "../../maps/seoul.json");
+		
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
 		this.load.image('logo', 'assets/quarantine-logo.png');
 		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
@@ -69,7 +61,7 @@ class GameScreen extends Phaser.Scene {
 			s.start("pauseScreen");
 		});
 
-		const map = this.make.tilemap({ key: "map" });
+		const map = this.make.tilemap({ key: this.game.cityName });
 		const tileset = map.addTilesetImage("QuarantineTiles", "tiles");
 
 		this.groundLayer = map.createStaticLayer("Tile Layer", tileset, 0, 150);
