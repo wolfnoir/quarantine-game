@@ -37,7 +37,7 @@ class HelpScreen extends Phaser.Scene {
 		this.add.image(this.game.config.width - 240, 300, 'cityPicture').setScale(0.45);;
 
 		//back button
-		var backButton = new RectangleButton(this, 70, 550, 100, 50, 0xFFFFFF, 1, 'BACK');
+		var backButton = new RectangleButton(this, 70, this.game.config.height-50, 100, 50, 0xFFFFFF, 1, 'BACK');
 		backButton.on('pointerdown', () => this.backClicked());
 	}
 

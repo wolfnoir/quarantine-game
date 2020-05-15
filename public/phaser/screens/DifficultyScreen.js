@@ -20,10 +20,10 @@ class DifficultyScreen extends Phaser.Scene {
 		this.add.image(this.game.config.width/2, 50, 'newGameTitle').setScale(0.8);
 
 		var textBox =
-			this.add.rectangle(this.game.config.width/2, this.game.config.height/2 + 25, 750, 400, 0x000000, 0.8).setOrigin(0.5, 0.5);
+			this.add.rectangle(this.game.config.width/2, this.game.config.height/2, 750, 450, 0x000000, 0.8).setOrigin(0.5, 0.5);
 
 		//difficulty buttons and text
-		var easyButton = new RectangleButton(this, 150, 175, 200, 50, 0xFFFFFF, 1, 'EASY');
+		var easyButton = new RectangleButton(this, 250, 200, 200, 50, 0xFFFFFF, 1, 'EASY');
 		easyButton.on('pointerdown', () => this.easyMode());
 
 		var easyText = this.add.text(this.game.config.width/2 + 100, easyButton.y,
@@ -32,7 +32,7 @@ class DifficultyScreen extends Phaser.Scene {
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
 			.setOrigin(0.5);
 		
-		var mediumButton = new RectangleButton(this, 150, 275, 200, 50, 0xFFFFFF, 1, 'MEDIUM');
+		var mediumButton = new RectangleButton(this, 250, 300, 200, 50, 0xFFFFFF, 1, 'MEDIUM');
 		mediumButton.on('pointerdown', () => this.mediumMode());
 
 		var mediumText = this.add.text(this.game.config.width/2 + 100, mediumButton.y,
@@ -42,7 +42,7 @@ class DifficultyScreen extends Phaser.Scene {
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
 			.setOrigin(0.5);
 
-		var hardButton = new RectangleButton(this, 150, 375, 200, 50, 0xFFFFFF, 1, 'HARD');
+		var hardButton = new RectangleButton(this, 250, 400, 200, 50, 0xFFFFFF, 1, 'HARD');
 		hardButton.on('pointerdown', () => this.hardMode());
 
 		var hardButton = this.add.text(this.game.config.width/2 + 100, hardButton.y,
@@ -52,7 +52,7 @@ class DifficultyScreen extends Phaser.Scene {
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
 			.setOrigin(0.5);
 
-		var customButton = new RectangleButton(this, 150, 475, 200, 50, 0x696969, 1, 'CUSTOM');
+		var customButton = new RectangleButton(this, 250, 500, 200, 50, 0x696969, 1, 'CUSTOM');
 		var customText = this.add.text(this.game.config.width/2 + 100, customButton.y,
 			"Create a pandemic scenario of your very own\n"+
 			"with the custom editor! This option is currently\n"+
@@ -71,7 +71,7 @@ class DifficultyScreen extends Phaser.Scene {
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
-		this.scene.start("gameScreen");
+		this.scene.start("levelScreen");
 	}
 
 	mediumMode(){

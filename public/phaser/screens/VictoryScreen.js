@@ -24,12 +24,12 @@ class VictoryScreen extends Phaser.Scene {
         victorymusic.play();
 
         // TODO: add image and message
-        this.add.image(this.game.config.width/2, 250, 'victoryImage').setScale(0.8);
+        this.add.image(this.game.config.width/2, this.game.config.height/2, 'victoryImage').setScale(1);
 
-		var restartButton = new RectangleButton(this, this.game.config.width/2 - 125, 500, 150, 50, 0xFFFFFF, 1, 'RESTART');
+		var restartButton = new RectangleButton(this, this.game.config.width/2 - 125, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'RESTART');
 		restartButton.on('pointerdown', () => this.restartButtonClicked(victorymusic));
 
-		var quitButton = new RectangleButton(this, this.game.config.width/2 + 125, 500, 150, 50, 0xFFFFFF, 1, 'QUIT');
+		var quitButton = new RectangleButton(this, this.game.config.width/2 + 125, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'QUIT');
 		quitButton.on('pointerdown', () => this.quitButtonClicked(victorymusic));
 	}
 
