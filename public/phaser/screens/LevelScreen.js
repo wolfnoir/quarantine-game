@@ -13,6 +13,11 @@ class LevelScreen extends Phaser.Scene {
 		this.load.image('newYork', 'assets/new york.jpg');
 		this.load.image('london', 'assets/london.jpg');
 		this.load.image('seoul', 'assets/seoul.jpg');
+
+		this.load.json("manhattanjs", "../../maps/manhattan.json");
+		this.load.json("londonjs", "../../maps/london.json");
+		this.load.json("seouljs", "../../maps/seoul.json");
+		this.load.json("tile-presets", "../../maps/tile-presets.json");
 	}
 
 	create() {
@@ -50,13 +55,37 @@ class LevelScreen extends Phaser.Scene {
 	}
 
 	nySelected(){
-		//change variables here
+		//Set up data structure for city
+		var mapjs = this.cache.json.get('manhattanjs');
+		var presets = this.cache.json.get('tile-presets');
+		this.game.city = new City(mapjs, presets);
+		this.game.cityName = "Manhattan";
+
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 		this.scene.start("gameScreen");
 	}
 
 	londonSelected(){
+		//Set up data structure for city
+		var mapjs = this.cache.json.get('londonjs');
+		var presets = this.cache.json.get('tile-presets');
+		this.game.city = new City(mapjs, presets);
+		this.game.cityName = "London";
+
+		//change variables here
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
+		this.scene.start("gameScreen");
+	}
+
+	seoulSelected(){
+		//Set up data structure for city
+		var mapjs = this.cache.json.get('seouljs');
+		var presets = this.cache.json.get('tile-presets');
+		this.game.city = new City(mapjs, presets);
+		this.game.cityName = "Seoul";
+
 		//change variables here
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
