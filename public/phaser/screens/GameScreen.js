@@ -24,10 +24,20 @@ class GameScreen extends Phaser.Scene {
 	preload() {
 		//import tileset image and map json file
 		this.load.image("tiles", "../../maps/tiles/quarantine-tiles.png");
-		
+
 		//@TODO: add code that loads the appropriate map based on what the player has selected
-		this.load.tilemapTiledJSON("map", "../../maps/manhattan.json");
-		this.load.json("mapjs", "../../maps/manhattan.json");
+		if(this.game.cityName === "Manhattan"){
+			this.load.tilemapTiledJSON("map", "../../maps/manhattan.json");
+			this.load.json("mapjs", "../../maps/manhattan.json");
+		}
+		else if(this.game.cityName === "London"){
+			this.load.tilemapTiledJSON("map", "../../maps/london.json");
+			this.load.json("mapjs", "../../maps/london.json");
+		}
+		else{
+			this.load.tilemapTiledJSON("map", "../../maps/seoul.json");
+			this.load.json("mapjs", "../../maps/seoul.json");
+		}
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
 		this.load.image('logo', 'assets/quarantine-logo.png');
 		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
@@ -37,10 +47,7 @@ class GameScreen extends Phaser.Scene {
 	create() {
 		this.game.music.play();
 		this.currentEnergy = this.game.gameData.energy;
-		//Set up data structure for city
-		var mapjs = this.cache.json.get('mapjs');
-		var presets = this.cache.json.get('tile-presets');
-		this.game.city = new City(mapjs, presets);
+		
 		var initialTiles = [6, 289];
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 

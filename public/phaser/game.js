@@ -65,6 +65,7 @@ window.onload = function () {
         game.effects = null;
         game.actions = [];
         game.city = null;
+        game.cityName = "";
         game.difficulty = null;
     }
 }
