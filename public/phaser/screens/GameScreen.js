@@ -312,6 +312,7 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
+	//@TODO: make it so that it actually reflects the % of people infected, doofus
 	updateInfectedTint(virusAlgorithm){
 		let infectedTiles = virusAlgorithm.infectedTiles;
 		for(let i = 0; i < infectedTiles.length; i++){
