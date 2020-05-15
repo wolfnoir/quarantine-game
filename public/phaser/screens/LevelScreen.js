@@ -32,7 +32,7 @@ class LevelScreen extends Phaser.Scene {
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
 			.setOrigin(0.5);
 		
-		var londonButton = new RectangleButton(this, 400, londonImg.y - 50, 200, 50, 0x696969, 1, 'LONDON');
+		var londonButton = new RectangleButton(this, 400, londonImg.y - 50, 200, 50, 0xFFFFFF, 1, 'LONDON');
 		londonButton.on('pointerdown', () => this.londonSelected());
 
 		var londonText = this.add.text(londonButton.x, londonButton.y + 50,
@@ -50,6 +50,13 @@ class LevelScreen extends Phaser.Scene {
 	}
 
 	nySelected(){
+		//change variables here
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
+		this.scene.start("gameScreen");
+	}
+
+	londonSelected(){
 		//change variables here
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();

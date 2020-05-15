@@ -24,6 +24,8 @@ class GameScreen extends Phaser.Scene {
 	preload() {
 		//import tileset image and map json file
 		this.load.image("tiles", "../../maps/tiles/quarantine-tiles.png");
+		
+		//@TODO: add code that loads the appropriate map based on what the player has selected
 		this.load.tilemapTiledJSON("map", "../../maps/manhattan.json");
 		this.load.json("mapjs", "../../maps/manhattan.json");
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
