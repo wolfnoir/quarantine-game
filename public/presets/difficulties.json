@@ -3,7 +3,7 @@
         "infectivity" : 0.03,
         "severity" : 0.01,
         "lethality" : 0,
-        "cureProgressPerDay" : 0.03,
+        "cureProgressPerDay" : 0.02,
         "energyPerDay": [3, 3, 3, 4, 4, 4, 4]
     },
 
@@ -11,7 +11,7 @@
         "infectivity" : 0.14,
         "severity" : 0.2,
         "lethality" : 0.1,
-        "cureProgressPerDay" : 0.02,
+        "cureProgressPerDay" : 0.01,
         "energyPerDay": [3, 3, 3, 4, 4, 4, 4]
     },
 
@@ -19,7 +19,7 @@
         "infectivity" : 0.3,
         "severity" : 0.3,
         "lethality" : 0.24,
-        "cureProgressPerDay" : 0.01,
+        "cureProgressPerDay" : 0.005,
         "energyPerDay": [2, 2, 2, 3, 3, 3, 3]
     }
 }
