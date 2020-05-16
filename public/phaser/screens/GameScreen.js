@@ -105,6 +105,9 @@ class GameScreen extends Phaser.Scene {
 		//create action buttons on the side
 		this.createGlobalActionButtons();
 
+		//create tile buttons on the side
+		this.createTileActionButtons();
+
 		//creates text for the energy
 		this.energyText = this.add.text(50, 160, 'Energy: ' + this.game.gameData.energy,
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
@@ -182,16 +185,8 @@ class GameScreen extends Phaser.Scene {
 
 	}
 	tileClicked(tile, x, y) {
-		// if the player clicks on a tile and its the same tile as tileSelected, set tileSelected = null. (cancel the action)
-		if(tile === this.selectedTile){
-			this.selectedTile = null;
-			console.log(this.selectedTile);
-		}
-		// otherwise, select that tile and place a marker to indicate that the tile has been selected
-		else {
-			this.selectedTile = tile;
-			console.log(this.selectedTile);
-		}
+		this.selectedTile = tile;
+		console.log(this.selectedTile);
 
 		if(this.selectedTile != null){
 			this.selectMarker.setAlpha(0.7);
@@ -211,11 +206,18 @@ class GameScreen extends Phaser.Scene {
 			for(let i = 0; i < this.globalActionButtons.length ; i++){
 				this.globalActionButtons[i].hideButton();
 			}
+			for(let i = 0; i < this.tileActionButtons.length ; i++){
+				this.tileActionButtons[i].showButton();
+			}
 		}
 		//otherwise we show the global actions
 		else{
+			this.selectMarker.setAlpha(0);
 			for(let i = 0; i < this.globalActionButtons.length ; i++){
 				this.globalActionButtons[i].showButton();
+			}
+			for(let i = 0; i < this.tileActionButtons.length ; i++){
+				this.tileActionButtons[i].hideButton();
 			}
 		}
 	}
@@ -289,6 +291,15 @@ class GameScreen extends Phaser.Scene {
 		this.globalActionButtons.push(increaseRecoveryButton);
 		this.globalActionButtons.push(increaseMoraleButton);
 		this.globalActionButtons.push(increaseCureButton);
+	}
+
+	createTileActionButtons() {
+		var backButton = new RectangleButton(this, 100, 550, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
+		backButton.buttonText.setScrollFactor(0).setDepth(1);
+		backButton.on('pointerdown', () => this.toggleActionButtons(false));
+		backButton.hideButton();
+
+		this.tileActionButtons.push(backButton);
 	}
 
 	//creates the top bar of the screen
