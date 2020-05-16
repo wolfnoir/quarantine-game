@@ -162,6 +162,7 @@ class VirusAlgorithm {
     }
 
     // returns an array of integers that point to the infectable tiles that surround a partiulcar tile at initIndex
+    // @TODO: add something that checks if something spreads across a bridge. this shouldn't be too difficult
     getSurroundingTiles(tileArray, initIndex) {
         //get the column (x) and row (y) from initIndex
         let x = initIndex%20;

@@ -62,6 +62,6 @@
         "recovery": 0,
         "morale": 0,
         "cureProgress": 0.05,
-        "cost": 1
+        "cost": 3
     }
 }

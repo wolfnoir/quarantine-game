@@ -17,13 +17,11 @@ class ControlScreen extends Phaser.Scene {
 		this.add.image(this.game.config.width/2, 50, 'controlsTitle').setScale(0.8);
 
 		//add control text
-		var textBox = this.add.rectangle(this.game.config.width/2, this.game.config.height/2, 400, 350, 0x000000, 0.8).setOrigin(0.5, 0.5);
+		var textBox = this.add.rectangle(this.game.config.width/2, this.game.config.height/2, 500, 300, 0x000000, 0.8).setOrigin(0.5, 0.5);
 		var controlText = this.add.text(textBox.x, textBox.y,
 			"GENERAL CONTROLS\n\n" +
-			"LEFT CLICK - Interact\n" +
-			"RIGHT CLICK - Cancel\n" +
-			"ESCAPE - Pause (in game)\n" +
-			"TAB - Access menu\n\n" +
+			"Left Click - Interact/Cancel\n" +
+			"Escape - Pause (in game)\n\n" +
 			"MAP NAVIGATION\n\n" +
 			"Up Arrow - Scroll Up\n" +
 			"Right Arrow - Scroll Right\n" +

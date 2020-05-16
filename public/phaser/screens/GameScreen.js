@@ -37,7 +37,11 @@ class GameScreen extends Phaser.Scene {
 
 	create() {
 		this.game.music.play();
-		this.currentEnergy = this.game.gameData.energy;
+		this.game.gameData.energy = this.game.gameData.energy + 5;
+
+		//sets up arrays for the global action buttons and tile action buttons
+		this.globalActionButtons = [];
+		this.tileActionButtons = [];
 
 		//add randomly generated starting positions based on the map
 		var initialTiles = this.generateStartingPositions();
@@ -102,7 +106,7 @@ class GameScreen extends Phaser.Scene {
 		this.createActionButtons();
 
 		//creates text for the energy
-		this.energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
+		this.energyText = this.add.text(50, 160, 'Energy: ' + this.game.gameData.energy,
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 
 		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
@@ -174,7 +178,7 @@ class GameScreen extends Phaser.Scene {
 		blueBar.fillStyle(0x31d5fd, 1);
 		blueBar.fillRect(this.game.config.width - 300, 100, Math.floor(this.game.gameData.cure * 200), 30);
 
-		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
+		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
 	}
 	tileClicked(tile, x, y) {
@@ -231,34 +235,34 @@ class GameScreen extends Phaser.Scene {
 
 		//add new energy for the next day
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
-		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
+		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
 		//reset button colors
 		//@TODO: Add code
 	}
 
 	createActionButtons() {
-		var reduceInfectivityButton = new RectangleButton(this, 80, 180, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
+		var reduceInfectivityButton = new RectangleButton(this, 100, 220, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
 		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
 		reduceInfectivityButton.on('pointerdown', () => this.takeAction(0, reduceInfectivityButton));
 
-		var reduceSeverityButton = new RectangleButton(this, 80, 240, 150, 50, 0xFFFFFF, 1, 'REDUCE\nSEVERITY').setDepth(1).setScrollFactor(0);
+		var reduceSeverityButton = new RectangleButton(this, 100, 280, 150, 50, 0xFFFFFF, 1, 'REDUCE\nSEVERITY').setDepth(1).setScrollFactor(0);
 		reduceSeverityButton.buttonText.setScrollFactor(0).setDepth(1);
 		reduceSeverityButton.on('pointerdown', () => this.takeAction(1, reduceSeverityButton));
 
-		var reduceLethalityButton = new RectangleButton(this, 80, 300, 150, 50, 0xFFFFFF, 1, 'REDUCE\nLETHALITY').setDepth(1).setScrollFactor(0);
+		var reduceLethalityButton = new RectangleButton(this, 100, 340, 150, 50, 0xFFFFFF, 1, 'REDUCE\nLETHALITY').setDepth(1).setScrollFactor(0);
 		reduceLethalityButton.buttonText.setScrollFactor(0).setDepth(1);
 		reduceLethalityButton.on('pointerdown', () => this.takeAction(2, reduceLethalityButton));
 
-		var increaseRecoveryButton = new RectangleButton(this, 80, 360, 150, 50, 0xFFFFFF, 1, 'INCREASE\nRECOVERY').setDepth(1).setScrollFactor(0);
+		var increaseRecoveryButton = new RectangleButton(this, 100, 400, 150, 50, 0xFFFFFF, 1, 'INCREASE\nRECOVERY').setDepth(1).setScrollFactor(0);
 		increaseRecoveryButton.buttonText.setScrollFactor(0).setDepth(1);
 		increaseRecoveryButton.on('pointerdown', () => this.takeAction(3, increaseRecoveryButton));
 
-		var increaseMoraleButton = new RectangleButton(this, 80, 420, 150, 50, 0xFFFFFF, 1, 'BOOST\nMORALE').setDepth(1).setScrollFactor(0);
+		var increaseMoraleButton = new RectangleButton(this, 100, 460, 150, 50, 0xFFFFFF, 1, 'BOOST\nMORALE').setDepth(1).setScrollFactor(0);
 		increaseMoraleButton.buttonText.setScrollFactor(0).setDepth(1);
 		increaseMoraleButton.on('pointerdown', () => this.takeAction(4, increaseMoraleButton));
 
-		var increaseCureButton = new RectangleButton(this, 80, 480, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
+		var increaseCureButton = new RectangleButton(this, 100, 520, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
 		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
 		increaseCureButton.on('pointerdown', () => this.takeAction(5, increaseCureButton));
 	}
