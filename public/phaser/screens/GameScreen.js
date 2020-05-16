@@ -103,7 +103,7 @@ class GameScreen extends Phaser.Scene {
 		this.createSideBar();
 
 		//create action buttons on the side
-		this.createActionButtons();
+		this.createGlobalActionButtons();
 
 		//creates text for the energy
 		this.energyText = this.add.text(50, 160, 'Energy: ' + this.game.gameData.energy,
@@ -196,11 +196,28 @@ class GameScreen extends Phaser.Scene {
 		if(this.selectedTile != null){
 			this.selectMarker.setAlpha(0.7);
 			this.selectMarker.setPosition(x + 25,y + 25);
+			this.toggleActionButtons(true);
 		}
 		else{
 			this.selectMarker.setAlpha(0);
+			this.toggleActionButtons(false);
 		}
 
+	}
+
+	toggleActionButtons(b){
+		//if b is true, then we hide the global actions and show the tile actions
+		if(b){
+			for(let i = 0; i < this.globalActionButtons.length ; i++){
+				this.globalActionButtons[i].hideButton();
+			}
+		}
+		//otherwise we show the global actions
+		else{
+			for(let i = 0; i < this.globalActionButtons.length ; i++){
+				this.globalActionButtons[i].showButton();
+			}
+		}
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
@@ -241,7 +258,7 @@ class GameScreen extends Phaser.Scene {
 		//@TODO: Add code
 	}
 
-	createActionButtons() {
+	createGlobalActionButtons() {
 		var reduceInfectivityButton = new RectangleButton(this, 100, 220, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
 		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
 		reduceInfectivityButton.on('pointerdown', () => this.takeAction(0, reduceInfectivityButton));
@@ -265,6 +282,13 @@ class GameScreen extends Phaser.Scene {
 		var increaseCureButton = new RectangleButton(this, 100, 520, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
 		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
 		increaseCureButton.on('pointerdown', () => this.takeAction(5, increaseCureButton));
+
+		this.globalActionButtons.push(reduceInfectivityButton);
+		this.globalActionButtons.push(reduceSeverityButton);
+		this.globalActionButtons.push(reduceLethalityButton);
+		this.globalActionButtons.push(increaseRecoveryButton);
+		this.globalActionButtons.push(increaseMoraleButton);
+		this.globalActionButtons.push(increaseCureButton);
 	}
 
 	//creates the top bar of the screen
