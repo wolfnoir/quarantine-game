@@ -16,7 +16,7 @@ class VictoryScreen extends Phaser.Scene {
 		this.cameras.main.setBackgroundColor('#ADD8E6');
         this.add.image(this.game.config.width/2, 50, 'victoryText').setScale(0.8);
 
-		this.game.music.stop();
+		this.game.music.setMute(true);
 
         var victorymusic = this.sound.add('victory');
         victorymusic.setLoop(false);
