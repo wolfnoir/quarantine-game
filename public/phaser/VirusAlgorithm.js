@@ -164,54 +164,57 @@ class VirusAlgorithm {
     // returns an array of integers that point to the infectable tiles that surround a partiulcar tile at initIndex
     //@TODO: something is wrong with the way that it checks the tiles. 
     getSurroundingTiles(tileArray, initIndex) {
-        //an array of index numbers
+        //get the column (x) and row (y) from initIndex
+        let x = initIndex%20;
+        let y = Math.floor(initIndex/20);
+
         let surroundingTiles = [];
         //check north west
-        if (initIndex - 21 >= 0) {
+        if (x - 1 >= 0 && y - 1 >= 0) {
             if (tileArray[initIndex - 21].infectable() && tileArray[initIndex - 21].getDead() === 0 && tileArray[initIndex - 21].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 21);
             }
         }
 
         //check north
-        if (initIndex - 20 >= 0) {
+        if (y - 1 >= 0) {
             if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 && tileArray[initIndex - 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 20);
             }
         }
         //check north east
-        if (initIndex - 19 >= 0) {
+        if (x + 1 >= 0 && y - 1 >= 0) {
             if (tileArray[initIndex - 19].infectable() && tileArray[initIndex - 19].getDead() === 0 && tileArray[initIndex - 19].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 19);
             }
         }
 
         //check west
-        if (initIndex - 1 >= 0) {
+        if (x - 1 >= 0) {
             if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 && tileArray[initIndex - 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 1);
             }
         }
         //check east
-        if (initIndex + 1 <= 400) {
+        if (x + 1 <= 19) {
             if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 && tileArray[initIndex + 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 1);
             }
         }
         //check south west
-        if (initIndex + 19 <= 400) {
+        if (x - 1 >= 0 && y + 1 <= 19) {
             if (tileArray[initIndex + 19].infectable() && tileArray[initIndex + 19].getDead() === 0 && tileArray[initIndex + 10].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 19);
             }
         }
         //check south
-        if (initIndex + 20 <= 400) {
+        if (y + 1 <= 19) {
             if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 && tileArray[initIndex + 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 20);
             }
         }
         //check south east
-        if (initIndex + 21 <= 400) {
+        if (y + 1 <= 19 && x + 1 <= 19) {
             if (tileArray[initIndex + 21].infectable() && tileArray[initIndex + 21].getDead() === 0 && tileArray[initIndex + 21].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 21);
             }
