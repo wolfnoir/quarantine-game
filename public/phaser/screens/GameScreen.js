@@ -98,9 +98,6 @@ class GameScreen extends Phaser.Scene {
 		//create action buttons on the side
 		this.createActionButtons();
 
-		//get the energy required for today
-		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
-
 		this.energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 
