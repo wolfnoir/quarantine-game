@@ -16,7 +16,7 @@ class DefeatScreen extends Phaser.Scene {
 		this.cameras.main.setBackgroundColor('#8b0000');
 		this.add.image(this.game.config.width/2, 50, 'defeatText').setScale(0.8);
 
-		this.game.music.stop();
+		this.game.music.setMute(true);
 
 		let gameover = this.sound.add('gameover');
 		gameover.setLoop(false);
