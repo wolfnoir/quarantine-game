@@ -202,6 +202,8 @@ class GameScreen extends Phaser.Scene {
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
 		//Sets up effects for the previous turn
 		this.game.effects = new Effects();
+		this.selectedTile = null;
+		this.selectMarker.setAlpha(0);
 		this.updateEffects();
 
 		this.game.gameData.turn += 1;
