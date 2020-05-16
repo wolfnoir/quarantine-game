@@ -31,6 +31,7 @@ class Difficulty{
     }
 
     //Returns the amount of energy that the player should receive on this turn
+    //You start getting i energy each turn on turn # energyPerDay[i] 
     //If past the last turn of the array, give the maximum amount of energy possible, 7
     getEnergyToday(turn){
         var i = 0;

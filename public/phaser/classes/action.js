@@ -7,7 +7,7 @@ class Action{
         this.recovery = obj.recovery;
         this.morale = obj.morale;
         this.cureProgress = obj.cureProgress;
-        this.cost = obj.cost
+        this.cost = obj.cost;
         this.taken = false;
     }
 

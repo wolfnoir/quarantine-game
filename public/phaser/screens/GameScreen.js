@@ -37,7 +37,6 @@ class GameScreen extends Phaser.Scene {
 
 	create() {
 		this.game.music.play();
-		this.game.gameData.energy = this.game.gameData.energy + 5;
 
 		//sets up arrays for the global action buttons and tile action buttons
 		this.globalActionButtons = [];
@@ -224,7 +223,6 @@ class GameScreen extends Phaser.Scene {
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
 		//Sets up effects for the previous turn
-		this.game.effects = new Effects();
 		this.selectedTile = null;
 		this.selectMarker.setAlpha(0);
 		this.updateEffects();
@@ -250,9 +248,11 @@ class GameScreen extends Phaser.Scene {
 		//Check end conditions
 		this.end()
 
-		this.game.effects = new Effects();
+		//Clear effects for this turn
+		this.game.effects.clear();
 
 		//add new energy for the next day
+		console.log(this.game.difficulty.getEnergyToday(this.game.gameData.turn))
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
@@ -298,6 +298,8 @@ class GameScreen extends Phaser.Scene {
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
 		backButton.on('pointerdown', () => this.toggleActionButtons(false));
 		backButton.hideButton();
+
+		//@TODO: add buttons for tile specific actions
 
 		this.tileActionButtons.push(backButton);
 	}

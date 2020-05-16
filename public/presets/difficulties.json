@@ -4,7 +4,7 @@
         "severity" : 0.01,
         "lethality" : 0,
         "cureProgressPerDay" : 0.02,
-        "energyPerDay": [3, 3, 3, 4, 4, 4, 4]
+        "energyPerDay": [1, 3, 5, 7, 9, 11, 13]
     },
 
     "medium" : {
@@ -12,7 +12,7 @@
         "severity" : 0.2,
         "lethality" : 0.1,
         "cureProgressPerDay" : 0.01,
-        "energyPerDay": [3, 3, 3, 4, 4, 4, 4]
+        "energyPerDay": [1, 4, 7, 10, 13, 16, 19]
     },
 
     "hard" : {
@@ -20,6 +20,6 @@
         "severity" : 0.3,
         "lethality" : 0.24,
         "cureProgressPerDay" : 0.005,
-        "energyPerDay": [2, 2, 2, 3, 3, 3, 3]
+        "energyPerDay": [1, 5, 9, 13, 17, 21, 25]
     }
 }

@@ -69,4 +69,13 @@ class Effects {
         this.changeMorale(action.getMoraleChange());
         this.changeCureProgress(action.getCureProgress());
     }
+
+    clear(){
+        this.infectivity = 0;
+        this.severity = 0;
+        this.lethality = 0;
+        this.recovery = 0;
+        this.morale = 0;
+        this.cure = 0;
+    }
 }

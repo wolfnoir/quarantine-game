@@ -7,6 +7,10 @@ class CityTile {
         this.infectivity = obj.infectivity;
         this.recovery = obj.recovery;
         this.isInfectable = obj.isInfectable;
+        
+        this.effects = new Effects();
+        this.actions = [];
+        //@TODO: add all tile-specific actions to this list
     }
 
     getPopulation(){

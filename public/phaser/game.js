@@ -30,7 +30,7 @@ window.onload = function () {
 
     //Stores effects for the current turn
     //Values will be modified by the below values upon transition to the next turn
-    game.effects = null;
+    game.effects = new Effects();
 
     //Stores actions that can be taken by player
     game.actions = [];
@@ -65,7 +65,7 @@ window.onload = function () {
         };
 
         //Will store main track so we can start or stop it at times
-        game.effects = null;
+        game.effects.clear();
         game.actions = [];
         game.city = null;
         game.cityName = "";
