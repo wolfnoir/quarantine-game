@@ -162,7 +162,6 @@ class VirusAlgorithm {
     }
 
     // returns an array of integers that point to the infectable tiles that surround a partiulcar tile at initIndex
-    //@TODO: something is wrong with the way that it checks the tiles. 
     getSurroundingTiles(tileArray, initIndex) {
         //get the column (x) and row (y) from initIndex
         let x = initIndex%20;

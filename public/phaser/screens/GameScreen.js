@@ -14,7 +14,7 @@ class GameScreen extends Phaser.Scene {
 
 	constructor() {
 		super({ key: 'gameScreen' });
-		this.energyText;
+		this.selectedTile = null;
 	}
 
 	init() {
@@ -25,7 +25,6 @@ class GameScreen extends Phaser.Scene {
 		//import tileset image and map json file
 		this.load.image("tiles", "../../maps/tiles/quarantine-tiles.png");
 
-		//@TODO: add code that loads the appropriate map based on what the player has selected
 		this.load.tilemapTiledJSON("Manhattan", "../../maps/manhattan.json");
 		this.load.tilemapTiledJSON("London", "../../maps/london.json");
 		this.load.tilemapTiledJSON("Seoul", "../../maps/seoul.json");
@@ -40,7 +39,7 @@ class GameScreen extends Phaser.Scene {
 		this.game.music.play();
 		this.currentEnergy = this.game.gameData.energy;
 
-		//@TODO: add actual randomly generated starting positions based on the map
+		//add randomly generated starting positions based on the map
 		var initialTiles = this.generateStartingPositions();
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
@@ -83,7 +82,11 @@ class GameScreen extends Phaser.Scene {
 		this.marker.lineStyle(3, 0xff4f78, 1);
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
 		this.marker.setDepth(1);
-
+		
+		//create the marker that indicates if a tile has been highlighter
+		this.selectMarker = this.add.rectangle(0, 0, map.tileWidth, map.tileHeight, 0x03cafc).setDepth(1);
+		this.selectMarker.setAlpha(0);
+		this.selectMarker.setOrigin(0.5, 0.5);
 
 		//create the infobox for hovering over tiles
 		this.infoBox = this.add.rectangle(0, 0, 140, 50, 0xffffff).setOrigin(0, 0.5).setDepth(1);
@@ -98,6 +101,7 @@ class GameScreen extends Phaser.Scene {
 		//create action buttons on the side
 		this.createActionButtons();
 
+		//creates text for the energy
 		this.energyText = this.add.text(20, 550, 'Energy Available: ' + this.game.gameData.energy,
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 
@@ -119,10 +123,14 @@ class GameScreen extends Phaser.Scene {
 		if (pointerTileXY.y >= 0) {
 			var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
 			var tilePos = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
-
+			var tile;
+			let pointer = this.input.activePointer;
 			//displays information about the tile the mouse is currently hovering over
 			if (tilePos !== null) {
-				var tile = this.game.city.getTile(tilePos.x, tilePos.y);
+				tile = this.game.city.getTile(tilePos.x, tilePos.y);
+				if(pointer.isDown && tile.isInfectable){
+					this.tileClicked(tile, snappedWorldPoint.x, snappedWorldPoint.y);
+				}
 			}
 
 			if (tile !== undefined && tilePos !== null) {
@@ -169,8 +177,26 @@ class GameScreen extends Phaser.Scene {
 		this.energyText.setText('Energy Available: ' + this.game.gameData.energy);
 
 	}
-	tileClicked(tile) {
-		tile.setAlpha(0);
+	tileClicked(tile, x, y) {
+		// if the player clicks on a tile and its the same tile as tileSelected, set tileSelected = null. (cancel the action)
+		if(tile === this.selectedTile){
+			this.selectedTile = null;
+			console.log(this.selectedTile);
+		}
+		// otherwise, select that tile and place a marker to indicate that the tile has been selected
+		else {
+			this.selectedTile = tile;
+			console.log(this.selectedTile);
+		}
+
+		if(this.selectedTile != null){
+			this.selectMarker.setAlpha(0.7);
+			this.selectMarker.setPosition(x + 25,y + 25);
+		}
+		else{
+			this.selectMarker.setAlpha(0);
+		}
+
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
