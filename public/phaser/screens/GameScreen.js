@@ -41,7 +41,7 @@ class GameScreen extends Phaser.Scene {
 		this.currentEnergy = this.game.gameData.energy;
 
 		//@TODO: add actual randomly generated starting positions based on the map
-		var initialTiles = [6, 289];
+		var initialTiles = this.generateStartingPositions();
 		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
 		//Set up actions
@@ -341,6 +341,33 @@ class GameScreen extends Phaser.Scene {
 			this.game.gameData.energy += action.getCost();
 			button.fillColor = 0xFFFFFF;
 		}
+	}
+
+	//generates random starting positions based on the map selected. returns an array that has two coordinates in it
+	generateStartingPositions(){
+		let array = [];
+		let manhattanPositions = [6, 13, 66, 91, 207, 289, 352];
+		let londonPositions = [11, 48, 57, 108, 167, 330, 390];
+		let seoulPositions = [12, 17, 32, 42, 89, 134, 174, 294, 316];
+		if(this.game.cityName === "Manhattan"){
+			let r = Math.floor((Math.random() * 4));
+			array.push(manhattanPositions[r]);
+			r = Math.floor((Math.random() * 3) + 4);
+			array.push(manhattanPositions[r]);
+		}
+		else if(this.game.cityName === "London"){
+			let r = Math.floor((Math.random() * 4));
+			array.push(londonPositions[r]);
+			r = Math.floor((Math.random() * 3) + 4);
+			array.push(londonPositions[r]);
+		}
+		else{
+			let r = Math.floor((Math.random() * 5));
+			array.push(seoulPositions[r]);
+			r = Math.floor((Math.random() * 4) + 5);
+			array.push(seoulPositions[r]);
+		}
+		return array;
 	}
 
 	//End conditions
