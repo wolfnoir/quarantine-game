@@ -36,9 +36,6 @@ class GameScreen extends Phaser.Scene {
 		this.load.json("actions", "../../presets/actions.json");
 	}
 
-	//@TODO: for some reason, quitting from the pause menu and restarting the game does not clear the map from the cache.
-	//see if we can fix this later.
-
 	create() {
 		this.game.music.play();
 		this.currentEnergy = this.game.gameData.energy;
