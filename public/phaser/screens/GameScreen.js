@@ -133,7 +133,7 @@ class GameScreen extends Phaser.Scene {
 			//displays information about the tile the mouse is currently hovering over
 			if (tilePos !== null) {
 				tile = this.game.city.getTile(tilePos.x, tilePos.y);
-				if(pointer.isDown && tile.isInfectable  && pointer.x > 200 && pointer.y > 150){
+				if(pointer.isDown && tile.isInfectable && pointer.x > 200 && pointer.y > 150){
 					this.tileClicked(tile, snappedWorldPoint.x, snappedWorldPoint.y);
 				}
 			}
