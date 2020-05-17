@@ -184,7 +184,6 @@ class GameScreen extends Phaser.Scene {
 	}
 	tileClicked(tile, x, y) {
 		this.selectedTile = tile;
-		console.log(this.selectedTile);
 
 		if(this.selectedTile != null){
 			this.selectMarker.setAlpha(0.7);
