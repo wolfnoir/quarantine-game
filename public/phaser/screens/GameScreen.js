@@ -125,7 +125,7 @@ class GameScreen extends Phaser.Scene {
 		// Place the marker in world space, but snap it to the tile grid. If we convert world -> tile and
 		// then tile -> world, we end up with the position of the tile under the pointer
 		var pointerTileXY = this.groundLayer.worldToTileXY(worldPoint.x, worldPoint.y);
-		if (pointerTileXY.y >= 0) {
+		if (pointerTileXY.y >= 0 && pointerTileXY.x >= 0) {
 			var snappedWorldPoint = this.groundLayer.tileToWorldXY(pointerTileXY.x, pointerTileXY.y);
 			var tilePos = this.groundLayer.getTileAtWorldXY(snappedWorldPoint.x, snappedWorldPoint.y);
 			var tile;
@@ -133,7 +133,7 @@ class GameScreen extends Phaser.Scene {
 			//displays information about the tile the mouse is currently hovering over
 			if (tilePos !== null) {
 				tile = this.game.city.getTile(tilePos.x, tilePos.y);
-				if(pointer.isDown && tile.isInfectable){
+				if(pointer.isDown && tile.isInfectable  && pointer.x > 200 && pointer.y > 150){
 					this.tileClicked(tile, snappedWorldPoint.x, snappedWorldPoint.y);
 				}
 			}
