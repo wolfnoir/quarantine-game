@@ -17,7 +17,9 @@ class LevelScreen extends Phaser.Scene {
 		this.load.json("manhattanjs", "../../maps/manhattan.json");
 		this.load.json("londonjs", "../../maps/london.json");
 		this.load.json("seouljs", "../../maps/seoul.json");
+
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
+		this.load.json("actions", "../../presets/actions.json");
 	}
 
 	create() {
@@ -58,7 +60,8 @@ class LevelScreen extends Phaser.Scene {
 		//Set up data structure for city
 		var mapjs = this.cache.json.get('manhattanjs');
 		var presets = this.cache.json.get('tile-presets');
-		this.game.city = new City(mapjs, presets);
+		var actionjs = this.cache.json.get('actions');
+		this.game.city = new City(mapjs, presets, actionjs);
 		this.game.cityName = "Manhattan";
 
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
@@ -70,7 +73,8 @@ class LevelScreen extends Phaser.Scene {
 		//Set up data structure for city
 		var mapjs = this.cache.json.get('londonjs');
 		var presets = this.cache.json.get('tile-presets');
-		this.game.city = new City(mapjs, presets);
+		var actionjs = this.cache.json.get('actions');
+		this.game.city = new City(mapjs, presets, actionjs);
 		this.game.cityName = "London";
 
 		//change variables here
@@ -83,7 +87,8 @@ class LevelScreen extends Phaser.Scene {
 		//Set up data structure for city
 		var mapjs = this.cache.json.get('seouljs');
 		var presets = this.cache.json.get('tile-presets');
-		this.game.city = new City(mapjs, presets);
+		var actionjs = this.cache.json.get('actions');
+		this.game.city = new City(mapjs, presets, actionjs);
 		this.game.cityName = "Seoul";
 
 		//change variables here

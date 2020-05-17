@@ -32,7 +32,6 @@ class GameScreen extends Phaser.Scene {
 		this.load.json("tile-presets", "../../maps/tile-presets.json");
 		this.load.image('logo', 'assets/quarantine-logo.png');
 		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
-		this.load.json("actions", "../../presets/actions.json");
 	}
 
 	create() {
@@ -252,7 +251,6 @@ class GameScreen extends Phaser.Scene {
 		this.game.effects.clear();
 
 		//add new energy for the next day
-		console.log(this.game.difficulty.getEnergyToday(this.game.gameData.turn))
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 

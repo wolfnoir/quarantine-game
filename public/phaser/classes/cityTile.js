@@ -1,5 +1,5 @@
 class CityTile {
-    constructor(obj){
+    constructor(obj, actionjs){
         this.population = obj.population;
         this.infected = obj.infected;
         this.dead = obj.dead;
@@ -10,7 +10,12 @@ class CityTile {
         
         this.effects = new Effects();
         this.actions = [];
-        //@TODO: add all tile-specific actions to this list
+        
+        //@TODO: make tile-specific actions for this list
+        for (let i = 1; i <= 6; i++) {
+			var obj = new Action(actionjs[i.toString()]);
+			this.actions.push(obj);
+		}
     }
 
     getPopulation(){

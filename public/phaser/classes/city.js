@@ -1,5 +1,5 @@
 class City{
-    constructor(obj, presets){
+    constructor(obj, presets, actions){
         this.cityTiles = [];
 
         var data = obj.layers[0].data;
@@ -7,7 +7,7 @@ class City{
         for(let i = 0; i < data.length; i++){
             var num = data[i];
             var key = num.toString();
-            var tile = new CityTile(presets[key][0]);
+            var tile = new CityTile(presets[key][0], actions);
             this.cityTiles.push(tile);
         }
     }
