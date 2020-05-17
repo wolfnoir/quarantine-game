@@ -70,4 +70,26 @@ class CityTile {
     infectable(){
         return this.isInfectable;
     }
+
+    getActions(){
+        return this.actions;
+    }
+
+    //Reads all actions that have been taken and updates effects
+    //Used to update effects at the end of turn
+    updateEffects(){
+        for (let i = 0; i < this.actions.length; i++) {
+			let action = this.actions[i];
+
+			if (action.hasBeenTaken()) {
+				this.game.effects.addAction(this.game.actions[i]);
+				action.toggleTaken();
+			}
+		}
+    }
+
+    //Used to clear effects at the end of turn
+    clearEffects(){
+        this.effects.clear()
+    }
 }

@@ -392,6 +392,7 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
+	//Can be used for both citywide and tile specific actions
 	//Marks action as taken if have enough energy
 	//If already taken, unmark it and give back energy
 	takeAction(actionNum, button) {
