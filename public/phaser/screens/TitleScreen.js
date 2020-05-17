@@ -13,7 +13,7 @@ class TitleScreen extends Phaser.Scene {
 	}
 
 	create() {
-		this.game.music.play()
+		//this.game.music.play()
 
 		//Resetting all global variables
 		this.game.resetAll();

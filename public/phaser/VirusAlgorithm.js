@@ -147,13 +147,13 @@ class VirusAlgorithm {
         // The different chances of values being increased are weighed in favor of infectivity > severity > morality.
         let pick = Math.floor(Math.random() * 7);
         if (pick < 3) { //1/2 chance of infectivity increasing
-            this.tempInfectivity += 0.05;
+            this.tempInfectivity += 0.02;
         }
         else if (pick >= 3 && pick < 5) { //1/3 chance of severity increasing
-            this.tempSeverity += 0.05;
+            this.tempSeverity += 0.02;
         }
         else { //1/6 chance of lehtality increasing
-            this.tempLethality += 0.05;
+            this.tempLethality += 0.02;
         }
         console.log("Infectivity: " + (this.difficulty.infectivity + this.tempInfectivity + this.game.effects.getInfectivity()));
         console.log("Severity: " + (this.difficulty.severity + this.tempSeverity + this.game.effects.getSeverity()));
@@ -248,7 +248,6 @@ class VirusAlgorithm {
 
         if(hasBridge){
             //loop through how many bridge indexes we have
-            console.log("attempting to spread across bridge");
             for(let i = 0; i < bridgeIndexes.length; i++){
                 //save the x and y pos of the bridges, just in case?
                 let bridgeX = initIndex%20;
