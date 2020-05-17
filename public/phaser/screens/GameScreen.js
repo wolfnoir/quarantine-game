@@ -35,7 +35,7 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	create() {
-		this.game.music.play();
+		//this.game.music.play();
 
 		//sets up arrays for the global action buttons and tile action buttons
 		this.globalActionButtons = [];
