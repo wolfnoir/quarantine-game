@@ -1,59 +1,28 @@
 <!DOCTYPE html>
-<html>
+
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <title>Benchmark 2</title>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/phaser@3.22.0/dist/phaser.js"></script>
+    <script type="text/javascript" src="./phaser/screens/ControlScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/DifficultyScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/DefeatScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/VictoryScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/GameScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/HelpScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/LevelScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/NameScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/PauseScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/SplashScreen.js"></script>
+    <script type="text/javascript" src="./phaser/screens/TitleScreen.js"></script>
+    <script type="text/javascript" src="./phaser/RectangleButton.js"></script>
+    <script type="text/javascript" src="./phaser/classes/cityTile.js"></script>
+    <script type="text/javascript" src="./phaser/classes/city.js"></script>
+    <script type="text/javascript" src="./phaser/classes/difficulty.js"></script>
+    <script type="text/javascript" src="./phaser/classes/effects.js"></script>
+    <script type="text/javascript" src="./phaser/classes/action.js"></script>
+    <script type="text/javascript" src="./phaser/VirusAlgorithm.js"></script>
+    <script type="text/javascript" src="./phaser/game.js"></script>
 </head>
-<body>
 
-    <script>
-    var config = {
-        type: Phaser.AUTO,
-        width: 800,
-        height: 600,
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: { y: 200 }
-            }
-        },
-        scene: {
-            preload: preload,
-            create: create
-        }
-    };
-
-    var game = new Phaser.Game(config);
-
-    function preload ()
-    {
-        this.load.setBaseURL('http://labs.phaser.io');
-
-        this.load.image('sky', 'assets/skies/space3.png');
-        this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-        this.load.image('red', 'assets/particles/red.png');
-    }
-
-    function create ()
-    {
-        this.add.image(400, 300, 'sky');
-
-        var particles = this.add.particles('red');
-
-        var emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
-        });
-
-        var logo = this.physics.add.image(400, 100, 'logo');
-
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
-
-        emitter.startFollow(logo);
-    }
-    </script>
-
-</body>
+<body></body>
 </html>

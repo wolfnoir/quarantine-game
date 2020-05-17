@@ -189,18 +189,18 @@ class GameScreen extends Phaser.Scene {
 		if(this.selectedTile != null){
 			this.selectMarker.setAlpha(0.7);
 			this.selectMarker.setPosition(x + 25,y + 25);
-			this.toggleActionButtons(true);
+			this.toggleActionButtons("tile");
 		}
 		else{
 			this.selectMarker.setAlpha(0);
-			this.toggleActionButtons(false);
+			this.toggleActionButtons("global");
 		}
 
 	}
 
-	toggleActionButtons(b){
+	toggleActionButtons(str){
 		//if b is true, then we hide the global actions and show the tile actions
-		if(b){
+		if(str === "tile"){
 			for(let i = 0; i < this.globalActionButtons.length ; i++){
 				this.globalActionButtons[i].hideButton();
 			}
@@ -209,7 +209,7 @@ class GameScreen extends Phaser.Scene {
 			}
 		}
 		//otherwise we show the global actions
-		else{
+		else if(str === "global"){
 			this.selectMarker.setAlpha(0);
 			for(let i = 0; i < this.globalActionButtons.length ; i++){
 				this.globalActionButtons[i].showButton();
@@ -294,7 +294,7 @@ class GameScreen extends Phaser.Scene {
 	createTileActionButtons() {
 		var backButton = new RectangleButton(this, 100, 550, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
-		backButton.on('pointerdown', () => this.toggleActionButtons(false));
+		backButton.on('pointerdown', () => this.toggleActionButtons("global"));
 		backButton.hideButton();
 
 		//@TODO: add buttons for tile specific actions
