@@ -1,5 +1,6 @@
 class CityTile {
     constructor(obj, actionjs){
+        this.name = obj.name;
         this.population = obj.population;
         this.infected = obj.infected;
         this.dead = obj.dead;
@@ -32,6 +33,10 @@ class CityTile {
 
     getInfectedPercentage(){
         return this.infected / this.population;
+    }
+
+    getName(){
+        return this.name;
     }
 
     //Infects num people in this tile

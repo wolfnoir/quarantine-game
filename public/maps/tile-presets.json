@@ -9,7 +9,7 @@
             "morale": 0,
             "infectivity": 0,
             "recovery": 0,
-            "isInfectable": false
+            "isInfectable": true
         }
     ],
 

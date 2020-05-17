@@ -167,58 +167,128 @@ class VirusAlgorithm {
         //get the column (x) and row (y) from initIndex
         let x = initIndex%20;
         let y = Math.floor(initIndex/20);
+        let hasBridge = false;
+        let bridgeIndexes = [];
 
         let surroundingTiles = [];
         //check north west
         if (x - 1 >= 0 && y - 1 >= 0) {
-            if (tileArray[initIndex - 21].infectable() && tileArray[initIndex - 21].getDead() === 0 && tileArray[initIndex - 21].getInfected() === 0) {
+            if (tileArray[initIndex - 21].getName() != "bridge" && tileArray[initIndex - 21].infectable() && tileArray[initIndex - 21].getDead() === 0 && tileArray[initIndex - 21].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 21);
             }
         }
 
         //check north
         if (y - 1 >= 0) {
-            if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 && tileArray[initIndex - 20].getInfected() === 0) {
+            if(tileArray[initIndex - 20].getName() === "bridge" && tileArray[initIndex - 20].infectable()){
+                hasBridge = true;
+                bridgeIndexes.push(initIndex - 20);
+            }
+            if (tileArray[initIndex - 20].getName() != "bridge" && tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 && tileArray[initIndex - 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 20);
             }
         }
         //check north east
         if (x + 1 >= 0 && y - 1 >= 0) {
-            if (tileArray[initIndex - 19].infectable() && tileArray[initIndex - 19].getDead() === 0 && tileArray[initIndex - 19].getInfected() === 0) {
+            if (tileArray[initIndex - 19].getName() != "bridge" && tileArray[initIndex - 19].infectable() && tileArray[initIndex - 19].getDead() === 0 && tileArray[initIndex - 19].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 19);
             }
         }
 
         //check west
         if (x - 1 >= 0) {
-            if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 && tileArray[initIndex - 1].getInfected() === 0) {
+            if(tileArray[initIndex - 1].getName() === "bridge" && tileArray[initIndex - 1].infectable()){
+                hasBridge = true;
+                bridgeIndexes.push(initIndex - 1);
+            }
+            if (tileArray[initIndex - 1].getName() != "bridge" && tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 && tileArray[initIndex - 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 1);
             }
         }
         //check east
         if (x + 1 <= 19) {
-            if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 && tileArray[initIndex + 1].getInfected() === 0) {
+            if(tileArray[initIndex + 1].getName() === "bridge" && tileArray[initIndex + 1].infectable()){
+                hasBridge = true;
+                bridgeIndexes.push(initIndex + 1);
+            }
+            if (tileArray[initIndex + 1].getName() != "bridge" && tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 && tileArray[initIndex + 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 1);
             }
         }
         //check south west
         if (x - 1 >= 0 && y + 1 <= 19) {
-            if (tileArray[initIndex + 19].infectable() && tileArray[initIndex + 19].getDead() === 0 && tileArray[initIndex + 10].getInfected() === 0) {
+            if (tileArray[initIndex + 19].getName() != "bridge" && tileArray[initIndex + 19].infectable() && tileArray[initIndex + 19].getDead() === 0 && tileArray[initIndex + 10].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 19);
             }
         }
         //check south
         if (y + 1 <= 19) {
-            if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 && tileArray[initIndex + 20].getInfected() === 0) {
+            if(tileArray[initIndex + 20].getName() === "bridge" && tileArray[initIndex + 20].infectable()){
+                hasBridge = true;
+                bridgeIndexes.push(initIndex + 20);
+            }
+            if (tileArray[initIndex + 20].getName() != "bridge" && tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 && tileArray[initIndex + 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 20);
             }
         }
         //check south east
         if (y + 1 <= 19 && x + 1 <= 19) {
-            if (tileArray[initIndex + 21].infectable() && tileArray[initIndex + 21].getDead() === 0 && tileArray[initIndex + 21].getInfected() === 0) {
+            if (tileArray[initIndex + 21].getName() != "bridge" && tileArray[initIndex + 21].infectable() && tileArray[initIndex + 21].getDead() === 0 && tileArray[initIndex + 21].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 21);
             }
         }
+
+        // check to see if hasBridge == true. if so, follow the bridge until we end up on land
+        // we add the land we find to surrounding tiles if its not infected yet
+        // (we only need to check north/south/east/west! convenient.)
+        // for this check, we assume that:
+        // 1) the bridge connects to land (aka doesnt go to the edge of the screen)
+        // 2) the bridge selected is, in fact, infectable and not blocked off by an action
+        // 3) the bridge is a straight line--it only goes north to south or west to east. no diagonal bridges allowed!
+
+        if(hasBridge){
+            //loop through how many bridge indexes we have
+            console.log("attempting to spread across bridge");
+            for(let i = 0; i < bridgeIndexes.length; i++){
+                //save the x and y pos of the bridges, just in case?
+                let bridgeX = initIndex%20;
+                let bridgeY = Math.floor(initIndex/20);
+                let currentBridgeIndex = bridgeIndexes[i];
+
+                let direction = 0; //saves the # we add to the index to find the next bridge/land tile
+                //check north
+                if(tileArray[currentBridgeIndex - 20].getName() === "bridge"){
+                    direction = -20;
+                }
+                //check west
+                else if(tileArray[currentBridgeIndex - 1].getName() === "bridge"){
+                    direction = -1;
+                }
+                //check east
+                else if(tileArray[currentBridgeIndex + 1].getName() === "bridge"){
+                    direction = 1;
+                }
+                //check south
+                else if(tileArray[currentBridgeIndex + 20].getName() === "bridge"){
+                    direction = 20;
+                }
+
+                let nextTile = tileArray[currentBridgeIndex + direction];
+                currentBridgeIndex = currentBridgeIndex + direction;
+
+                //continue in the direction the bridge is heading until we find a tile is not a bridge tile
+                while(nextTile.getName() === "bridge"){
+                    nextTile = tileArray[currentBridgeIndex + direction];
+                    currentBridgeIndex = currentBridgeIndex + direction;
+                }
+
+                //push the tile we've found to "suroundingTiles" array if no ones been infected yet
+                if(nextTile.getDead() === 0 && nextTile.getInfected() === 0){
+                    surroundingTiles.push(currentBridgeIndex);
+                }
+            }
+        }
+
         return surroundingTiles;
     }
 }
