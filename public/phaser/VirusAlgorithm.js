@@ -25,13 +25,13 @@ class VirusAlgorithm {
         // determines how many people must be infected in a tile before the algorithm checks if the virus spreads
         this.difficultyRatio = 0;
         if (this.difficulty.name === "easy") {
-            this.difficultyRatio = 0.5
+            this.difficultyRatio = 0.75
         }
         else if (this.difficulty.name === "medium") {
-            this.difficultyRatio = 0.4
+            this.difficultyRatio = 0.6
         }
         else {
-            this.difficultyRatio = 0.3;
+            this.difficultyRatio = 0.5;
         }
 
         // push the initial tiles that have been infected to the infectedTiles array.

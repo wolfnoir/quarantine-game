@@ -26,7 +26,7 @@ class City{
         let numOfInfectableTiles = 0;
 
         for(let i = 0; i < this.cityTiles.length; i++){
-            if(this.cityTiles[i].infectable()){
+            if(this.cityTiles[i].infectable() && this.cityTiles[i].getName() != "bridge"){
                 totalMorale += this.cityTiles[i].getMorale();
                 numOfInfectableTiles += 1;
             }
