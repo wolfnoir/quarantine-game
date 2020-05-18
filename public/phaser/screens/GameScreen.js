@@ -257,6 +257,11 @@ class GameScreen extends Phaser.Scene {
 
 		//reset button colors
 		//@TODO: Add code
+		for(let i = 0; i < this.globalActionButtons.length; i++){
+			let button = this.globalActionButtons[i];
+			button.setHover(true);
+			button.fillColor = 0xffffff;
+		}
 	}
 
 	createGlobalActionButtons() {
@@ -402,6 +407,7 @@ class GameScreen extends Phaser.Scene {
 				action.toggleTaken();
 				this.game.gameData.energy -= action.getCost();
 				button.fillColor = 0x696969;
+				button.toggleHover();
 			}
 		}
 
@@ -409,6 +415,7 @@ class GameScreen extends Phaser.Scene {
 			action.toggleTaken();
 			this.game.gameData.energy += action.getCost();
 			button.fillColor = 0xFFFFFF;
+			button.toggleHover();
 		}
 	}
 
