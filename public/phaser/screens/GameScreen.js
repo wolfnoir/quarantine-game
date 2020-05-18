@@ -91,7 +91,7 @@ class GameScreen extends Phaser.Scene {
 		this.selectMarker.setOrigin(0.5, 0.5);
 
 		//create the infobox for hovering over tiles
-		this.infoBox = this.add.rectangle(0, 0, 140, 50, 0xffffff).setOrigin(0, 0.5).setDepth(1);
+		this.infoBox = this.add.rectangle(0, 0, 140, 75, 0xffffff).setOrigin(0, 0.5).setDepth(1);
 		this.infoText = this.add.text(0, 0, "", { fontFamily: '"Courier New"', fontSize: '14px', fontWeight: 'bold', color: '#000000' }).setDepth(1);;
 
 		//makes the top bar displaying information about threat, morale, and cure
@@ -133,14 +133,14 @@ class GameScreen extends Phaser.Scene {
 			//displays information about the tile the mouse is currently hovering over
 			if (tilePos !== null) {
 				tile = this.game.city.getTile(tilePos.x, tilePos.y);
-				if(pointer.isDown && tile.isInfectable  && pointer.x > 200 && pointer.y > 150){
+				if(pointer.isDown && tile.isInfectable && pointer.x > 200 && pointer.y > 150){
 					this.tileClicked(tile, snappedWorldPoint.x, snappedWorldPoint.y);
 				}
 			}
 
 			if (tile !== undefined && tilePos !== null) {
 				if (tile.isInfectable) {
-					if (snappedWorldPoint.x + 250 > this.game.config.width) {
+					if (snappedWorldPoint.x + 200 > this.game.config.width) {
 						this.infoBox.setPosition(snappedWorldPoint.x - 148, snappedWorldPoint.y + 25);
 						this.infoText.setPosition(snappedWorldPoint.x - 146, snappedWorldPoint.y + 3);
 					}
@@ -149,7 +149,9 @@ class GameScreen extends Phaser.Scene {
 						this.infoText.setPosition(snappedWorldPoint.x + 62, snappedWorldPoint.y + 3);
 					}
 
-					this.infoText.setText("Population: " + tile.population + "\nInfected: " + tile.infected + "\nDead: " + tile.dead);
+					this.infoText.setText("Population: " + tile.population + "\nInfected: " + tile.infected +
+						"\nDead: " + tile.dead + "\nMorale: " + Math.floor(tile.morale * 100) + "%");
+					this.infoText.setPosition(this.infoBox.x + 2, this.infoBox.y - 30);
 					//show the infobox
 					this.infoBox.setAlpha(1);
 					this.infoText.setAlpha(1);

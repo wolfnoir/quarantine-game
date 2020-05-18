@@ -25,13 +25,13 @@ class VirusAlgorithm {
         // determines how many people must be infected in a tile before the algorithm checks if the virus spreads
         this.difficultyRatio = 0;
         if (this.difficulty.name === "easy") {
-            this.difficultyRatio = 0.75
-        }
-        else if (this.difficulty.name === "medium") {
             this.difficultyRatio = 0.6
         }
+        else if (this.difficulty.name === "medium") {
+            this.difficultyRatio = 0.5
+        }
         else {
-            this.difficultyRatio = 0.5;
+            this.difficultyRatio = 0.4;
         }
 
         // push the initial tiles that have been infected to the infectedTiles array.
@@ -48,6 +48,7 @@ class VirusAlgorithm {
     runVirusTurn() {
         // Check to see if any special events will occur. If so, apply the effects.
         // Check which tiles are currently infected (greater than 0% infected).
+        let newTilesInfected = [];
         for (let i = 0; i < this.infectedTiles.length; i++) {
             let index = this.infectedTiles[i];
             //calculates the total original population of the tile
@@ -120,12 +121,12 @@ class VirusAlgorithm {
                     if (surroundingTileArray.length > 0) {
                         let num = Math.floor(Math.random() * surroundingTileArray.length)
                         let newTileIndex = surroundingTileArray[num];
-                        // pick a random number of people to be infected (between 1,000-2,000 * virus infectivity)
-                        let numberOfNewInfected = Math.floor(Math.random() * 1000 * this.difficulty.getInfectivity()) + 1000;
+                        // pick a random number of people to be infected
+                        let numberOfNewInfected = Math.floor(Math.random() * (1000 * this.difficulty.getInfectivity()));
                         //infect the new tile with the new number of infected
                         this.cityTiles[newTileIndex].infected = numberOfNewInfected;
                         //add the new tile index to the array of infectedTiles
-                        this.infectedTiles.push(newTileIndex);
+                        newTilesInfected.push(newTileIndex);
                     }
                 }
             }
@@ -136,7 +137,10 @@ class VirusAlgorithm {
             this.cityTiles[index].dead += died;
             this.cityTiles[index].morale = newMorale;
         }
-        console.log("Tiles infected: " + this.infectedTiles.length);
+
+        for(let i = 0; i < newTilesInfected.length; i++){
+            this.infectedTiles.push(newTilesInfected[i]);
+        }
 
         //@TODO:
         // * Calculate overall threat level based on infection, severity, morality of the disease, and the city-wide morale
