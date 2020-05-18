@@ -27,6 +27,8 @@ class LevelScreen extends Phaser.Scene {
 		this.background.setOrigin(0, 0).setAlpha(0.8);
 		this.add.image(this.game.config.width/2, 50, 'mapSelectTitle').setScale(0.5).setOrigin(0.5);
 
+		this.add.rectangle(this.game.config.width/2 + 30, this.game.config.height/2 + 40, 500, 600, 0x000000, 0.8);
+
 		var newYorkImg = this.add.image(150, 170, 'newYork').setOrigin(0.5).setScale(0.5);
 		var londonImg = this.add.image(150, this.game.config.height/2+40, 'london').setOrigin(0.5).setScale(0.5);
 		var seoulImg = this.add.image(150, this.game.config.height - 100, 'seoul').setOrigin(0.5).setScale(0.5);
@@ -34,26 +36,33 @@ class LevelScreen extends Phaser.Scene {
 		var nyButton = new RectangleButton(this, 400, newYorkImg.y - 50, 200, 50, 0xFFFFFF, 1, 'NEW YORK');
 		nyButton.on('pointerdown', () => this.nySelected());
 
-		var nyText = this.add.text(nyButton.x, nyButton.y + 50,
-			"Description TBA",
+		var nyText = this.add.text(nyButton.x - 100, nyButton.y + 75,
+			"Recommended for beginners learning how to play\n"+
+			"the game. Standard map, small size. All you have\n" +
+			"to do is focus on fighting against the virus\n"+
+			"while you research a cure.\n",
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
-			.setOrigin(0.5);
+			.setOrigin(0, 0.5);
 		
 		var londonButton = new RectangleButton(this, 400, londonImg.y - 50, 200, 50, 0xFFFFFF, 1, 'LONDON');
 		londonButton.on('pointerdown', () => this.londonSelected());
 
-		var londonText = this.add.text(londonButton.x, londonButton.y + 50,
-			"Description TBA",
+		var londonText = this.add.text(londonButton.x - 100, londonButton.y + 75,
+			"This is where things start to heat up. The NHS\n"+
+			"does its best to serve the people, but can\n" +
+			"they handle an outbreak like this?",
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
-			.setOrigin(0.5);
+			.setOrigin(0, 0.5);
 
 		var seoulButton = new RectangleButton(this, 400, seoulImg.y - 50, 200, 50, 0xFFFFFF, 1, 'SEOUL');
 		seoulButton.on('pointerdown', () => this.seoulSelected());
 
-		var seoulText = this.add.text(seoulButton.x, seoulButton.y + 50,
-			"Description TBA",
+		var seoulText = this.add.text(seoulButton.x - 100, seoulButton.y + 75,
+			"Searching for a cure isn't the only thing you\n"+
+			"have to worry about--if the pandemic reaches\n"+
+			"the airport, it's game over!",
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
-			.setOrigin(0.5);
+			.setOrigin(0, 0.5);
 	}
 
 	nySelected(){

@@ -88,7 +88,7 @@ class VirusAlgorithm {
             let died = 0;
             random = Math.random();
             if (currentInfected > 0 && deadPeople != totalPopulation && random <= lethality) {
-                died = Math.floor(currentInfected * lethality);
+                died = Math.floor(currentInfected * lethality * 0.5);
             }
 
             // apply the number of newly infected/recovered
@@ -103,7 +103,7 @@ class VirusAlgorithm {
             }
 
             // Calculate the new morale for the tile using severity and morality.
-            newMorale = newMorale - (severity * (newInfected + currentInfected) / totalPopulation + deadPeople / totalPopulation);
+            newMorale = newMorale - (severity * ((newInfected + currentInfected) / totalPopulation) + deadPeople / totalPopulation)/2;
             if (newMorale < 0) {
                 newMorale = 0;
             }
