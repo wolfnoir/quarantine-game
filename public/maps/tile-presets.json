@@ -36,7 +36,7 @@
             "dead": 0,
             "morale": 1.0,
             "infectivity": 0.2,
-            "recovery": 0.6,
+            "recovery": 0.8,
             "isInfectable": true
         }
     ],
@@ -136,6 +136,20 @@
             "infectivity": 0,
             "recovery": 0,
             "isInfectable": false
+        }
+    ],
+
+    "11": [
+        {
+            "name": "airport",
+            "id": 11,
+            "population": 3000,
+            "infected": 0,
+            "dead": 0,
+            "morale": 1.0,
+            "infectivity": 0.8,
+            "recovery": 0.2,
+            "isInfectable": true
         }
     ]
 }

@@ -30,15 +30,15 @@
  "tileheight":50,
  "tilesets":[
         {
-         "columns":10,
+         "columns":11,
          "firstgid":1,
-         "image":"tiles/quarantine-tiles.png",
+         "image":"tiles/quarantine-tiles-seoul.png",
          "imageheight":50,
-         "imagewidth":500,
+         "imagewidth":550,
          "margin":0,
          "name":"QuarantineTiles",
          "spacing":0,
-         "tilecount":10,
+         "tilecount":11,
          "tileheight":50,
          "tilewidth":50
         }],

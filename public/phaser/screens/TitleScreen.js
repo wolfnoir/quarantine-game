@@ -7,13 +7,11 @@ class TitleScreen extends Phaser.Scene {
 	}
 
 	preload() {
-		//this.load.image('background', 'assets/virus-bg.png');
-		//this.load.image('titleText', 'assets/quarantine-title-text.png');
 		this.load.audio('chimeSFX', 'assets/sfx/soft-chime.wav');
 	}
 
 	create() {
-		//this.game.music.play()
+		this.game.music.play()
 
 		//Resetting all global variables
 		this.game.resetAll();
