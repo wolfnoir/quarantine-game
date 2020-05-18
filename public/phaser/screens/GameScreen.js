@@ -35,7 +35,9 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	create() {
-		//this.game.music.play();
+		this.game.gameData.threatLevel = (this.game.difficulty.infectivity)/3 +
+                                        (this.game.difficulty.severity)/3 + 
+                                        (this.game.difficulty.lethality)/2;
 
 		//sets up arrays for the global action buttons and tile action buttons
 		this.globalActionButtons = [];
@@ -171,6 +173,11 @@ class GameScreen extends Phaser.Scene {
 			this.marker.setPosition(snappedWorldPoint.x, snappedWorldPoint.y);
 		}
 
+		var redBar = this.game.gameData.progressBarRed;
+		redBar.clear();
+		redBar.fillStyle(0xff0000, 1);
+		redBar.fillRect(this.game.config.width - 300, 20, Math.floor(this.game.gameData.threatLevel * 200), 30);
+
 		var greenBar = this.game.gameData.progressBarGreen;
 		greenBar.clear();
 		greenBar.fillStyle(0x00ff00, 1);
@@ -256,7 +263,11 @@ class GameScreen extends Phaser.Scene {
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
 		//reset button colors
-		//@TODO: Add code
+		for(let i = 0; i < this.globalActionButtons.length; i++){
+			let button = this.globalActionButtons[i];
+			button.setHover(true);
+			button.fillColor = 0xffffff;
+		}
 	}
 
 	createGlobalActionButtons() {
@@ -320,7 +331,7 @@ class GameScreen extends Phaser.Scene {
 
 		var threatText = this.add.text(this.game.config.width - 380, 25, 'Threat:',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
-		this.threatPercent = this.add.text(this.game.config.width - 80, 25, '0%',
+		this.threatPercent = this.add.text(this.game.config.width - 80, 25, Math.floor(this.game.gameData.threatLevel * 100) + '%',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 
 		var progressBoxRed = this.add.graphics().setScrollFactor(0).setDepth(1);
@@ -331,7 +342,7 @@ class GameScreen extends Phaser.Scene {
 
 		var progressBarRed = this.game.gameData.progressBarRed = this.add.graphics().setScrollFactor(0).setDepth(1);
 		progressBarRed.fillStyle(0xff0000, 1);
-		progressBarRed.fillRect(this.game.config.width - 300, 20, 150, 30);
+		progressBarRed.fillRect(this.game.config.width - 300, 20, Math.floor(this.game.gameData.threatLevel * 200), 30);
 
 
 		var moraleText = this.add.text(this.game.config.width - 380, 65, 'Morale:',
@@ -402,6 +413,7 @@ class GameScreen extends Phaser.Scene {
 				action.toggleTaken();
 				this.game.gameData.energy -= action.getCost();
 				button.fillColor = 0x696969;
+				button.toggleHover();
 			}
 		}
 
@@ -409,6 +421,7 @@ class GameScreen extends Phaser.Scene {
 			action.toggleTaken();
 			this.game.gameData.energy += action.getCost();
 			button.fillColor = 0xFFFFFF;
+			button.toggleHover();
 		}
 	}
 

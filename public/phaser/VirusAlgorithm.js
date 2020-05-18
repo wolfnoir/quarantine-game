@@ -142,8 +142,10 @@ class VirusAlgorithm {
             this.infectedTiles.push(newTilesInfected[i]);
         }
 
-        //@TODO:
-        // * Calculate overall threat level based on infection, severity, morality of the disease, and the city-wide morale
+        // * Calculate overall threat level based on infection, severity, and morality of the disease
+        this.game.gameData.threatLevel = (this.difficulty.infectivity + this.tempInfectivity)/3 +
+                                        (this.difficulty.severity + this.tempSeverity)/3 + 
+                                        (this.difficulty.lethality + this.tempLethality)/2;
 
         // Increase the cure progress.
         this.game.gameData.cure = this.game.gameData.cure + this.game.difficulty.getDailyCureProgress() + this.game.effects.getCureProgress();
@@ -166,7 +168,7 @@ class VirusAlgorithm {
     }
 
     // returns an array of integers that point to the infectable tiles that surround a partiulcar tile at initIndex
-    // @TODO: add something that checks if something spreads across a bridge. this shouldn't be too difficult
+
     getSurroundingTiles(tileArray, initIndex) {
         //get the column (x) and row (y) from initIndex
         let x = initIndex%20;

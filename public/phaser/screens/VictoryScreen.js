@@ -37,6 +37,9 @@ class VictoryScreen extends Phaser.Scene {
 		music.stop();
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
+		//@TODO: This does not reset any of the city statistics, for some reason.
+		//it visually clears everything, but hovering over tiles reveals another story
+		//fix this!!
 		this.game.resetData();
 		this.scene.start("gameScreen");
 	}
