@@ -168,7 +168,8 @@ class VirusAlgorithm {
     }
 
     // returns an array of integers that point to the infectable tiles that surround a partiulcar tile at initIndex
-
+    //@TODO: Something goes wrong when the infection reaches the right side of the screen--it wraps around to infect the tiles
+    //on the left! yikes! fix this!!!
     getSurroundingTiles(tileArray, initIndex) {
         //get the column (x) and row (y) from initIndex
         let x = initIndex%20;
@@ -190,7 +191,7 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex - 20);
             }
-            if (tileArray[initIndex - 20].getName() != "bridge" && tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 && tileArray[initIndex - 20].getInfected() === 0) {
+            else if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 && tileArray[initIndex - 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 20);
             }
         }
@@ -207,7 +208,7 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex - 1);
             }
-            if (tileArray[initIndex - 1].getName() != "bridge" && tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 && tileArray[initIndex - 1].getInfected() === 0) {
+            else if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 && tileArray[initIndex - 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 1);
             }
         }
@@ -217,7 +218,7 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex + 1);
             }
-            if (tileArray[initIndex + 1].getName() != "bridge" && tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 && tileArray[initIndex + 1].getInfected() === 0) {
+            else if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 && tileArray[initIndex + 1].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 1);
             }
         }
@@ -233,7 +234,7 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex + 20);
             }
-            if (tileArray[initIndex + 20].getName() != "bridge" && tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 && tileArray[initIndex + 20].getInfected() === 0) {
+            else if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 && tileArray[initIndex + 20].getInfected() === 0) {
                 surroundingTiles.push(initIndex + 20);
             }
         }

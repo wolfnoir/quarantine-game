@@ -15,6 +15,8 @@ class GameScreen extends Phaser.Scene {
 	constructor() {
 		super({ key: 'gameScreen' });
 		this.selectedTile = null;
+		this.virusAlgorithm;
+		this.offLimitTiles = [];
 	}
 
 	init() {
@@ -23,7 +25,7 @@ class GameScreen extends Phaser.Scene {
 
 	preload() {
 		//import tileset image and map json file
-		this.load.image("tiles", "../../maps/tiles/quarantine-tiles.png");
+		this.load.image("tiles", "../../maps/tiles/quarantine-tiles-seoul.png");
 
 		this.load.tilemapTiledJSON("Manhattan", "../../maps/manhattan.json");
 		this.load.tilemapTiledJSON("London", "../../maps/london.json");
@@ -35,6 +37,7 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	create() {
+		//sets the initial threat level
 		this.game.gameData.threatLevel = (this.game.difficulty.infectivity)/3 +
                                         (this.game.difficulty.severity)/3 + 
                                         (this.game.difficulty.lethality)/2;
@@ -43,9 +46,19 @@ class GameScreen extends Phaser.Scene {
 		this.globalActionButtons = [];
 		this.tileActionButtons = [];
 
+		//adding 'off limit' tiles.
+		if(this.game.cityName === "Seoul"){
+			let cityTiles = this.game.city.cityTiles;
+			for(let i = 0; i < cityTiles.length; i++){
+				if(cityTiles[i].getName() === "airport"){
+					this.offLimitTiles.push(cityTiles[i]);
+				}
+			}
+		}
+
 		//add randomly generated starting positions based on the map
 		var initialTiles = this.generateStartingPositions();
-		var virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
+		this.virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
 		//Set up actions
 		var actionjs = this.cache.json.get('actions');
@@ -115,7 +128,7 @@ class GameScreen extends Phaser.Scene {
 		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
-		nextTurnButton.on('pointerdown', () => this.nextTurn(virusAlgorithm, this.dayCounterText, this.populationText, this.threatPercent, this.moralePercent, this.curePercent));
+		nextTurnButton.on('pointerdown', () => this.nextTurn(this.virusAlgorithm, this.dayCounterText, this.populationText, this.threatPercent, this.moralePercent, this.curePercent));
 	}
 
 	update(time, delta) {
@@ -141,7 +154,7 @@ class GameScreen extends Phaser.Scene {
 			}
 
 			if (tile !== undefined && tilePos !== null) {
-				if (tile.isInfectable) {
+				if (tile.isInfectable && (tile.name != "bridge" || tile.name != "airport")) {
 					if (snappedWorldPoint.x + 200 > this.game.config.width) {
 						this.infoBox.setPosition(snappedWorldPoint.x - 148, snappedWorldPoint.y + 25);
 						this.infoText.setPosition(snappedWorldPoint.x - 146, snappedWorldPoint.y + 3);
@@ -461,7 +474,11 @@ class GameScreen extends Phaser.Scene {
 			this.scene.start("victoryScreen");
 
 		if(this.game.cityName === "Seoul"){
-			//@TODO: add seoul end conditions
+			for(let i = 0; i < this.offLimitTiles.length; i++){
+				if(this.offLimitTiles[i].getInfected() > 0){
+					this.scene.start("defeatScreen");
+				}
+			}
 		}
 	}
 }
