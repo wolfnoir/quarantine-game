@@ -279,51 +279,62 @@ class GameScreen extends Phaser.Scene {
 		for(let i = 0; i < this.globalActionButtons.length; i++){
 			let button = this.globalActionButtons[i];
 			button.setHover(true);
-			button.fillColor = 0xffffff;
+			button.fillColor = 0x7bbfc7;
 		}
 	}
 
 	createGlobalActionButtons() {
-		var reduceInfectivityButton = new RectangleButton(this, 100, 220, 150, 50, 0xFFFFFF, 1, 'REDUCE\nINFECTIVITY').setDepth(1).setScrollFactor(0);
-		reduceInfectivityButton.buttonText.setScrollFactor(0).setDepth(1);
-		reduceInfectivityButton.on('pointerdown', () => this.takeAction(0, reduceInfectivityButton));
+		var livestreamAction = new ActionButton(this, 100, 240, "LIVESTREAM\nENERTAINMENT", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
+		livestreamAction.title.setScrollFactor(0);
+		livestreamAction.energyText.setScrollFactor(0);
+		livestreamAction.text.setScrollFactor(0);
+		livestreamAction.setEnergyCost(5);
+		//@TODO: pointerdown take action here
 
-		var reduceSeverityButton = new RectangleButton(this, 100, 280, 150, 50, 0xFFFFFF, 1, 'REDUCE\nSEVERITY').setDepth(1).setScrollFactor(0);
-		reduceSeverityButton.buttonText.setScrollFactor(0).setDepth(1);
-		reduceSeverityButton.on('pointerdown', () => this.takeAction(1, reduceSeverityButton));
+		var medicineGlobal = new ActionButton(this, 100, 345, "DISTRIBUTE\nMEDICINE", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
+		medicineGlobal.title.setScrollFactor(0);
+		medicineGlobal.energyText.setScrollFactor(0);
+		medicineGlobal.text.setScrollFactor(0);
+		medicineGlobal.setEnergyCost(8);
+		//@TODO: pointerdown take action here
 
-		var reduceLethalityButton = new RectangleButton(this, 100, 340, 150, 50, 0xFFFFFF, 1, 'REDUCE\nLETHALITY').setDepth(1).setScrollFactor(0);
-		reduceLethalityButton.buttonText.setScrollFactor(0).setDepth(1);
-		reduceLethalityButton.on('pointerdown', () => this.takeAction(2, reduceLethalityButton));
+		var boostCureButton = new ActionButton(this, 100, 450, "BOOST CURE", "++ cure progress").setDepth(1).setScrollFactor(0);
+		boostCureButton.title.setScrollFactor(0);
+		boostCureButton.energyText.setScrollFactor(0);
+		boostCureButton.text.setScrollFactor(0);
+		boostCureButton.setEnergyCost(10);
+		//@TODO: pointerdown take action here
 
-		var increaseRecoveryButton = new RectangleButton(this, 100, 400, 150, 50, 0xFFFFFF, 1, 'INCREASE\nRECOVERY').setDepth(1).setScrollFactor(0);
-		increaseRecoveryButton.buttonText.setScrollFactor(0).setDepth(1);
-		increaseRecoveryButton.on('pointerdown', () => this.takeAction(3, increaseRecoveryButton));
+		var psaButton = new ActionButton(this, 100, 555, "PSA FROM\nMAYOR", "--- infectivity\n+ morale").setDepth(1).setScrollFactor(0);
+		psaButton.title.setScrollFactor(0);
+		psaButton.energyText.setScrollFactor(0);
+		psaButton.text.setScrollFactor(0);
+		psaButton.setEnergyCost(5);
+		//@TODO: pointerdown take action here
 
-		var increaseMoraleButton = new RectangleButton(this, 100, 460, 150, 50, 0xFFFFFF, 1, 'BOOST\nMORALE').setDepth(1).setScrollFactor(0);
-		increaseMoraleButton.buttonText.setScrollFactor(0).setDepth(1);
-		increaseMoraleButton.on('pointerdown', () => this.takeAction(4, increaseMoraleButton));
-
-		var increaseCureButton = new RectangleButton(this, 100, 520, 150, 50, 0xFFFFFF, 1, 'BOOST\nCURE').setDepth(1).setScrollFactor(0);
-		increaseCureButton.buttonText.setScrollFactor(0).setDepth(1);
-		increaseCureButton.on('pointerdown', () => this.takeAction(5, increaseCureButton));
-
-		this.globalActionButtons.push(reduceInfectivityButton);
-		this.globalActionButtons.push(reduceSeverityButton);
-		this.globalActionButtons.push(reduceLethalityButton);
-		this.globalActionButtons.push(increaseRecoveryButton);
-		this.globalActionButtons.push(increaseMoraleButton);
-		this.globalActionButtons.push(increaseCureButton);
+		this.globalActionButtons.push(livestreamAction);
+		this.globalActionButtons.push(medicineGlobal);
+		this.globalActionButtons.push(boostCureButton);
+		this.globalActionButtons.push(psaButton);
 	}
 
 	createTileActionButtons() {
-		var backButton = new RectangleButton(this, 100, 550, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
+		var recoveryButton = new ActionButton(this, 100, 240, "TEMPORARY\nCLINIC", "+++ recovery\n-- severity").setDepth(1).setScrollFactor(0);
+		recoveryButton.title.setScrollFactor(0);
+		recoveryButton.energyText.setScrollFactor(0);
+		recoveryButton.text.setScrollFactor(0);
+		recoveryButton.setEnergyCost(5);
+		recoveryButton.hideButton();
+		//@TODO: pointerdown take action here
+
+		var backButton = new RectangleButton(this, 100, 595, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
 		backButton.on('pointerdown', () => this.toggleActionButtons("global"));
 		backButton.hideButton();
 
 		//@TODO: add buttons for tile specific actions
-
+		//@TODO: how do we deal with multiple tile actions across multiple tiles?
+		this.tileActionButtons.push(recoveryButton);
 		this.tileActionButtons.push(backButton);
 	}
 
@@ -425,7 +436,7 @@ class GameScreen extends Phaser.Scene {
 			if (action.getCost() <= this.game.gameData.energy) {
 				action.toggleTaken();
 				this.game.gameData.energy -= action.getCost();
-				button.fillColor = 0x696969;
+				button.fillColor = 0x345559;
 				button.toggleHover();
 			}
 		}
@@ -433,7 +444,7 @@ class GameScreen extends Phaser.Scene {
 		else {
 			action.toggleTaken();
 			this.game.gameData.energy += action.getCost();
-			button.fillColor = 0xFFFFFF;
+			button.fillColor = 0x7bbfc7;
 			button.toggleHover();
 		}
 	}
