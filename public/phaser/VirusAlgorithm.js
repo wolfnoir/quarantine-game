@@ -17,6 +17,13 @@ class VirusAlgorithm {
         this.cityTiles = game.city.cityTiles;
         this.difficulty = game.difficulty;
 
+        this.totalTiles = 0;
+        for(let i = 0; i < this.cityTiles.length; i++){
+            if(this.cityTiles[i].infectable() && this.cityTiles[i].getName() != "bridge"){
+                this.totalTiles = this.totalTiles + 1;
+            }
+        }
+
         this.tempInfectivity = 0;
         this.tempSeverity = 0;
         this.tempLethality = 0;
@@ -62,14 +69,31 @@ class VirusAlgorithm {
             //reads in the current amount of dead people in the tile
             let deadPeople = this.cityTiles[index].getDead();
 
+            //gets the actions for that specific tile
+            this.cityTiles[index].updateEffects();
+
+            let tileActions = this.cityTiles[index].actions;
+            let tileInfectivity = 0;
+            let tileSeverity = 0;
+            let tileLethality = 0;
+            let tileRecovery = 0;
+            let tileMorale = 0;
+            for(let i = 0; i < tileActions.length; i++){
+                tileInfectivity = tileinfectivity + tileActions[i].getInfectivity();
+                tileSeverity = tileSeverity + tileActions[i].getSeverity();
+                tileLethality = tileLethality + tileActions[i].getLethality();
+                tileRecovery = tileRecovery + tileActions[i].getRecovery();
+                tileMorale = tileMorale + tileActions[i].tileMorale();
+            }
+
             //virus statistics
-            let infectivity = this.difficulty.getInfectivity() + this.game.effects.getInfectivity() + this.tempInfectivity;
-            let severity = this.difficulty.getSeverity() + this.game.effects.getSeverity() + this.tempSeverity;
-            let lethality = this.difficulty.getLethality() + this.game.effects.getLethality() + this.tempLethality;
+            let infectivity = this.difficulty.getInfectivity() + this.game.effects.getInfectivity() + this.tempInfectivity + tileInfectivity;
+            let severity = this.difficulty.getSeverity() + this.game.effects.getSeverity() + this.tempSeverity + tileSeverity;
+            let lethality = this.difficulty.getLethality() + this.game.effects.getLethality() + this.tempLethality + tileLethality;
 
             //individual tile statistics, with the effects taking place
-            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + this.tempRecovery;
-            let newMorale = this.cityTiles[index].getMorale() + this.game.effects.getMorale();
+            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + this.tempRecovery + tileRecovery;
+            let newMorale = this.cityTiles[index].getMorale() + this.game.effects.getMorale() + tileMorale;
 
             // Calculate how many new people are infected for each tile
             let newInfected = 0;
@@ -139,6 +163,8 @@ class VirusAlgorithm {
             this.cityTiles[index].infected = currentInfected + newInfected;
             this.cityTiles[index].dead += died;
             this.cityTiles[index].morale = newMorale;
+
+            this.cityTiles[index].clearEffects();
         }
 
         for(let i = 0; i < newTilesInfected.length; i++){
@@ -148,7 +174,7 @@ class VirusAlgorithm {
         // * Calculate overall threat level based on infection, severity, and morality of the disease
         this.game.gameData.threatLevel = (this.difficulty.infectivity + this.tempInfectivity)/3 +
                                         (this.difficulty.severity + this.tempSeverity)/3 + 
-                                        (this.difficulty.lethality + this.tempLethality)/2 + (this.infectedTiles.length/this.cityTiles.length)/2;
+                                        (this.difficulty.lethality + this.tempLethality)/2 + (this.infectedTiles.length/this.totalTiles)/3;
 
         // Increase the cure progress.
         this.game.gameData.cure = this.game.gameData.cure + this.game.difficulty.getDailyCureProgress() + this.game.effects.getCureProgress();

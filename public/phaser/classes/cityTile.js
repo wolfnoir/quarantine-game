@@ -13,7 +13,7 @@ class CityTile {
         this.actions = [];
         
         //@TODO: make tile-specific actions for this list
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 0; i < 6; i++) {
 			var obj = new Action(actionjs[i.toString()]);
 			this.actions.push(obj);
 		}
