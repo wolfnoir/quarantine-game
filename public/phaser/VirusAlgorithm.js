@@ -107,6 +107,9 @@ class VirusAlgorithm {
             if (newMorale < 0) {
                 newMorale = 0;
             }
+            else if(newMorale > 1){
+                newMorale = 1;
+            }
 
             // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
             if (this.cityTiles[index].getInfectedPercentage() > this.difficultyRatio) {

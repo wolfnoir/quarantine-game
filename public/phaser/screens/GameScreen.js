@@ -63,7 +63,7 @@ class GameScreen extends Phaser.Scene {
 		//Set up actions
 		var actionjs = this.cache.json.get('actions');
 		this.game.actions = [];
-		for (let i = 1; i <= 7; i++) {
+		for (let i = 1; i <= 10; i++) {
 			var obj = new Action(actionjs[i.toString()]);
 			this.game.actions.push(obj);
 		}
@@ -292,14 +292,14 @@ class GameScreen extends Phaser.Scene {
 		livestreamAction.energyText.setScrollFactor(0);
 		livestreamAction.text.setScrollFactor(0);
 		livestreamAction.setEnergyCost(5);
-		//@TODO: pointerdown take action here
+		livestreamAction.on('pointerdown', () => this.takeAction(7, livestreamAction));
 
 		var medicineGlobal = new ActionButton(this, 100, 310, "DISTRIBUTE\nMEDICINE", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
 		medicineGlobal.title.setScrollFactor(0);
 		medicineGlobal.energyText.setScrollFactor(0);
 		medicineGlobal.text.setScrollFactor(0);
 		medicineGlobal.setEnergyCost(8);
-		//@TODO: pointerdown take action here
+		medicineGlobal.on('pointerdown', () => this.takeAction(8, medicineGlobal));
 
 		var boostCureButton = new ActionButton(this, 100, 415, "BOOST CURE", "++ cure progress").setDepth(1).setScrollFactor(0);
 		boostCureButton.title.setScrollFactor(0);
@@ -313,7 +313,7 @@ class GameScreen extends Phaser.Scene {
 		psaButton.energyText.setScrollFactor(0);
 		psaButton.text.setScrollFactor(0);
 		psaButton.setEnergyCost(5);
-		//@TODO: pointerdown take action here
+		psaButton.on('pointerdown', () => this.takeAction(9, psaButton));
 
 		this.globalActionButtons.push(testingButton);
 		this.globalActionButtons.push(livestreamAction);
