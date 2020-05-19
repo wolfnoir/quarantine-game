@@ -312,7 +312,7 @@ class GameScreen extends Phaser.Scene {
 		psaButton.title.setScrollFactor(0);
 		psaButton.energyText.setScrollFactor(0);
 		psaButton.text.setScrollFactor(0);
-		psaButton.setEnergyCost(5);
+		psaButton.setEnergyCost(6);
 		psaButton.on('pointerdown', () => this.takeAction(9, psaButton));
 
 		this.globalActionButtons.push(testingButton);

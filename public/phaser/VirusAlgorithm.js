@@ -148,7 +148,7 @@ class VirusAlgorithm {
         // * Calculate overall threat level based on infection, severity, and morality of the disease
         this.game.gameData.threatLevel = (this.difficulty.infectivity + this.tempInfectivity)/3 +
                                         (this.difficulty.severity + this.tempSeverity)/3 + 
-                                        (this.difficulty.lethality + this.tempLethality)/2;
+                                        (this.difficulty.lethality + this.tempLethality)/2 + (this.infectedTiles.length/this.cityTiles.length)/2;
 
         // Increase the cure progress.
         this.game.gameData.cure = this.game.gameData.cure + this.game.difficulty.getDailyCureProgress() + this.game.effects.getCureProgress();
