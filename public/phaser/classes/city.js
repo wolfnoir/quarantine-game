@@ -1,7 +1,9 @@
 class City{
     constructor(obj, presets, actions){
+        this.obj = obj
+        this.presets = presets
+        this.actions = actions
         this.cityTiles = [];
-
         var data = obj.layers[0].data;
 
         for(let i = 0; i < data.length; i++){
@@ -59,5 +61,17 @@ class City{
 
     getTile(x, y){
         return this.cityTiles[y * 20 + x];
+    }
+
+    reset(){
+        this.cityTiles = [];
+        var data = this.obj.layers[0].data;
+
+        for(let i = 0; i < data.length; i++){
+            var num = data[i];
+            var key = num.toString();
+            var tile = new CityTile(this.presets[key][0], this.actions);
+            this.cityTiles.push(tile);
+        }
     }
 }
