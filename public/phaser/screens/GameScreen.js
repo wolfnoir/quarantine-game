@@ -121,7 +121,7 @@ class GameScreen extends Phaser.Scene {
 		//create tile buttons on the side
 		this.createTileActionButtons();
 
-		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
+		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 45, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
 		nextTurnButton.on('pointerdown', () => this.nextTurn(this.virusAlgorithm, this.dayCounterText, this.populationText, this.threatPercent, this.moralePercent, this.curePercent));
@@ -329,9 +329,41 @@ class GameScreen extends Phaser.Scene {
 		recoveryButton.text.setScrollFactor(0);
 		recoveryButton.setEnergyCost(5);
 		recoveryButton.hideButton();
-		//@TODO: pointerdown take action here
+		recoveryButton.on('pointerdown', () => this.takeTilesetAction(5, boostCureButton));
 
-		var backButton = new RectangleButton(this, 100, 595, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
+		var livestreamAction = new ActionButton(this, 100, 205, "PLACE\nHOLDER", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
+		livestreamAction.title.setScrollFactor(0);
+		livestreamAction.energyText.setScrollFactor(0);
+		livestreamAction.text.setScrollFactor(0);
+		livestreamAction.setEnergyCost(5);
+		livestreamAction.hideButton();
+		livestreamAction.on('pointerdown', () => this.takeTilesetAction(7, livestreamAction));
+
+		var medicineGlobal = new ActionButton(this, 100, 310, "PLACE\nHOLDER", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
+		medicineGlobal.title.setScrollFactor(0);
+		medicineGlobal.energyText.setScrollFactor(0);
+		medicineGlobal.text.setScrollFactor(0);
+		medicineGlobal.setEnergyCost(8);
+		medicineGlobal.hideButton();
+		medicineGlobal.on('pointerdown', () => this.takeTilesetAction(8, medicineGlobal));
+
+		var boostCureButton = new ActionButton(this, 100, 415, "PLACE\nHOLDER", "++ cure progress").setDepth(1).setScrollFactor(0);
+		boostCureButton.title.setScrollFactor(0);
+		boostCureButton.energyText.setScrollFactor(0);
+		boostCureButton.text.setScrollFactor(0);
+		boostCureButton.setEnergyCost(12);
+		boostCureButton.hideButton();
+		boostCureButton.on('pointerdown', () => this.takeTilesetAction(5, boostCureButton));
+
+		var psaButton = new ActionButton(this, 100, 520, "PLACE\nHOLDER", "--- infectivity\n+ morale").setDepth(1).setScrollFactor(0);
+		psaButton.title.setScrollFactor(0);
+		psaButton.energyText.setScrollFactor(0);
+		psaButton.text.setScrollFactor(0);
+		psaButton.setEnergyCost(6);
+		psaButton.hideButton();
+		psaButton.on('pointerdown', () => this.takeTilesetAction(9, psaButton));
+
+		var backButton = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
 		backButton.on('pointerdown', () => this.toggleActionButtons("global"));
 		backButton.hideButton();
@@ -339,6 +371,10 @@ class GameScreen extends Phaser.Scene {
 		//@TODO: add buttons for tile specific actions
 		//@TODO: how do we deal with multiple tile actions across multiple tiles?
 		this.tileActionButtons.push(recoveryButton);
+		this.tileActionButtons.push(livestreamAction);
+		this.tileActionButtons.push(medicineGlobal);
+		this.tileActionButtons.push(boostCureButton);
+		this.tileActionButtons.push(psaButton);
 		this.tileActionButtons.push(backButton);
 	}
 
