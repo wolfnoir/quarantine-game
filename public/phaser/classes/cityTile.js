@@ -81,6 +81,10 @@ class CityTile {
         return this.isInfectable;
     }
 
+    getEffects(){
+        return this.effects;
+    }
+
     getAction(actionNum){
         return this.actions[actionNum];
     }
