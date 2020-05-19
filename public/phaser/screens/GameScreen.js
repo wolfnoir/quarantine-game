@@ -329,7 +329,7 @@ class GameScreen extends Phaser.Scene {
 		recoveryButton.text.setScrollFactor(0);
 		recoveryButton.setEnergyCost(5);
 		recoveryButton.hideButton();
-		recoveryButton.on('pointerdown', () => this.takeTilesetAction(5, boostCureButton));
+		recoveryButton.on('pointerdown', () => this.takeTileAction(5, boostCureButton));
 
 		var livestreamAction = new ActionButton(this, 100, 205, "PLACE\nHOLDER", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
 		livestreamAction.title.setScrollFactor(0);
@@ -337,7 +337,7 @@ class GameScreen extends Phaser.Scene {
 		livestreamAction.text.setScrollFactor(0);
 		livestreamAction.setEnergyCost(5);
 		livestreamAction.hideButton();
-		livestreamAction.on('pointerdown', () => this.takeTilesetAction(7, livestreamAction));
+		livestreamAction.on('pointerdown', () => this.takeTileAction(7, livestreamAction));
 
 		var medicineGlobal = new ActionButton(this, 100, 310, "PLACE\nHOLDER", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
 		medicineGlobal.title.setScrollFactor(0);
@@ -345,7 +345,7 @@ class GameScreen extends Phaser.Scene {
 		medicineGlobal.text.setScrollFactor(0);
 		medicineGlobal.setEnergyCost(8);
 		medicineGlobal.hideButton();
-		medicineGlobal.on('pointerdown', () => this.takeTilesetAction(8, medicineGlobal));
+		medicineGlobal.on('pointerdown', () => this.takeTileAction(8, medicineGlobal));
 
 		var boostCureButton = new ActionButton(this, 100, 415, "PLACE\nHOLDER", "++ cure progress").setDepth(1).setScrollFactor(0);
 		boostCureButton.title.setScrollFactor(0);
@@ -353,7 +353,7 @@ class GameScreen extends Phaser.Scene {
 		boostCureButton.text.setScrollFactor(0);
 		boostCureButton.setEnergyCost(12);
 		boostCureButton.hideButton();
-		boostCureButton.on('pointerdown', () => this.takeTilesetAction(5, boostCureButton));
+		boostCureButton.on('pointerdown', () => this.takeTileAction(5, boostCureButton));
 
 		var psaButton = new ActionButton(this, 100, 520, "PLACE\nHOLDER", "--- infectivity\n+ morale").setDepth(1).setScrollFactor(0);
 		psaButton.title.setScrollFactor(0);
@@ -361,7 +361,7 @@ class GameScreen extends Phaser.Scene {
 		psaButton.text.setScrollFactor(0);
 		psaButton.setEnergyCost(6);
 		psaButton.hideButton();
-		psaButton.on('pointerdown', () => this.takeTilesetAction(9, psaButton));
+		psaButton.on('pointerdown', () => this.takeTileAction(9, psaButton));
 
 		var backButton = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
