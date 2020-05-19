@@ -506,10 +506,10 @@ class GameScreen extends Phaser.Scene {
 
 	//End conditions
 	end() {
-		if (this.game.city.getPopulation() == 0 || Math.floor(this.game.gameData.moraleLevel * 100) <= 0)
+		if (this.game.city.getPopulation() == 0 || Math.floor(this.game.gameData.moraleLevel * 100) <= 0 || this.game.gameData.threatLevel > 1)
 			this.scene.start("defeatScreen");
 
-		else if (this.game.city.getInfected() == 0 || this.game.gameData.cure >= 1)
+		else if (this.game.city.getInfected() == 0 || this.game.gameData.cure > 1)
 			this.scene.start("victoryScreen");
 
 		if(this.game.cityName === "Seoul"){
