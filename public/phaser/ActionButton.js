@@ -1,7 +1,7 @@
 class ActionButton extends Phaser.GameObjects.Rectangle {
     constructor(scene, x, y, title, desc){
-        super(scene, x, y, 150, 100, 0x7bbfc7);
-        this.fillColor = 0x7bbfc7;
+        super(scene, x, y, 150, 100, 0xffffff);
+        this.fillColor = 0xffffff;
         this.energyCost = 0;
         this.title = scene.add.text(x, y - 30, title,
             { fontFamily: '"Courier New"', fontSize: '18px', fontWeight: 900, color: '0xffffff' }).setOrigin(0.5).setDepth(2);
@@ -52,13 +52,13 @@ class ActionButton extends Phaser.GameObjects.Rectangle {
 
     hoverOver(){
         if(this.allowHover){
-            super.setFillStyle(0x345559);
+            super.setFillStyle(0x696969);
         }
     }
 
     hoverOut(){
         if(this.allowHover){
-            super.setFillStyle(0x7bbfc7);
+            super.setFillStyle(0xffffff);
         }
     }
 }
