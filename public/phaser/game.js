@@ -52,6 +52,9 @@ window.onload = function () {
             energy: 0,
             turn: 1,
         };
+
+        game.effects.clear();
+        game.city.reset();
     }
 
     game.resetAll = function() {

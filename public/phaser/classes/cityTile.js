@@ -81,8 +81,12 @@ class CityTile {
         return this.isInfectable;
     }
 
-    getActions(){
-        return this.actions;
+    getEffects(){
+        return this.effects;
+    }
+
+    getAction(actionNum){
+        return this.actions[actionNum];
     }
 
     //Reads all actions that have been taken and updates effects

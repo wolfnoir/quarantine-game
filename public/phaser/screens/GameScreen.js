@@ -457,6 +457,26 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
+	takeTileAction(actionNum, button) {
+		var action = this.selectedTile.getAction(actionNum);
+
+		if (action.hasBeenTaken() == false) {
+			if (action.getCost() <= this.game.gameData.energy) {
+				action.toggleTaken();
+				this.game.gameData.energy -= action.getCost();
+				button.fillColor = 0x696969;
+				button.toggleHover();
+			}
+		}
+
+		else {
+			action.toggleTaken();
+			this.game.gameData.energy += action.getCost();
+			button.fillColor = 0xffffff;
+			button.toggleHover();
+		}
+	}
+
 	//generates random starting positions based on the map selected. returns an array that has two coordinates in it
 	generateStartingPositions(){
 		let array = [];
