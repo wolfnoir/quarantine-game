@@ -72,19 +72,11 @@ class VirusAlgorithm {
             //gets the actions for that specific tile
             this.cityTiles[index].updateEffects();
 
-            let tileActions = this.cityTiles[index].actions;
-            let tileInfectivity = 0;
-            let tileSeverity = 0;
-            let tileLethality = 0;
-            let tileRecovery = 0;
-            let tileMorale = 0;
-            for(let i = 0; i < tileActions.length; i++){
-                tileInfectivity = tileinfectivity + tileActions[i].getInfectivity();
-                tileSeverity = tileSeverity + tileActions[i].getSeverity();
-                tileLethality = tileLethality + tileActions[i].getLethality();
-                tileRecovery = tileRecovery + tileActions[i].getRecovery();
-                tileMorale = tileMorale + tileActions[i].tileMorale();
-            }
+            let tileInfectivity = this.cityTiles[index].effects.getInfectivity();
+            let tileSeverity = this.cityTiles[index].effects.getSeverity();
+            let tileLethality = this.cityTiles[index].effects.getLethality();
+            let tileRecovery = this.cityTiles[index].effects.getRecovery();
+            let tileMorale = this.cityTiles[index].effects.getMorale();
 
             //virus statistics
             let infectivity = this.difficulty.getInfectivity() + this.game.effects.getInfectivity() + this.tempInfectivity + tileInfectivity;
