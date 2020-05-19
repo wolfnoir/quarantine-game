@@ -69,14 +69,31 @@ class VirusAlgorithm {
             //reads in the current amount of dead people in the tile
             let deadPeople = this.cityTiles[index].getDead();
 
+            //gets the actions for that specific tile
+            this.cityTiles[index].updateEffects();
+
+            let tileActions = this.cityTiles[index].actions;
+            let tileInfectivity = 0;
+            let tileSeverity = 0;
+            let tileLethality = 0;
+            let tileRecovery = 0;
+            let tileMorale = 0;
+            for(let i = 0; i < tileActions.length; i++){
+                tileInfectivity = tileinfectivity + tileActions[i].getInfectivity();
+                tileSeverity = tileSeverity + tileActions[i].getSeverity();
+                tileLethality = tileLethality + tileActions[i].getLethality();
+                tileRecovery = tileRecovery + tileActions[i].getRecovery();
+                tileMorale = tileMorale + tileActions[i].tileMorale();
+            }
+
             //virus statistics
-            let infectivity = this.difficulty.getInfectivity() + this.game.effects.getInfectivity() + this.tempInfectivity;
-            let severity = this.difficulty.getSeverity() + this.game.effects.getSeverity() + this.tempSeverity;
-            let lethality = this.difficulty.getLethality() + this.game.effects.getLethality() + this.tempLethality;
+            let infectivity = this.difficulty.getInfectivity() + this.game.effects.getInfectivity() + this.tempInfectivity + tileInfectivity;
+            let severity = this.difficulty.getSeverity() + this.game.effects.getSeverity() + this.tempSeverity + tileSeverity;
+            let lethality = this.difficulty.getLethality() + this.game.effects.getLethality() + this.tempLethality + tileLethality;
 
             //individual tile statistics, with the effects taking place
-            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + this.tempRecovery;
-            let newMorale = this.cityTiles[index].getMorale() + this.game.effects.getMorale();
+            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + this.tempRecovery + tileRecovery;
+            let newMorale = this.cityTiles[index].getMorale() + this.game.effects.getMorale() + tileMorale;
 
             // Calculate how many new people are infected for each tile
             let newInfected = 0;
@@ -146,6 +163,8 @@ class VirusAlgorithm {
             this.cityTiles[index].infected = currentInfected + newInfected;
             this.cityTiles[index].dead += died;
             this.cityTiles[index].morale = newMorale;
+
+            this.cityTiles[index].clearEffects();
         }
 
         for(let i = 0; i < newTilesInfected.length; i++){
