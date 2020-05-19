@@ -16,6 +16,7 @@ class HelpScreen extends Phaser.Scene {
 	}
 
 	create() {
+		this.currentPage = 1;
 		this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, 'background');
 		this.background.setOrigin(0, 0).setAlpha(0.8);
 		this.add.image(this.game.config.width/2, 50, 'helpTitle').setScale(0.8);
