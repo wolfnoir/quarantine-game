@@ -63,7 +63,7 @@ class GameScreen extends Phaser.Scene {
 		//Set up actions
 		var actionjs = this.cache.json.get('actions');
 		this.game.actions = [];
-		for (let i = 1; i <= 10; i++) {
+		for (let i = 0; i < 10; i++) {
 			var obj = new Action(actionjs[i.toString()]);
 			this.game.actions.push(obj);
 		}
