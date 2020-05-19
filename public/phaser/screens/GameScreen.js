@@ -275,7 +275,7 @@ class GameScreen extends Phaser.Scene {
 		for(let i = 0; i < this.globalActionButtons.length; i++){
 			let button = this.globalActionButtons[i];
 			button.setHover(true);
-			button.fillColor = 0x7bbfc7;
+			button.fillColor = 0xffffff;
 		}
 	}
 
@@ -444,7 +444,7 @@ class GameScreen extends Phaser.Scene {
 			if (action.getCost() <= this.game.gameData.energy) {
 				action.toggleTaken();
 				this.game.gameData.energy -= action.getCost();
-				button.fillColor = 0x345559;
+				button.fillColor = 0x696969;
 				button.toggleHover();
 			}
 		}
@@ -452,7 +452,7 @@ class GameScreen extends Phaser.Scene {
 		else {
 			action.toggleTaken();
 			this.game.gameData.energy += action.getCost();
-			button.fillColor = 0x7bbfc7;
+			button.fillColor = 0xffffff;
 			button.toggleHover();
 		}
 	}
