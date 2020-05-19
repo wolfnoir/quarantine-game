@@ -121,10 +121,6 @@ class GameScreen extends Phaser.Scene {
 		//create tile buttons on the side
 		this.createTileActionButtons();
 
-		//creates text for the energy
-		this.energyText = this.add.text(50, 160, 'Energy: ' + this.game.gameData.energy,
-			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
-
 		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
 		nextTurnButton.buttonText.setScrollFactor(0).setDepth(1);
@@ -284,34 +280,42 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	createGlobalActionButtons() {
-		var livestreamAction = new ActionButton(this, 100, 240, "LIVESTREAM\nENERTAINMENT", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
+		var testingButton = new ActionButton(this, 100, 100, "VIRUS TESTING", "- morale\n-- lethality").setDepth(1).setScrollFactor(0);
+		testingButton.title.setScrollFactor(0);
+		testingButton.energyText.setScrollFactor(0);
+		testingButton.text.setScrollFactor(0);
+		testingButton.setEnergyCost(12);
+		//@TODO: pointerdown take action here
+
+		var livestreamAction = new ActionButton(this, 100, 205, "LIVESTREAM\nENERTAINMENT", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
 		livestreamAction.title.setScrollFactor(0);
 		livestreamAction.energyText.setScrollFactor(0);
 		livestreamAction.text.setScrollFactor(0);
 		livestreamAction.setEnergyCost(5);
 		//@TODO: pointerdown take action here
 
-		var medicineGlobal = new ActionButton(this, 100, 345, "DISTRIBUTE\nMEDICINE", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
+		var medicineGlobal = new ActionButton(this, 100, 310, "DISTRIBUTE\nMEDICINE", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
 		medicineGlobal.title.setScrollFactor(0);
 		medicineGlobal.energyText.setScrollFactor(0);
 		medicineGlobal.text.setScrollFactor(0);
 		medicineGlobal.setEnergyCost(8);
 		//@TODO: pointerdown take action here
 
-		var boostCureButton = new ActionButton(this, 100, 450, "BOOST CURE", "++ cure progress").setDepth(1).setScrollFactor(0);
+		var boostCureButton = new ActionButton(this, 100, 415, "BOOST CURE", "++ cure progress").setDepth(1).setScrollFactor(0);
 		boostCureButton.title.setScrollFactor(0);
 		boostCureButton.energyText.setScrollFactor(0);
 		boostCureButton.text.setScrollFactor(0);
 		boostCureButton.setEnergyCost(10);
 		//@TODO: pointerdown take action here
 
-		var psaButton = new ActionButton(this, 100, 555, "PSA FROM\nMAYOR", "--- infectivity\n+ morale").setDepth(1).setScrollFactor(0);
+		var psaButton = new ActionButton(this, 100, 520, "PSA FROM\nMAYOR", "--- infectivity\n+ morale").setDepth(1).setScrollFactor(0);
 		psaButton.title.setScrollFactor(0);
 		psaButton.energyText.setScrollFactor(0);
 		psaButton.text.setScrollFactor(0);
 		psaButton.setEnergyCost(5);
 		//@TODO: pointerdown take action here
 
+		this.globalActionButtons.push(testingButton);
 		this.globalActionButtons.push(livestreamAction);
 		this.globalActionButtons.push(medicineGlobal);
 		this.globalActionButtons.push(boostCureButton);
@@ -319,7 +323,7 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	createTileActionButtons() {
-		var recoveryButton = new ActionButton(this, 100, 240, "TEMPORARY\nCLINIC", "+++ recovery\n-- severity").setDepth(1).setScrollFactor(0);
+		var recoveryButton = new ActionButton(this, 100, 100, "TEMPORARY\nCLINIC", "+++ recovery\n-- severity").setDepth(1).setScrollFactor(0);
 		recoveryButton.title.setScrollFactor(0);
 		recoveryButton.energyText.setScrollFactor(0);
 		recoveryButton.text.setScrollFactor(0);
@@ -341,7 +345,7 @@ class GameScreen extends Phaser.Scene {
 	//creates the top bar of the screen
 	createTopBar() {
 		//make the back of the message box
-		var rec = this.add.rectangle(0, 0, this.game.config.width, 150, 0x001a24).setScrollFactor(0).setDepth(1);
+		var rec = this.add.rectangle(200, 0, this.game.config.width - 200, 150, 0x001a24).setScrollFactor(0).setDepth(1);
 		rec.setOrigin(0, 0);
 		this.dayCounterText = this.add.text(rec.x + 20, rec.y + 20, 'Day ' + this.game.gameData.turn + ' of outbreak',
 			{ fontFamily: '"Georgia"', fontSize: '25px', fontWeight: 'bold' }).setScrollFactor(0).setDepth(1);
@@ -349,7 +353,7 @@ class GameScreen extends Phaser.Scene {
 			'\nConfirmed Infected: ' + this.game.city.getInfected() +
 			'\nDeaths: ' + this.game.city.getDead(),
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
-		var logo = this.add.image(this.game.config.width / 2 - 50, 70, 'logo');
+		var logo = this.add.image(this.game.config.width / 2, 70, 'logo');
 		logo.setScale(0.1);
 		logo.setScrollFactor(0).setDepth(1);
 
@@ -401,8 +405,12 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	createSideBar() {
-		let sidebar = this.add.rectangle(0, 150, 200, this.game.config.height, 0x354b59).setScrollFactor(0).setDepth(1);
+		let sidebar = this.add.rectangle(0, 0, 200, this.game.config.height, 0x354b59).setScrollFactor(0).setDepth(1);
 		sidebar.setOrigin(0, 0);
+
+		//creates text for the energy
+		this.energyText = this.add.text(50, 10, 'Energy: ' + this.game.gameData.energy,
+			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
 	}
 
 	updateEffects() {
