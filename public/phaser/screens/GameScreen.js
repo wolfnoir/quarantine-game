@@ -66,7 +66,7 @@ class GameScreen extends Phaser.Scene {
 		//Set up keyboard listener
 		let s = this.scene;
 		this.input.keyboard.on("keydown-ESC", function (event) {
-			s.start("pauseScreen");
+			s.switch("pauseScreen");
 		});
 
 		const map = this.make.tilemap({ key: this.game.cityName });
