@@ -96,7 +96,7 @@ class CityTile {
 			let action = this.actions[i];
 
 			if (action.hasBeenTaken()) {
-				this.effects.addAction(this.game.actions[i]);
+				this.effects.addAction(this.actions[i]);
 				action.toggleTaken();
 			}
 		}
