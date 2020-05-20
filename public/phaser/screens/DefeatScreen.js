@@ -8,7 +8,7 @@ class DefeatScreen extends Phaser.Scene {
 
 	preload() {
 		this.load.image('defeatText', 'assets/defeat-title.png');
-		this.load.image('defeatImage', 'assets/defeat-image.png');
+		this.load.image('defeatImage', 'assets/defeat-fire.png');
 		this.load.audio('gameover', 'assets/sfx/air-raid-siren.mp3');
 	}
 
@@ -24,7 +24,7 @@ class DefeatScreen extends Phaser.Scene {
 		gameover.play();
 
 		// @TODO: add message
-		this.add.image(this.game.config.width/2, this.game.config.height/2, 'defeatImage').setScale(1);
+		this.add.image(this.game.config.width/2, this.game.config.height/2, 'defeatImage').setScale(0.5);
 
 		var restartButton = new RectangleButton(this, this.game.config.width/2 - 125, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'RESTART');
 		restartButton.on('pointerdown', () => this.restartButtonClicked(gameover));

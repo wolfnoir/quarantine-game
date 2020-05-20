@@ -8,7 +8,7 @@ class VictoryScreen extends Phaser.Scene {
 
 	preload() {
 		this.load.image('victoryText', 'assets/victory-title.png');
-		this.load.image('victoryImage', 'assets/victory-image.png');
+		this.load.image('victoryImage', 'assets/sunrise-image.png');
 		this.load.audio('victory', 'assets/music/hollow_victory.wav');
 	}
 
@@ -24,7 +24,7 @@ class VictoryScreen extends Phaser.Scene {
         victorymusic.play();
 
         // TODO: add image and message
-        this.add.image(this.game.config.width/2, this.game.config.height/2, 'victoryImage').setScale(1);
+        this.add.image(this.game.config.width/2, this.game.config.height/2, 'victoryImage').setScale(0.5);
 
 		var restartButton = new RectangleButton(this, this.game.config.width/2 - 125, this.game.config.height - 50, 150, 50, 0xFFFFFF, 1, 'RESTART');
 		restartButton.on('pointerdown', () => this.restartButtonClicked(victorymusic));
