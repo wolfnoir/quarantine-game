@@ -59,6 +59,7 @@ class PauseScreen extends Phaser.Scene {
 	}
 
 	quitButtonClicked(){
+		this.scene.stop("gameScreen");
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 		this.game.resetData();

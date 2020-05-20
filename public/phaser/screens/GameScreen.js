@@ -36,6 +36,8 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	create() {
+		this.redOverlays = [];
+		this.blackOverlays = [];
 		//sets the initial threat level
 		this.game.gameData.threatLevel = (this.game.difficulty.infectivity) / 3 +
 			(this.game.difficulty.severity) / 3 +
@@ -206,7 +208,7 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
-		for(let i = 0; i < 5; i++)
+		for(let i = 0; i < 4; i++)
 			this.fadeTileActionButton(i, this.tileActionButtons[i]);
 	}
 
@@ -445,9 +447,8 @@ class GameScreen extends Phaser.Scene {
 
 	fadeTileActionButton(actionNum, button){
 		if(this.selectedTile != null){
-			console.log(this.selectedTile.actions[0].hasBeenTaken(), this.selectedTile.actions[1].hasBeenTaken(), this.selectedTile.actions[2].hasBeenTaken());
 
-			if(this.selectedTile.getAction(actionNum).hasBeenTaken()){
+			if(this.selectedTile.getAction(actionNum).hasBeenTaken()){console
 				button.fillColor = 0x696969;
 				button.toggleHover();
 			}
@@ -466,7 +467,7 @@ class GameScreen extends Phaser.Scene {
 		closeBridgeButton.text.setScrollFactor(0);
 		closeBridgeButton.setEnergyCost(15);
 		closeBridgeButton.hideButton();
-		//@TODO: implement bridge closing action
+		//add bridge stuff here
 
 		let bridgeBack = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		bridgeBack.buttonText.setScrollFactor(0).setDepth(1);
@@ -566,15 +567,14 @@ class GameScreen extends Phaser.Scene {
 
 		//create infected (red) and dead (black) overlays
 		for(let i = 0; i < tiles.length; i++){
-			let tile = tiles[i];
 			let rObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0xff0000).setOrigin(0, 0).setAlpha(0).setDepth(1);
 			let bObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0x000000).setOrigin(0, 0).setAlpha(0).setDepth(1);
 			
 			this.redOverlays.push(rObj);
 			this.blackOverlays.push(bObj);
 
-			this.redOverlays[i].setAlpha(tile.getInfectedPercentage());
-			this.blackOverlays[i].setAlpha(tile.getDeadPercentage());
+			this.redOverlays[i].setAlpha(0);
+			this.blackOverlays[i].setAlpha(0);
 		}
 	}
 

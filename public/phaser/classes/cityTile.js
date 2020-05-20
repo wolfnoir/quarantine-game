@@ -13,7 +13,7 @@ class CityTile {
         this.actions = [];
         
         //@TODO: make tile-specific actions for this list
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
 			var obj = new Action(actionjs[i.toString()]);
 			this.actions.push(obj);
 		}
@@ -104,11 +104,6 @@ class CityTile {
 				action.toggleTaken();
 			}
 		}
-    }
-
-    resetActions(){
-        for(let i = 0; i < this.actions.length; i++)
-            this.actions[i].reset();
     }
 
     //Used to clear effects at the end of turn
