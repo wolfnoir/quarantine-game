@@ -28,7 +28,7 @@ class DifficultyScreen extends Phaser.Scene {
 
 		var easyText = this.add.text(this.game.config.width/2 + 100, easyButton.y,
 			"The pandemic takes slightly more time to spread,\n"+
-			"and outbreaparseks are less likely to occur.",
+			"and outbreaks are less likely to occur.",
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
 			.setOrigin(0.5);
 		
