@@ -29,12 +29,17 @@ class PauseScreen extends Phaser.Scene {
 
 		var quitButton = new RectangleButton(this, this.game.config.width/2, 500, 300, 50, 0xFFFFFF, 1, 'QUIT');
 		quitButton.on('pointerdown', () => this.quitButtonClicked());
+
+		let s = this.scene;
+		this.input.keyboard.on("keydown-ESC", function (event) {
+			s.switch("gameScreen");
+		});
 	}
 
 	resumeButtonClicked(){
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
-		this.scene.start("gameScreen");
+		this.scene.switch("gameScreen");
 	}
 
 	muteButtonClicked(){
@@ -46,6 +51,7 @@ class PauseScreen extends Phaser.Scene {
 	}
 
 	restartButtonClicked(){
+		this.scene.stop("gameScreen");
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 		this.game.resetData();

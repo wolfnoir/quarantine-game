@@ -52,6 +52,24 @@ window.onload = function () {
             energy: 0,
             turn: 1,
         };
+        if(game.cityName === "Manhattan"){
+            var mapjs = this.cache.json.get('manhattanjs');
+		    var presets = this.cache.json.get('tile-presets');
+		    var actionjs = this.cache.json.get('tileactions');
+		    game.city = new City(mapjs, presets, actionjs);
+        }
+        else if(game.cityName === "London"){
+            var mapjs = this.cache.json.get('londonjs');
+		    var presets = this.cache.json.get('tile-presets');
+		    var actionjs = this.cache.json.get('tileactions');
+		    game.city = new City(mapjs, presets, actionjs);
+        }
+        else{
+            var mapjs = this.cache.json.get('seouljs');
+            var presets = this.cache.json.get('tile-presets');
+            var actionjs = this.cache.json.get('tileactions');
+            game.city = new City(mapjs, presets, actionjs);
+        }
     }
 
     game.resetAll = function() {
