@@ -50,4 +50,8 @@ class Action{
     toggleTaken(){
         this.taken = !this.taken;
     }
+
+    reset(){
+        this.taken = false;
+    }
 }

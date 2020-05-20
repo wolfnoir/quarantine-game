@@ -57,14 +57,6 @@ class GameScreen extends Phaser.Scene {
 		var initialTiles = this.generateStartingPositions();
 		this.virusAlgorithm = new VirusAlgorithm(initialTiles, this.game);
 
-		//Set up actions
-		var actionjs = this.cache.json.get('actions');
-		this.game.actions = [];
-		for (let i = 0; i < 10; i++) {
-			var obj = new Action(actionjs[i.toString()]);
-			this.game.actions.push(obj);
-		}
-
 		//Set up keyboard listener
 		let s = this.scene;
 		this.input.keyboard.on("keydown-ESC", function (event) {
@@ -320,6 +312,7 @@ class GameScreen extends Phaser.Scene {
 		testingButton.text.setScrollFactor(0);
 		testingButton.setEnergyCost(12);
 		testingButton.on('pointerdown', () => this.takeAction(6, testingButton));
+		this.fadeGlobalActionButton(6, testingButton);
 
 		var livestreamAction = new ActionButton(this, 100, 205, "LIVESTREAM\nENERTAINMENT", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
 		livestreamAction.title.setScrollFactor(0);
@@ -327,6 +320,7 @@ class GameScreen extends Phaser.Scene {
 		livestreamAction.text.setScrollFactor(0);
 		livestreamAction.setEnergyCost(5);
 		livestreamAction.on('pointerdown', () => this.takeAction(7, livestreamAction));
+		this.fadeGlobalActionButton(7, livestreamAction);
 
 		var medicineGlobal = new ActionButton(this, 100, 310, "DISTRIBUTE\nMEDICINE", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
 		medicineGlobal.title.setScrollFactor(0);
@@ -334,6 +328,7 @@ class GameScreen extends Phaser.Scene {
 		medicineGlobal.text.setScrollFactor(0);
 		medicineGlobal.setEnergyCost(8);
 		medicineGlobal.on('pointerdown', () => this.takeAction(8, medicineGlobal));
+		this.fadeGlobalActionButton(8, medicineGlobal);
 
 		var boostCureButton = new ActionButton(this, 100, 415, "BOOST CURE", "++ cure progress").setDepth(1).setScrollFactor(0);
 		boostCureButton.title.setScrollFactor(0);
@@ -341,6 +336,7 @@ class GameScreen extends Phaser.Scene {
 		boostCureButton.text.setScrollFactor(0);
 		boostCureButton.setEnergyCost(12);
 		boostCureButton.on('pointerdown', () => this.takeAction(5, boostCureButton));
+		this.fadeGlobalActionButton(5, boostCureButton);
 
 		var psaButton = new ActionButton(this, 100, 520, "PSA FROM\nMAYOR", "--- infectivity\n+ morale").setDepth(1).setScrollFactor(0);
 		psaButton.title.setScrollFactor(0);
@@ -348,12 +344,20 @@ class GameScreen extends Phaser.Scene {
 		psaButton.text.setScrollFactor(0);
 		psaButton.setEnergyCost(6);
 		psaButton.on('pointerdown', () => this.takeAction(9, psaButton));
+		this.fadeGlobalActionButton(9, psaButton);
 
 		this.globalActionButtons.push(testingButton);
 		this.globalActionButtons.push(livestreamAction);
 		this.globalActionButtons.push(medicineGlobal);
 		this.globalActionButtons.push(boostCureButton);
 		this.globalActionButtons.push(psaButton);
+	}
+
+	fadeGlobalActionButton(actionNum, button){
+		if(this.game.actions[actionNum].hasBeenTaken()){
+			button.fillColor = 0x696969;
+			button.toggleHover();
+		}
 	}
 
 	createTileActionButtons() {
@@ -364,6 +368,7 @@ class GameScreen extends Phaser.Scene {
 		recoveryButton.setEnergyCost(5);
 		recoveryButton.hideButton();
 		recoveryButton.on('pointerdown', () => this.takeTileAction(0, boostCureButton));
+		this.fadeTileActionButton(0, recoveryButton);
 
 		var livestreamAction = new ActionButton(this, 100, 205, "PLACE\nHOLDER", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
 		livestreamAction.title.setScrollFactor(0);
@@ -372,6 +377,7 @@ class GameScreen extends Phaser.Scene {
 		livestreamAction.setEnergyCost(5);
 		livestreamAction.hideButton();
 		livestreamAction.on('pointerdown', () => this.takeTileAction(1, livestreamAction));
+		this.fadeTileActionButton(1, livestreamAction);
 
 		var medicineGlobal = new ActionButton(this, 100, 310, "PLACE\nHOLDER", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
 		medicineGlobal.title.setScrollFactor(0);
@@ -380,6 +386,7 @@ class GameScreen extends Phaser.Scene {
 		medicineGlobal.setEnergyCost(8);
 		medicineGlobal.hideButton();
 		medicineGlobal.on('pointerdown', () => this.takeTileAction(2, medicineGlobal));
+		this.fadeTileActionButton(2, medicineGlobal);
 
 		var backButton = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
@@ -392,6 +399,13 @@ class GameScreen extends Phaser.Scene {
 		this.tileActionButtons.push(livestreamAction);
 		this.tileActionButtons.push(medicineGlobal);
 		this.tileActionButtons.push(backButton);
+	}
+
+	fadeTileActionButton(actionNum, button){
+		if(this.selectedTile != null && this.selectedTile.getAction(actionNum).hasBeenTaken()){
+			button.fillColor = 0xffffff;
+			button.toggleHover();
+		}
 	}
 
 	createBridgeActionButtons() {

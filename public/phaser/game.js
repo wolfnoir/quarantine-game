@@ -55,6 +55,9 @@ window.onload = function () {
 
         game.effects.clear();
         game.city.reset();
+
+        for(let i = 0; i < game.actions.length; i++)
+            game.actions[i].reset();
     }
 
     game.resetAll = function() {
