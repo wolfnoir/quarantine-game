@@ -17,6 +17,8 @@ class GameScreen extends Phaser.Scene {
 		this.selectedTile = null;
 		this.virusAlgorithm;
 		this.offLimitTiles = [];
+		this.redOverlays = [];
+		this.blackOverlays = [];
 	}
 
 	preload() {
@@ -42,6 +44,9 @@ class GameScreen extends Phaser.Scene {
 		this.globalActionButtons = [];
 		this.tileActionButtons = [];
 		this.bridgeActionButtons = []
+
+		//creates the red/black overlays for the tiles
+		this.createOverlays();
 
 		//adding 'off limit' tiles.
 		if (this.game.cityName === "Seoul") {
@@ -273,7 +278,8 @@ class GameScreen extends Phaser.Scene {
 
 		this.game.gameData.moraleLevel = this.game.city.getMorale();
 
-		this.updateInfectedTint(virusAlgorithm);
+		//updates the rectangles that display the infected/death info
+		this.updateOverlays();
 
 		//Check end conditions
 		this.end()
@@ -509,12 +515,24 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
-	//@TODO: make it so that it actually reflects the % of people infected, doofus
-	updateInfectedTint(virusAlgorithm) {
-		let infectedTiles = virusAlgorithm.infectedTiles;
-		for (let i = 0; i < infectedTiles.length; i++) {
-			let index = infectedTiles[i];
-			this.add.rectangle(index % 20 * 50 + 200, Math.floor(index / 20) * 50 + 150, 50, 50, 0xff0000, 0.2).setOrigin(0, 0).setDepth(0);
+	createOverlays(){
+		let tiles = this.game.city.cityTiles;
+
+		//create infected (red) and dead (black) overlays
+		for(let i = 0; i < tiles.length; i++){
+			let rObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0xff0000).setOrigin(0, 0).setAlpha(0).setDepth(1);
+			let bObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0x000000).setOrigin(0, 0).setAlpha(0).setDepth(1);
+			this.redOverlays.push(rObj);
+			this.blackOverlays.push(bObj);
+		}
+	}
+
+	updateOverlays(){
+		let tiles = this.game.city.cityTiles;
+		for(let i = 0; i < tiles.length; i++){
+			let tile = tiles[i];
+			this.redOverlays[i].setAlpha(tile.getInfectedPercentage());
+			this.blackOverlays[i].setAlpha(tile.getDeadPercentage());
 		}
 	}
 
