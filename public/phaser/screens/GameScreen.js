@@ -38,19 +38,20 @@ class GameScreen extends Phaser.Scene {
 
 	create() {
 		//sets the initial threat level
-		this.game.gameData.threatLevel = (this.game.difficulty.infectivity)/3 +
-                                        (this.game.difficulty.severity)/3 + 
-                                        (this.game.difficulty.lethality)/2;
+		this.game.gameData.threatLevel = (this.game.difficulty.infectivity) / 3 +
+			(this.game.difficulty.severity) / 3 +
+			(this.game.difficulty.lethality) / 2;
 
 		//sets up arrays for the global action buttons and tile action buttons
 		this.globalActionButtons = [];
 		this.tileActionButtons = [];
+		this.bridgeActionButtons = []
 
 		//adding 'off limit' tiles.
-		if(this.game.cityName === "Seoul"){
+		if (this.game.cityName === "Seoul") {
 			let cityTiles = this.game.city.cityTiles;
-			for(let i = 0; i < cityTiles.length; i++){
-				if(cityTiles[i].getName() === "airport"){
+			for (let i = 0; i < cityTiles.length; i++) {
+				if (cityTiles[i].getName() === "airport") {
 					this.offLimitTiles.push(cityTiles[i]);
 				}
 			}
@@ -99,7 +100,7 @@ class GameScreen extends Phaser.Scene {
 		this.marker.lineStyle(3, 0xff4f78, 1);
 		this.marker.strokeRect(0, 0, map.tileWidth, map.tileHeight);
 		this.marker.setDepth(1);
-		
+
 		//create the marker that indicates if a tile has been highlighter
 		this.selectMarker = this.add.rectangle(0, 0, map.tileWidth, map.tileHeight, 0x03cafc).setDepth(1);
 		this.selectMarker.setAlpha(0);
@@ -120,6 +121,9 @@ class GameScreen extends Phaser.Scene {
 
 		//create tile buttons on the side
 		this.createTileActionButtons();
+
+		//create buttons for bridge
+		this.createBridgeActionButtons();
 
 		var nextTurnButton = new RectangleButton(this, 100, this.game.config.height - 45, 150, 50, 0xFFFFFF, 1, 'NEXT TURN').setDepth(1);
 		nextTurnButton.setScrollFactor(0);
@@ -144,7 +148,7 @@ class GameScreen extends Phaser.Scene {
 			//displays information about the tile the mouse is currently hovering over
 			if (tilePos !== null) {
 				tile = this.game.city.getTile(tilePos.x, tilePos.y);
-				if(pointer.isDown && tile.isInfectable && pointer.x > 200 && pointer.y > 150){
+				if (pointer.isDown && tile.isInfectable && pointer.x > 200 && pointer.y > 150) {
 					this.tileClicked(tile, snappedWorldPoint.x, snappedWorldPoint.y);
 				}
 			}
@@ -203,36 +207,57 @@ class GameScreen extends Phaser.Scene {
 	tileClicked(tile, x, y) {
 		this.selectedTile = tile;
 
-		if(this.selectedTile != null){
+		if (this.selectedTile != null) {
 			this.selectMarker.setAlpha(0.7);
-			this.selectMarker.setPosition(x + 25,y + 25);
-			this.toggleActionButtons("tile");
+			this.selectMarker.setPosition(x + 25, y + 25);
+			if (this.selectedTile.name === "bridge") {
+				this.toggleActionButtons("bridge");
+			}
+			else {
+				this.toggleActionButtons("tile");
+			}
 		}
-		else{
+		else {
 			this.selectMarker.setAlpha(0);
 			this.toggleActionButtons("global");
 		}
 
 	}
 
-	toggleActionButtons(str){
-		//if b is true, then we hide the global actions and show the tile actions
-		if(str === "tile"){
-			for(let i = 0; i < this.globalActionButtons.length ; i++){
+	toggleActionButtons(str) {
+		if (str === "tile") {
+			for (let i = 0; i < this.tileActionButtons.length; i++) {
+				this.tileActionButtons[i].showButton();
+			}
+			for (let i = 0; i < this.bridgeActionButtons.length; i++) {
+				this.bridgeActionButtons[i].hideButton();
+			}
+			for (let i = 0; i < this.globalActionButtons.length; i++) {
 				this.globalActionButtons[i].hideButton();
 			}
-			for(let i = 0; i < this.tileActionButtons.length ; i++){
-				this.tileActionButtons[i].showButton();
+		}
+		else if (str === "bridge") {
+			for (let i = 0; i < this.bridgeActionButtons.length; i++) {
+				this.bridgeActionButtons[i].showButton();
+			}
+			for (let i = 0; i < this.tileActionButtons.length; i++) {
+				this.tileActionButtons[i].hideButton();
+			}
+			for (let i = 0; i < this.globalActionButtons.length; i++) {
+				this.globalActionButtons[i].hideButton();
 			}
 		}
 		//otherwise we show the global actions
-		else if(str === "global"){
+		else if (str === "global") {
 			this.selectMarker.setAlpha(0);
-			for(let i = 0; i < this.globalActionButtons.length ; i++){
+			for (let i = 0; i < this.globalActionButtons.length; i++) {
 				this.globalActionButtons[i].showButton();
 			}
-			for(let i = 0; i < this.tileActionButtons.length ; i++){
+			for (let i = 0; i < this.tileActionButtons.length; i++) {
 				this.tileActionButtons[i].hideButton();
+			}
+			for (let i = 0; i < this.bridgeActionButtons.length; i++) {
+				this.bridgeActionButtons[i].hideButton();
 			}
 		}
 	}
@@ -272,8 +297,20 @@ class GameScreen extends Phaser.Scene {
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
 		//reset button colors
-		for(let i = 0; i < this.globalActionButtons.length; i++){
+		for (let i = 0; i < this.globalActionButtons.length; i++) {
 			let button = this.globalActionButtons[i];
+			button.setHover(true);
+			button.fillColor = 0xffffff;
+		}
+
+		for (let i = 0; i < this.tileActionButtons.length; i++) {
+			let button = this.tileActionButtons[i];
+			button.setHover(true);
+			button.fillColor = 0xffffff;
+		}
+
+		for (let i = 0; i < this.bridgeActionButtons.length; i++) {
+			let button = this.bridgeActionButtons[i];
 			button.setHover(true);
 			button.fillColor = 0xffffff;
 		}
@@ -376,6 +413,24 @@ class GameScreen extends Phaser.Scene {
 		this.tileActionButtons.push(boostCureButton);
 		this.tileActionButtons.push(psaButton);
 		this.tileActionButtons.push(backButton);
+	}
+
+	createBridgeActionButtons() {
+		var closeBridgeButton = new ActionButton(this, 100, 100, "BLOCKADE", "prevents spread\nof virus").setDepth(1).setScrollFactor(0);
+		closeBridgeButton.title.setScrollFactor(0);
+		closeBridgeButton.energyText.setScrollFactor(0);
+		closeBridgeButton.text.setScrollFactor(0);
+		closeBridgeButton.setEnergyCost(15);
+		closeBridgeButton.hideButton();
+		//@TODO: implement bridge closing action
+
+		let bridgeBack = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
+		bridgeBack.buttonText.setScrollFactor(0).setDepth(1);
+		bridgeBack.on('pointerdown', () => this.toggleActionButtons("global"));
+		bridgeBack.hideButton();
+
+		this.bridgeActionButtons.push(closeBridgeButton);
+		this.bridgeActionButtons.push(bridgeBack);
 	}
 
 	//creates the top bar of the screen
@@ -514,24 +569,24 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	//generates random starting positions based on the map selected. returns an array that has two coordinates in it
-	generateStartingPositions(){
+	generateStartingPositions() {
 		let array = [];
 		let manhattanPositions = [6, 13, 66, 91, 207, 289, 352];
 		let londonPositions = [11, 48, 57, 108, 167, 330, 390];
 		let seoulPositions = [12, 17, 32, 42, 89, 134, 174, 294, 316];
-		if(this.game.cityName === "Manhattan"){
+		if (this.game.cityName === "Manhattan") {
 			let r = Math.floor((Math.random() * 4));
 			array.push(manhattanPositions[r]);
 			r = Math.floor((Math.random() * 3) + 4);
 			array.push(manhattanPositions[r]);
 		}
-		else if(this.game.cityName === "London"){
+		else if (this.game.cityName === "London") {
 			let r = Math.floor((Math.random() * 4));
 			array.push(londonPositions[r]);
 			r = Math.floor((Math.random() * 3) + 4);
 			array.push(londonPositions[r]);
 		}
-		else{
+		else {
 			let r = Math.floor((Math.random() * 5));
 			array.push(seoulPositions[r]);
 			r = Math.floor((Math.random() * 4) + 5);
@@ -548,9 +603,9 @@ class GameScreen extends Phaser.Scene {
 		else if (this.game.city.getInfected() == 0 || this.game.gameData.cure > 1)
 			this.scene.start("victoryScreen");
 
-		if(this.game.cityName === "Seoul"){
-			for(let i = 0; i < this.offLimitTiles.length; i++){
-				if(this.offLimitTiles[i].getInfected() > 0){
+		if (this.game.cityName === "Seoul") {
+			for (let i = 0; i < this.offLimitTiles.length; i++) {
+				if (this.offLimitTiles[i].getInfected() > 0) {
 					this.scene.start("defeatScreen");
 				}
 			}
