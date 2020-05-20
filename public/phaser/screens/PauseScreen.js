@@ -41,7 +41,8 @@ class PauseScreen extends Phaser.Scene {
 		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
 		sfx.play();
 
-		this.game.music.setMute(!this.game.music.mute);
+		this.game.mute = !this.game.mute;
+		this.game.music.setMute(this.game.mute);
 	}
 
 	restartButtonClicked(){
