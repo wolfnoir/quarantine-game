@@ -111,7 +111,7 @@ class GameScreen extends Phaser.Scene {
 
 		//create action buttons on the side
 		this.createGlobalActionButtons();
-
+		
 		//create tile buttons on the side
 		this.createTileActionButtons();
 
@@ -196,6 +196,8 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
+		for(let i = 0; i < 3; i++)
+			this.fadeTileActionButton(i, this.tileActionButtons[i]);
 	}
 
 	tileClicked(tile, x, y) {
@@ -287,6 +289,9 @@ class GameScreen extends Phaser.Scene {
 		//Clear effects for this turn
 		this.game.effects.clear();
 
+		for(let i = 0; i < this.game.city.cityTiles.length; i++)
+			this.game.city.cityTiles[i].resetActions();
+
 		//add new energy for the next day
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
@@ -373,7 +378,7 @@ class GameScreen extends Phaser.Scene {
 		recoveryButton.text.setScrollFactor(0);
 		recoveryButton.setEnergyCost(5);
 		recoveryButton.hideButton();
-		recoveryButton.on('pointerdown', () => this.takeTileAction(0, boostCureButton));
+		recoveryButton.on('pointerdown', () => this.takeTileAction(0, recoveryButton));
 		this.fadeTileActionButton(0, recoveryButton);
 
 		var livestreamAction = new ActionButton(this, 100, 205, "PLACE\nHOLDER", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
@@ -408,9 +413,18 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	fadeTileActionButton(actionNum, button){
-		if(this.selectedTile != null && this.selectedTile.getAction(actionNum).hasBeenTaken()){
-			button.fillColor = 0xffffff;
-			button.toggleHover();
+		if(this.selectedTile != null){
+			console.log(this.selectedTile.actions[0].hasBeenTaken(), this.selectedTile.actions[1].hasBeenTaken(), this.selectedTile.actions[2].hasBeenTaken());
+
+			if(this.selectedTile.getAction(actionNum).hasBeenTaken()){
+				button.fillColor = 0x696969;
+				button.toggleHover();
+			}
+
+			else{
+				button.fillColor = 0xffffff;
+				button.toggleHover();
+			}
 		}
 	}
 
@@ -536,7 +550,6 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
-	//Can be used for both citywide and tile specific actions
 	//Marks action as taken if have enough energy
 	//If already taken, unmark it and give back energy
 	takeAction(actionNum, button) {

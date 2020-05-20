@@ -156,6 +156,7 @@ class VirusAlgorithm {
             this.cityTiles[index].dead += died;
             this.cityTiles[index].morale = newMorale;
 
+            this.cityTiles[index].resetActions();
             this.cityTiles[index].clearEffects();
         }
 

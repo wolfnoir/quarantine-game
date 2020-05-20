@@ -106,6 +106,11 @@ class CityTile {
 		}
     }
 
+    resetActions(){
+        for(let i = 0; i < this.actions.length; i++)
+            this.actions[i].reset();
+    }
+
     //Used to clear effects at the end of turn
     clearEffects(){
         this.effects.clear()
