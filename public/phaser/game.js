@@ -27,7 +27,6 @@ window.onload = function () {
 
     //Will store main track so we can start or stop it at times
     game.music = null;
-    game.mute = false;
 
     //Stores effects for the current turn
     //Values will be modified by the below values upon transition to the next turn
@@ -53,12 +52,6 @@ window.onload = function () {
             energy: 0,
             turn: 1,
         };
-
-        game.effects.clear();
-        game.city.reset();
-
-        for(let i = 0; i < game.actions.length; i++)
-            game.actions[i].reset();
     }
 
     game.resetAll = function() {
