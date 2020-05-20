@@ -89,7 +89,7 @@ class GameScreen extends Phaser.Scene {
 
 		//make the images that mark the inital starting positions
 		let img1 = this.add.image(initialTiles[0] % 20 * 50 + 200, Math.floor(initialTiles[0] / 20) * 50 + 155, 'logo');
-		img1.setScale(0.05).setOrigin(0).setAlpha(0.8);
+		img1.setScale(0.05).setOrigin(0);
 		img1.setDepth(1);
 
 		let img2 = this.add.image(initialTiles[1] % 20 * 50 + 200, Math.floor(initialTiles[1] / 20) * 50 + 155, 'logo');
