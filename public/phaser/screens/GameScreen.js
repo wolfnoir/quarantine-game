@@ -197,7 +197,7 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
-		for(let i = 0; i < 3; i++)
+		for(let i = 0; i < 5; i++)
 			this.fadeTileActionButton(i, this.tileActionButtons[i]);
 	}
 
@@ -376,43 +376,61 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	createTileActionButtons() {
-		var recoveryButton = new ActionButton(this, 100, 100, "TEMPORARY\nCLINIC", "+++ recovery\n-- severity").setDepth(1).setScrollFactor(0);
-		recoveryButton.title.setScrollFactor(0);
-		recoveryButton.energyText.setScrollFactor(0);
-		recoveryButton.text.setScrollFactor(0);
-		recoveryButton.setEnergyCost(5);
-		recoveryButton.hideButton();
-		recoveryButton.on('pointerdown', () => this.takeTileAction(0, recoveryButton));
-		this.fadeTileActionButton(0, recoveryButton);
+		var tempclinic = new ActionButton(this, 100, 100, "TEMPORARY\nCLINIC", "+++ recovery\n-- severity").setDepth(1).setScrollFactor(0);
+		tempclinic.title.setScrollFactor(0);
+		tempclinic.energyText.setScrollFactor(0);
+		tempclinic.text.setScrollFactor(0);
+		tempclinic.setEnergyCost(4);
+		tempclinic.hideButton();
+		tempclinic.on('pointerdown', () => this.takeTileAction(0, tempclinic));
+		this.fadeTileActionButton(0, tempclinic);
 
-		var livestreamAction = new ActionButton(this, 100, 205, "PLACE\nHOLDER", "++ morale\n- infectivity").setDepth(1).setScrollFactor(0);
-		livestreamAction.title.setScrollFactor(0);
-		livestreamAction.energyText.setScrollFactor(0);
-		livestreamAction.text.setScrollFactor(0);
-		livestreamAction.setEnergyCost(5);
-		livestreamAction.hideButton();
-		livestreamAction.on('pointerdown', () => this.takeTileAction(1, livestreamAction));
-		this.fadeTileActionButton(1, livestreamAction);
+		var suppliesButton = new ActionButton(this, 100, 205, "SEND SUPPLIES", "++ morale").setDepth(1).setScrollFactor(0);
+		suppliesButton.title.setScrollFactor(0);
+		suppliesButton.energyText.setScrollFactor(0);
+		suppliesButton.text.setScrollFactor(0);
+		suppliesButton.setEnergyCost(2);
+		suppliesButton.hideButton();
+		suppliesButton.on('pointerdown', () => this.takeTileAction(1, suppliesButton));
+		this.fadeTileActionButton(1, suppliesButton);
 
-		var medicineGlobal = new ActionButton(this, 100, 310, "PLACE\nHOLDER", "-- severity\n-- infectivity").setDepth(1).setScrollFactor(0);
-		medicineGlobal.title.setScrollFactor(0);
-		medicineGlobal.energyText.setScrollFactor(0);
-		medicineGlobal.text.setScrollFactor(0);
-		medicineGlobal.setEnergyCost(8);
-		medicineGlobal.hideButton();
-		medicineGlobal.on('pointerdown', () => this.takeTileAction(2, medicineGlobal));
-		this.fadeTileActionButton(2, medicineGlobal);
+		var socialDistancing = new ActionButton(this, 100, 310, "SOCIAL\nDISTANCING", "- infectivity\n+ recovery").setDepth(1).setScrollFactor(0);
+		socialDistancing.title.setScrollFactor(0);
+		socialDistancing.energyText.setScrollFactor(0);
+		socialDistancing.text.setScrollFactor(0);
+		socialDistancing.setEnergyCost(1);
+		socialDistancing.hideButton();
+		socialDistancing.on('pointerdown', () => this.takeTileAction(2, socialDistancing));
+		this.fadeTileActionButton(2, socialDistancing);
+
+		var quarantineButton = new ActionButton(this, 100, 415, "QUARANTINE\nTILE", "--- virus effects\n-- morale").setDepth(1).setScrollFactor(0);
+		quarantineButton.title.setScrollFactor(0);
+		quarantineButton.energyText.setScrollFactor(0);
+		quarantineButton.text.setScrollFactor(0);
+		quarantineButton.setEnergyCost(7);
+		quarantineButton.hideButton();
+		quarantineButton.on('pointerdown', () => this.takeTileAction(3, quarantineButton));
+		this.fadeTileActionButton(3, quarantineButton);
+
+		var preventativeButton = new ActionButton(this, 100, 520, "PREVENTATIVE\nCARE", "-- lethality\n+ morale").setDepth(1).setScrollFactor(0);
+		preventativeButton.title.setScrollFactor(0);
+		preventativeButton.energyText.setScrollFactor(0);
+		preventativeButton.text.setScrollFactor(0);
+		preventativeButton.setEnergyCost(2);
+		preventativeButton.hideButton();
+		preventativeButton.on('pointerdown', () => this.takeTileAction(4, preventativeButton));
+		this.fadeTileActionButton(4, preventativeButton);
 
 		var backButton = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
 		backButton.on('pointerdown', () => this.toggleActionButtons("global"));
 		backButton.hideButton();
 
-		//@TODO: add buttons for tile specific actions
-		//@TODO: how do we deal with multiple tile actions across multiple tiles?
-		this.tileActionButtons.push(recoveryButton);
-		this.tileActionButtons.push(livestreamAction);
-		this.tileActionButtons.push(medicineGlobal);
+		this.tileActionButtons.push(tempclinic);
+		this.tileActionButtons.push(suppliesButton);
+		this.tileActionButtons.push(socialDistancing);
+		this.tileActionButtons.push(quarantineButton);
+		this.tileActionButtons.push(preventativeButton);
 		this.tileActionButtons.push(backButton);
 	}
 
