@@ -217,7 +217,7 @@ class VirusAlgorithm {
             }
         }
         //check north east
-        if (x + 1 >= 0 && y - 1 >= 0) {
+        if (x + 1 <= 19 && y - 1 >= 0) {
             if (tileArray[initIndex - 19].getName() != "bridge" && tileArray[initIndex - 19].infectable() && tileArray[initIndex - 19].getDead() === 0 && tileArray[initIndex - 19].getInfected() === 0) {
                 surroundingTiles.push(initIndex - 19);
             }
