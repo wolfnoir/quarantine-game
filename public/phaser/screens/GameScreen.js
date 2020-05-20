@@ -87,6 +87,15 @@ class GameScreen extends Phaser.Scene {
 
 		camera.setBounds(0, 0, map.widthInPixels + 200, map.heightInPixels + 150);
 
+		//make the images that mark the inital starting positions
+		let img1 = this.add.image(initialTiles[0] % 20 * 50 + 200, Math.floor(initialTiles[0] / 20) * 50 + 155, 'logo');
+		img1.setScale(0.05).setOrigin(0);
+		img1.setDepth(1);
+
+		let img2 = this.add.image(initialTiles[1] % 20 * 50 + 200, Math.floor(initialTiles[1] / 20) * 50 + 155, 'logo');
+		img2.setScale(0.05).setOrigin(0);
+		img2.setDepth(1);
+
 		//creates the marker to indicate where the player is hovering over tiles
 		this.marker = this.add.graphics();
 		this.marker.lineStyle(5, 0xffffff, 1);
