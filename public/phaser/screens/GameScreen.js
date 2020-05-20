@@ -19,6 +19,7 @@ class GameScreen extends Phaser.Scene {
 		this.offLimitTiles = [];
 		this.redOverlays = [];
 		this.blackOverlays = [];
+		this.virusCheatClicked = 0;
 	}
 
 	preload() {
@@ -257,6 +258,10 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
+		if(this.virusCheatClicked === 10){
+			this.game.gameData.cure = this.game.gameData.cure + 0.5;
+			this.virusCheatClicked = this.virusCheatClicked + 1;
+		}
 		//Sets up effects for the previous turn
 		this.selectedTile = null;
 		this.selectMarker.setAlpha(0);
@@ -443,9 +448,10 @@ class GameScreen extends Phaser.Scene {
 			'\nConfirmed Infected: ' + this.game.city.getInfected() +
 			'\nDeaths: ' + this.game.city.getDead(),
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
-		var logo = this.add.image(this.game.config.width / 2, 70, 'logo');
+		var logo = this.add.image(this.game.config.width / 2 + 25, 70, 'logo');
 		logo.setScale(0.1);
 		logo.setScrollFactor(0).setDepth(1);
+		logo.setInteractive({ useHandCursor: true }).on('pointerdown', () => this.virusCheatClicked++);
 
 		var threatText = this.add.text(this.game.config.width - 380, 25, 'Threat:',
 			{ fontFamily: '"Georgia"', fontSize: '20px' }).setScrollFactor(0).setDepth(1);
@@ -520,10 +526,15 @@ class GameScreen extends Phaser.Scene {
 
 		//create infected (red) and dead (black) overlays
 		for(let i = 0; i < tiles.length; i++){
+			let tile = tiles[i];
 			let rObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0xff0000).setOrigin(0, 0).setAlpha(0).setDepth(1);
 			let bObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0x000000).setOrigin(0, 0).setAlpha(0).setDepth(1);
+			
 			this.redOverlays.push(rObj);
 			this.blackOverlays.push(bObj);
+
+			this.redOverlays[i].setAlpha(tile.getInfectedPercentage());
+			this.blackOverlays[i].setAlpha(tile.getDeadPercentage());
 		}
 	}
 
