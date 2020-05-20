@@ -151,6 +151,10 @@ class HelpScreen extends Phaser.Scene {
 				"Thus, it is important to keep morale\n" +
 				"up and keep the threat level as low as\n"+
 				"possible.\n\n" +
+				"Threat level is impacted by the\n" +
+				"infectivity, severity, and lethality\n" +
+				"of the virus, as well as how many tiles\n"+
+				"have been infected.\n\n" +
 				"It's a race against the clock--with\n" +
 				"each turn, the virus becomes more and\n"+
 				"more vicious, causing the threat level\n" +
