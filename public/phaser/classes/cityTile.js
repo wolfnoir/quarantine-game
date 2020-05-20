@@ -35,6 +35,10 @@ class CityTile {
         return this.infected / this.population;
     }
 
+    getDeadPercentage(){
+        return this.dead / (this.dead + this.population);
+    }
+
     getName(){
         return this.name;
     }
