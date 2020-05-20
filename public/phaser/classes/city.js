@@ -63,6 +63,13 @@ class City{
         return this.cityTiles[y * 20 + x];
     }
 
+    nextTurn(){
+        for(let i = 0; i < this.cityTiles.length; i++){
+            this.cityTiles[i].resetActions();
+            this.cityTiles[i].clearEffects();
+        }
+    }
+
     reset(){
         this.cityTiles = [];
         var data = this.obj.layers[0].data;

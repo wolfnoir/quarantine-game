@@ -294,8 +294,7 @@ class GameScreen extends Phaser.Scene {
 		//Clear effects for this turn
 		this.game.effects.clear();
 
-		for(let i = 0; i < this.game.city.cityTiles.length; i++)
-			this.game.city.cityTiles[i].resetActions();
+		this.game.city.nextTurn();
 
 		//add new energy for the next day
 		this.game.gameData.energy += this.game.difficulty.getEnergyToday(this.game.gameData.turn);
