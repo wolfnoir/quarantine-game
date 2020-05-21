@@ -32,13 +32,13 @@ class VirusAlgorithm {
         // determines how many people must be infected in a tile before the algorithm checks if the virus spreads
         this.difficultyRatio = 0;
         if (this.difficulty.name === "easy") {
-            this.difficultyRatio = 0.6
+            this.difficultyRatio = 0.5;
         }
         else if (this.difficulty.name === "medium") {
-            this.difficultyRatio = 0.5
+            this.difficultyRatio = 0.4;
         }
         else {
-            this.difficultyRatio = 0.4;
+            this.difficultyRatio = 0.3;
         }
 
         // push the initial tiles that have been infected to the infectedTiles array.
@@ -186,7 +186,7 @@ class VirusAlgorithm {
         // * Calculate overall threat level based on infection, severity, and morality of the disease
         this.game.gameData.threatLevel = (this.difficulty.infectivity + this.tempInfectivity)/5 +
                                         (this.difficulty.severity + this.tempSeverity)/5 + 
-                                        (this.difficulty.lethality + this.tempLethality)/5 + (this.infectedTiles.length/this.totalTiles);
+                                        (this.difficulty.lethality + this.tempLethality)/4 + (this.infectedTiles.length/this.totalTiles);
 
         // Increase the cure progress.
         this.game.gameData.cure = this.game.gameData.cure + this.game.difficulty.getDailyCureProgress() + this.game.effects.getCureProgress();
