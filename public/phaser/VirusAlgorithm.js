@@ -84,7 +84,7 @@ class VirusAlgorithm {
             let lethality = this.difficulty.getLethality() + this.game.effects.getLethality() + this.tempLethality + tileLethality;
 
             //individual tile statistics, with the effects taking place
-            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + this.tempRecovery + tileRecovery;
+            let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + tileRecovery;
             let newMorale = this.cityTiles[index].getMorale() + this.game.effects.getMorale() + tileMorale;
 
             // Calculate how many new people are infected for each tile
