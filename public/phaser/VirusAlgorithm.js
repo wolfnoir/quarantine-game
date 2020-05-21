@@ -87,6 +87,28 @@ class VirusAlgorithm {
             let recoveryRate = this.cityTiles[index].getRecoveryRate() + this.game.effects.getRecovery() + this.tempRecovery + tileRecovery;
             let newMorale = this.cityTiles[index].getMorale() + this.game.effects.getMorale() + tileMorale;
 
+            if(infectivity < 0)
+                infectivity = 0;
+            else if(infectivity > 1)
+                infectivity = 1;
+            if(severity < 0)
+                severity = 0;
+            else if(severity > 1)
+                severity = 1;
+            if(lethality < 0)
+                lethality = 0;
+            else if(lethality > 1)
+                lethality = 1;
+
+            if(recoveryRate > 1)
+                recoveryRate = 1
+            else if(recoveryRate < 0)
+                recoveryRate = 0
+            if(newMorale > 1)
+                newMorale = 1
+            else if(newMorale < 0)
+                newMorale = 0;
+
             // Calculate how many new people are infected for each tile
             let newInfected = 0;
             if (healthyPeople > 0) {

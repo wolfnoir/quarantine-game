@@ -94,9 +94,9 @@ class GameScreen extends Phaser.Scene {
 		img1.setScale(0.05).setOrigin(0);
 		img1.setDepth(1);
 
-		let img2 = this.add.image(initialTiles[1] % 20 * 50 + 200, Math.floor(initialTiles[1] / 20) * 50 + 155, 'logo');
-		img2.setScale(0.05).setOrigin(0);
-		img2.setDepth(1);
+		// let img2 = this.add.image(initialTiles[1] % 20 * 50 + 200, Math.floor(initialTiles[1] / 20) * 50 + 155, 'logo');
+		// img2.setScale(0.05).setOrigin(0);
+		// img2.setDepth(1);
 
 		//creates the marker to indicate where the player is hovering over tiles
 		this.marker = this.add.graphics();
@@ -678,22 +678,22 @@ class GameScreen extends Phaser.Scene {
 		let londonPositions = [11, 48, 57, 108, 167, 330, 390];
 		let seoulPositions = [12, 17, 32, 42, 89, 134, 174, 294, 316];
 		if (this.game.cityName === "Manhattan") {
-			let r = Math.floor((Math.random() * 4));
+			let r = Math.floor((Math.random() * 7));
 			array.push(manhattanPositions[r]);
-			r = Math.floor((Math.random() * 3) + 4);
-			array.push(manhattanPositions[r]);
+			// r = Math.floor((Math.random() * 3) + 4);
+			// array.push(manhattanPositions[r]);
 		}
 		else if (this.game.cityName === "London") {
-			let r = Math.floor((Math.random() * 4));
+			let r = Math.floor((Math.random() * 7));
 			array.push(londonPositions[r]);
-			r = Math.floor((Math.random() * 3) + 4);
-			array.push(londonPositions[r]);
+			// r = Math.floor((Math.random() * 3) + 4);
+			// array.push(londonPositions[r]);
 		}
 		else {
-			let r = Math.floor((Math.random() * 5));
+			let r = Math.floor((Math.random() * 9));
 			array.push(seoulPositions[r]);
-			r = Math.floor((Math.random() * 4) + 5);
-			array.push(seoulPositions[r]);
+			// r = Math.floor((Math.random() * 4) + 5);
+			// array.push(seoulPositions[r]);
 		}
 		return array;
 	}
