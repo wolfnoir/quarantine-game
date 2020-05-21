@@ -39,9 +39,7 @@ class GameScreen extends Phaser.Scene {
 		this.redOverlays = [];
 		this.blackOverlays = [];
 		//sets the initial threat level
-		this.game.gameData.threatLevel = (this.game.difficulty.infectivity) / 3 +
-			(this.game.difficulty.severity) / 3 +
-			(this.game.difficulty.lethality) / 2;
+		this.game.gameData.threatLevel = 0;
 
 		//sets up arrays for the global action buttons and tile action buttons
 		this.globalActionButtons = [];
