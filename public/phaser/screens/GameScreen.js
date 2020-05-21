@@ -208,7 +208,7 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
-		for (let i = 0; i < 4; i++)
+		for (let i = 0; i < 5; i++)
 			this.fadeTileActionButton(i, this.tileActionButtons[i]);
 		
 		this.fadeQuarantineButton(this.tileActionButtons[4]);
@@ -431,7 +431,7 @@ class GameScreen extends Phaser.Scene {
 		preventativeButton.text.setScrollFactor(0);
 		preventativeButton.setEnergyCost(2);
 		preventativeButton.hideButton();
-		preventativeButton.on('pointerdown', () => this.takeTileAction(4, preventativeButton));
+		preventativeButton.on('pointerdown', () => this.takeTileAction(3, preventativeButton));
 		this.fadeTileActionButton(3, preventativeButton);
 
 		var quarantineButton = new ActionButton(this, 100, 520, "QUARANTINE\nTILE", "--- virus effects\n-- morale").setDepth(1).setScrollFactor(0);
@@ -660,7 +660,9 @@ class GameScreen extends Phaser.Scene {
 				this.game.gameData.energy -= action.getCost();
 				button.fillColor = 0x696969;
 				button.toggleHover();
+				console.log("taking action");
 			}
+			console.log("not enough energy");
 		}
 
 		else {
@@ -668,6 +670,7 @@ class GameScreen extends Phaser.Scene {
 			this.game.gameData.energy += action.getCost();
 			button.fillColor = 0xffffff;
 			button.toggleHover();
+			console.log("cancel action");
 		}
 	}
 
