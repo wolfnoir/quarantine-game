@@ -153,13 +153,13 @@ class GameScreen extends Phaser.Scene {
 			//displays information about the tile the mouse is currently hovering over
 			if (tilePos !== null) {
 				tile = this.game.city.getTile(tilePos.x, tilePos.y);
-				if (pointer.isDown && tile.isInfectable && pointer.x > 200 && pointer.y > 150) {
+				if (pointer.isDown && (tile.isInfectable || tile.name === "bridge") && pointer.x > 200 && pointer.y > 150) {
 					this.tileClicked(tile, snappedWorldPoint.x, snappedWorldPoint.y);
 				}
 			}
 
 			if (tile !== undefined && tilePos !== null) {
-				if (tile.isInfectable && (tile.name != "bridge" || tile.name != "airport")) {
+				if (tile.isInfectable && tile.name != "bridge") {
 					if (snappedWorldPoint.x + 200 > this.game.config.width) {
 						this.infoBox.setPosition(snappedWorldPoint.x - 148, snappedWorldPoint.y + 25);
 						this.infoText.setPosition(snappedWorldPoint.x - 146, snappedWorldPoint.y + 3);
@@ -458,6 +458,22 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
+	fadeBridgeTile(button){
+		if(this.selectedTile != null){
+
+			if(!this.selectedTile.isInfectable){
+				console.log("blockade has already been selected");
+				button.fillColor = 0x696969;
+				button.setHover(false);
+			}
+
+			else{
+				button.fillColor = 0xffffff;
+				button.setHover(true);
+			}
+		}
+	}
+
 	createBridgeActionButtons() {
 		var closeBridgeButton = new ActionButton(this, 100, 100, "BLOCKADE", "prevents spread\nof virus").setDepth(1).setScrollFactor(0);
 		closeBridgeButton.title.setScrollFactor(0);
@@ -465,7 +481,8 @@ class GameScreen extends Phaser.Scene {
 		closeBridgeButton.text.setScrollFactor(0);
 		closeBridgeButton.setEnergyCost(15);
 		closeBridgeButton.hideButton();
-		//add bridge stuff here
+		closeBridgeButton.on('pointerdown', () => this.toggleBlockade(closeBridgeButton));
+		this.fadeBridgeTile(closeBridgeButton); //add bridge stuff here
 
 		let bridgeBack = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		bridgeBack.buttonText.setScrollFactor(0).setDepth(1);
@@ -624,6 +641,26 @@ class GameScreen extends Phaser.Scene {
 			this.game.gameData.energy += action.getCost();
 			button.fillColor = 0xffffff;
 			button.toggleHover();
+		}
+	}
+
+	toggleBlockade(button){
+		if(this.selectedTile.isInfectable){
+			if(this.game.gameData.energy >= 15){
+				this.selectedTile.isInfectable = false;
+				this.game.gameData.energy -= 15;
+				button.fillColor = 0x696969;
+				button.setHover(false);
+				console.log("bridge blocked")
+			}
+			console.log("not enough energy")
+		}
+		else{
+			this.selectedTile.isInfectable = true;
+			this.game.gameData.energy += 15;
+			button.fillColor = 0xffffff;
+			button.setHover(true);
+			console.log("bridge unblocked");
 		}
 	}
 
