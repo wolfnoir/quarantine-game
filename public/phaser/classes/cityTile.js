@@ -8,6 +8,7 @@ class CityTile {
         this.infectivity = obj.infectivity;
         this.recovery = obj.recovery;
         this.isInfectable = obj.isInfectable;
+        this.quarantine = false;
         
         this.effects = new Effects();
         this.actions = [];
@@ -41,6 +42,18 @@ class CityTile {
 
     getName(){
         return this.name;
+    }
+    
+    isQuarantined(){
+        return this.quarantine;
+    }
+
+    setQuarantine(bool){
+        this.quarantine = bool;
+    }
+
+    toggleQuarantine(){
+        this.quarantine = !this.quarantine;
     }
 
     //Infects num people in this tile
