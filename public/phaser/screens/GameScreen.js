@@ -208,6 +208,8 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
+		for(let i = 0; i < 5; i++)
+			this.fadeTileActionButton(i, this.tileActionButtons[i]);
 	}
 
 	tileClicked(tile, x, y) {
