@@ -274,6 +274,9 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
+		let sfx = this.sound.add('chimeSFX').setVolume(0.3);
+		sfx.play();
+
 		if (this.virusCheatClicked === 10) {
 			this.game.gameData.cure = this.game.gameData.cure + 0.5;
 			this.virusCheatClicked = this.virusCheatClicked + 1;
@@ -332,6 +335,9 @@ class GameScreen extends Phaser.Scene {
 			button.setHover(true);
 			button.fillColor = 0xffffff;
 		}
+
+		//Switch back to global action buttons
+		this.toggleActionButtons("global");
 	}
 
 	createGlobalActionButtons() {
