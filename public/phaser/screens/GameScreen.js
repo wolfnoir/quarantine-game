@@ -210,6 +210,9 @@ class GameScreen extends Phaser.Scene {
 
 		for(let i = 0; i < 5; i++)
 			this.fadeTileActionButton(i, this.tileActionButtons[i]);
+		
+		
+		this.fadeBridgeTile(this.bridgeActionButtons[0]);
 	}
 
 	tileClicked(tile, x, y) {

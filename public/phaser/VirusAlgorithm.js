@@ -303,8 +303,13 @@ class VirusAlgorithm {
 
                 //continue in the direction the bridge is heading until we find a tile is not a bridge tile
                 while(nextTile.getName() === "bridge"){
-                    nextTile = tileArray[currentBridgeIndex + direction];
-                    currentBridgeIndex = currentBridgeIndex + direction;
+                    if(nextTile.isInfectable){
+                        nextTile = tileArray[currentBridgeIndex + direction];
+                        currentBridgeIndex = currentBridgeIndex + direction;
+                    }
+                    else{
+                        return surroundingTiles;
+                    }
                 }
 
                 //push the tile we've found to "suroundingTiles" array if no ones been infected yet
