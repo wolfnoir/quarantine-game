@@ -208,7 +208,7 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
-		for(let i = 0; i < 4; i++)
+		for(let i = 0; i < 5; i++)
 			this.fadeTileActionButton(i, this.tileActionButtons[i]);
 	}
 
@@ -447,7 +447,6 @@ class GameScreen extends Phaser.Scene {
 
 	fadeTileActionButton(actionNum, button){
 		if(this.selectedTile != null){
-
 			if(this.selectedTile.getAction(actionNum).hasBeenTaken()){console
 				button.fillColor = 0x696969;
 				button.toggleHover();
