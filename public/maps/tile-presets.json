@@ -22,7 +22,7 @@
             "dead": 0,
             "morale": 1.0,
             "infectivity": 0.5,
-            "recovery": 0.3,
+            "recovery": 0.6,
             "isInfectable": true
         }
     ],
@@ -36,7 +36,7 @@
             "dead": 0,
             "morale": 1.0,
             "infectivity": 0.2,
-            "recovery": 0.8,
+            "recovery": 0.9,
             "isInfectable": true
         }
     ],
@@ -50,7 +50,7 @@
             "dead": 0,
             "morale": 1.0,
             "infectivity": 0.6,
-            "recovery": 0.3,
+            "recovery": 0.4,
             "isInfectable": true
         }
     ],
@@ -64,7 +64,7 @@
             "dead": 0,
             "morale": 1.0,
             "infectivity": 0.6,
-            "recovery": 0.3,
+            "recovery": 0.4,
             "isInfectable": true
         }
     ],
@@ -106,7 +106,7 @@
             "dead": 0,
             "morale": 1,
             "infectivity": 0.5,
-            "recovery": 0.4,
+            "recovery": 0.7,
             "isInfectable": true
         }
     ],
@@ -148,7 +148,7 @@
             "dead": 0,
             "morale": 1.0,
             "infectivity": 0.8,
-            "recovery": 0.2,
+            "recovery": 0.3,
             "isInfectable": true
         }
     ]
