@@ -123,7 +123,7 @@ class GameScreen extends Phaser.Scene {
 
 		//create action buttons on the side
 		this.createGlobalActionButtons();
-		
+
 		//create tile buttons on the side
 		this.createTileActionButtons();
 
@@ -208,10 +208,10 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
-		for(let i = 0; i < 5; i++)
+		for (let i = 0; i < 5; i++)
 			this.fadeTileActionButton(i, this.tileActionButtons[i]);
-		
-		
+
+
 		this.fadeBridgeTile(this.bridgeActionButtons[0]);
 	}
 
@@ -274,7 +274,7 @@ class GameScreen extends Phaser.Scene {
 	}
 
 	nextTurn(virusAlgorithm, dayCounterText, populationText, threatPercent, moralePercent, curePercent) {
-		if(this.virusCheatClicked === 10){
+		if (this.virusCheatClicked === 10) {
 			this.game.gameData.cure = this.game.gameData.cure + 0.5;
 			this.virusCheatClicked = this.virusCheatClicked + 1;
 		}
@@ -382,8 +382,8 @@ class GameScreen extends Phaser.Scene {
 		this.globalActionButtons.push(psaButton);
 	}
 
-	fadeGlobalActionButton(actionNum, button){
-		if(this.game.actions[actionNum].hasBeenTaken()){
+	fadeGlobalActionButton(actionNum, button) {
+		if (this.game.actions[actionNum].hasBeenTaken()) {
 			button.fillColor = 0x696969;
 			button.toggleHover();
 		}
@@ -448,31 +448,31 @@ class GameScreen extends Phaser.Scene {
 		this.tileActionButtons.push(backButton);
 	}
 
-	fadeTileActionButton(actionNum, button){
-		if(this.selectedTile != null){
+	fadeTileActionButton(actionNum, button) {
+		if (this.selectedTile != null) {
 
-			if(this.selectedTile.getAction(actionNum).hasBeenTaken()){
+			if (this.selectedTile.getAction(actionNum).hasBeenTaken()) {
 				button.fillColor = 0x696969;
 				button.toggleHover();
 			}
 
-			else{
+			else {
 				button.fillColor = 0xffffff;
 				button.toggleHover();
 			}
 		}
 	}
 
-	fadeBridgeTile(button){
-		if(this.selectedTile != null){
+	fadeBridgeTile(button) {
+		if (this.selectedTile != null) {
 
-			if(!this.selectedTile.isInfectable){
+			if (!this.selectedTile.isInfectable) {
 				console.log("blockade has already been selected");
 				button.fillColor = 0x696969;
 				button.setHover(false);
 			}
 
-			else{
+			else {
 				button.fillColor = 0xffffff;
 				button.setHover(true);
 			}
@@ -582,14 +582,14 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
-	createOverlays(){
+	createOverlays() {
 		let tiles = this.game.city.cityTiles;
 
 		//create infected (red) and dead (black) overlays
-		for(let i = 0; i < tiles.length; i++){
+		for (let i = 0; i < tiles.length; i++) {
 			let rObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0xff0000).setOrigin(0, 0).setAlpha(0).setDepth(1);
 			let bObj = this.add.rectangle(i % 20 * 50 + 200, Math.floor(i / 20) * 50 + 150, 50, 50, 0x000000).setOrigin(0, 0).setAlpha(0).setDepth(1);
-			
+
 			this.redOverlays.push(rObj);
 			this.blackOverlays.push(bObj);
 
@@ -598,9 +598,9 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
-	updateOverlays(){
+	updateOverlays() {
 		let tiles = this.game.city.cityTiles;
-		for(let i = 0; i < tiles.length; i++){
+		for (let i = 0; i < tiles.length; i++) {
 			let tile = tiles[i];
 			this.redOverlays[i].setAlpha(tile.getInfectedPercentage());
 			this.blackOverlays[i].setAlpha(tile.getDeadPercentage());
@@ -649,23 +649,25 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
-	toggleBlockade(button){
-		if(this.selectedTile.isInfectable){
-			if(this.game.gameData.energy >= 15){
-				this.selectedTile.isInfectable = false;
-				this.game.gameData.energy -= 15;
-				button.fillColor = 0x696969;
-				button.setHover(false);
-				console.log("bridge blocked")
+	toggleBlockade(button) {
+		if (this.selectedTile != null) {
+			if (this.selectedTile.isInfectable) {
+				if (this.game.gameData.energy >= 15) {
+					this.selectedTile.isInfectable = false;
+					this.game.gameData.energy -= 15;
+					button.fillColor = 0x696969;
+					button.setHover(false);
+					console.log("bridge blocked")
+				}
+				console.log("not enough energy")
 			}
-			console.log("not enough energy")
-		}
-		else{
-			this.selectedTile.isInfectable = true;
-			this.game.gameData.energy += 15;
-			button.fillColor = 0xffffff;
-			button.setHover(true);
-			console.log("bridge unblocked");
+			else {
+				this.selectedTile.isInfectable = true;
+				this.game.gameData.energy += 15;
+				button.fillColor = 0xffffff;
+				button.setHover(true);
+				console.log("bridge unblocked");
+			}
 		}
 	}
 
