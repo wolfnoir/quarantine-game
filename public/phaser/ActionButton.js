@@ -43,7 +43,7 @@ class ActionButton extends Phaser.GameObjects.Rectangle {
     }
 
     toggleHover(){
-        this.allowHover = !this.allowHover
+        this.allowHover = !this.allowHover;
     }
 
     setHover(bool){

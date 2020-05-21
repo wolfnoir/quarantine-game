@@ -448,7 +448,7 @@ class GameScreen extends Phaser.Scene {
 	fadeTileActionButton(actionNum, button){
 		if(this.selectedTile != null){
 
-			if(this.selectedTile.getAction(actionNum).hasBeenTaken()){console
+			if(this.selectedTile.getAction(actionNum).hasBeenTaken()){
 				button.fillColor = 0x696969;
 				button.toggleHover();
 			}
