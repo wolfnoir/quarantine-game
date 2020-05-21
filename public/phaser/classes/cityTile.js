@@ -110,4 +110,9 @@ class CityTile {
     clearEffects(){
         this.effects.clear()
     }
+
+    resetActions(){
+        for(let i = 0; i < this.actions.length; i++)
+            this.actions[i].reset();
+    }
 }
