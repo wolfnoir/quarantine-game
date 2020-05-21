@@ -100,15 +100,6 @@ class VirusAlgorithm {
             else if(lethality > 1)
                 lethality = 1;
 
-            if(recoveryRate > 1)
-                recoveryRate = 1
-            else if(recoveryRate < 0)
-                recoveryRate = 0
-            if(newMorale > 1)
-                newMorale = 1
-            else if(newMorale < 0)
-                newMorale = 0;
-
             // Calculate how many new people are infected for each tile
             let newInfected = 0;
             if (healthyPeople > 0) {
@@ -150,7 +141,8 @@ class VirusAlgorithm {
             }
 
             // If # of infected exceeds a certain ratio, check to see if the infection spreads to surrounding tiles.
-            if (this.cityTiles[index].getInfectedPercentage() > this.difficultyRatio) {
+            if (this.cityTiles[index].getInfectedPercentage() > this.difficultyRatio && !this.cityTiles[index].isQuarantined()) {
+                //if the tile is quarantined we dont check for this
                 random = Math.random();
                 // If the random # is equal to or less than the infected tile's infectivity rate,
                 // pick a random tile and add a random number of infected to the tile.
@@ -232,7 +224,8 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex - 20);
             }
-            else if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 && tileArray[initIndex - 20].getInfected() === 0) {
+            else if (tileArray[initIndex - 20].infectable() && tileArray[initIndex - 20].getDead() === 0 &&
+                        tileArray[initIndex - 20].getInfected() === 0 && !tileArray[initIndex - 20].isQuarantined()) {
                 surroundingTiles.push(initIndex - 20);
             }
         }
@@ -249,7 +242,8 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex - 1);
             }
-            else if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 && tileArray[initIndex - 1].getInfected() === 0) {
+            else if (tileArray[initIndex - 1].infectable() && tileArray[initIndex - 1].getDead() === 0 &&
+                        tileArray[initIndex - 1].getInfected() === 0 && !tileArray[initIndex - 1].isQuarantined()) {
                 surroundingTiles.push(initIndex - 1);
             }
         }
@@ -259,7 +253,8 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex + 1);
             }
-            else if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 && tileArray[initIndex + 1].getInfected() === 0) {
+            else if (tileArray[initIndex + 1].infectable() && tileArray[initIndex + 1].getDead() === 0 &&
+                        tileArray[initIndex + 1].getInfected() === 0 && !tileArray[initIndex + 1].isQuarantined()) {
                 surroundingTiles.push(initIndex + 1);
             }
         }
@@ -275,7 +270,8 @@ class VirusAlgorithm {
                 hasBridge = true;
                 bridgeIndexes.push(initIndex + 20);
             }
-            else if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 && tileArray[initIndex + 20].getInfected() === 0) {
+            else if (tileArray[initIndex + 20].infectable() && tileArray[initIndex + 20].getDead() === 0 &&
+                        tileArray[initIndex + 20].getInfected() === 0 && !tileArray[initIndex + 20].isQuarantined()) {
                 surroundingTiles.push(initIndex + 20);
             }
         }

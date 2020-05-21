@@ -208,8 +208,10 @@ class GameScreen extends Phaser.Scene {
 
 		this.energyText.setText('Energy: ' + this.game.gameData.energy);
 
-		for (let i = 0; i < 5; i++)
+		for (let i = 0; i < 4; i++)
 			this.fadeTileActionButton(i, this.tileActionButtons[i]);
+		
+		this.fadeQuarantineButton(this.tileActionButtons[4]);
 
 
 		this.fadeBridgeTile(this.bridgeActionButtons[0]);
@@ -423,23 +425,23 @@ class GameScreen extends Phaser.Scene {
 		socialDistancing.on('pointerdown', () => this.takeTileAction(2, socialDistancing));
 		this.fadeTileActionButton(2, socialDistancing);
 
-		var quarantineButton = new ActionButton(this, 100, 415, "QUARANTINE\nTILE", "--- virus effects\n-- morale").setDepth(1).setScrollFactor(0);
-		quarantineButton.title.setScrollFactor(0);
-		quarantineButton.energyText.setScrollFactor(0);
-		quarantineButton.text.setScrollFactor(0);
-		quarantineButton.setEnergyCost(7);
-		quarantineButton.hideButton();
-		quarantineButton.on('pointerdown', () => this.takeTileAction(3, quarantineButton));
-		this.fadeTileActionButton(3, quarantineButton);
-
-		var preventativeButton = new ActionButton(this, 100, 520, "PREVENTATIVE\nCARE", "-- lethality\n+ morale").setDepth(1).setScrollFactor(0);
+		var preventativeButton = new ActionButton(this, 100, 415, "PREVENTATIVE\nCARE", "-- lethality\n+ morale").setDepth(1).setScrollFactor(0);
 		preventativeButton.title.setScrollFactor(0);
 		preventativeButton.energyText.setScrollFactor(0);
 		preventativeButton.text.setScrollFactor(0);
 		preventativeButton.setEnergyCost(2);
 		preventativeButton.hideButton();
 		preventativeButton.on('pointerdown', () => this.takeTileAction(4, preventativeButton));
-		this.fadeTileActionButton(4, preventativeButton);
+		this.fadeTileActionButton(3, preventativeButton);
+
+		var quarantineButton = new ActionButton(this, 100, 520, "QUARANTINE\nTILE", "--- virus effects\n-- morale").setDepth(1).setScrollFactor(0);
+		quarantineButton.title.setScrollFactor(0);
+		quarantineButton.energyText.setScrollFactor(0);
+		quarantineButton.text.setScrollFactor(0);
+		quarantineButton.setEnergyCost(25);
+		quarantineButton.hideButton();
+		quarantineButton.on('pointerdown', () => this.toggleQuarantine(quarantineButton));
+		this.fadeQuarantineButton(quarantineButton);
 
 		var backButton = new RectangleButton(this, 100, 600, 150, 50, 0xFFFFFF, 1, 'CANCEL').setDepth(1).setScrollFactor(0);
 		backButton.buttonText.setScrollFactor(0).setDepth(1);
@@ -449,8 +451,8 @@ class GameScreen extends Phaser.Scene {
 		this.tileActionButtons.push(tempclinic);
 		this.tileActionButtons.push(suppliesButton);
 		this.tileActionButtons.push(socialDistancing);
-		this.tileActionButtons.push(quarantineButton);
 		this.tileActionButtons.push(preventativeButton);
+		this.tileActionButtons.push(quarantineButton);
 		this.tileActionButtons.push(backButton);
 	}
 
@@ -469,11 +471,25 @@ class GameScreen extends Phaser.Scene {
 		}
 	}
 
+	fadeQuarantineButton(button) {
+		if (this.selectedTile != null) {
+
+			if (this.selectedTile.isQuarantined()) {
+				button.fillColor = 0x696969;
+				button.setHover(false);
+			}
+
+			else {
+				button.fillColor = 0xffffff;
+				button.setHover(true);
+			}
+		}
+	}
+
 	fadeBridgeTile(button) {
 		if (this.selectedTile != null) {
 
 			if (!this.selectedTile.isInfectable) {
-				console.log("blockade has already been selected");
 				button.fillColor = 0x696969;
 				button.setHover(false);
 			}
@@ -663,16 +679,35 @@ class GameScreen extends Phaser.Scene {
 					this.game.gameData.energy -= 15;
 					button.fillColor = 0x696969;
 					button.setHover(false);
-					console.log("bridge blocked")
 				}
-				console.log("not enough energy")
 			}
 			else {
 				this.selectedTile.isInfectable = true;
 				this.game.gameData.energy += 15;
 				button.fillColor = 0xffffff;
 				button.setHover(true);
-				console.log("bridge unblocked");
+			}
+		}
+	}
+
+	toggleQuarantine(button) {
+		if (this.selectedTile != null) {
+			if (!this.selectedTile.isQuarantined()) {
+				if (this.game.gameData.energy >= 25) {
+					this.selectedTile.toggleQuarantine();
+					this.game.gameData.energy -= 25;
+					button.fillColor = 0x696969;
+					button.setHover(false);
+					console.log("tile quarantined")
+				}
+				console.log("not enough energy")
+			}
+			else {
+				this.selectedTile.toggleQuarantine();
+				this.game.gameData.energy += 25;
+				button.fillColor = 0xffffff;
+				button.setHover(true);
+				console.log("quarantine removed");
 			}
 		}
 	}

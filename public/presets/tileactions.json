@@ -33,17 +33,6 @@
     },
 
     "3":{
-        "name": "Quarantine Tile",
-        "infectivity": -0.3,
-        "severity": -0.3,
-        "lethality": -0.3,
-        "recovery": 0,
-        "morale": -0.1,
-        "cureProgress": 0,
-        "cost": 7
-    },
-
-    "4":{
         "name": "Preventative Care",
         "infectivity": 0,
         "severity": 0,
@@ -52,5 +41,17 @@
         "morale": 0.05,
         "cureProgress": 0,
         "cost": 2
+    },
+
+    
+    "4":{
+        "name": "Quarantine Tile",
+        "infectivity": -0.3,
+        "severity": -0.3,
+        "lethality": -0.3,
+        "recovery": 0,
+        "morale": -0.1,
+        "cureProgress": 0,
+        "cost": 7
     }
 }
