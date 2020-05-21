@@ -49,9 +49,11 @@ class LevelScreen extends Phaser.Scene {
 		londonButton.on('pointerdown', () => this.londonSelected());
 
 		var londonText = this.add.text(londonButton.x - 100, londonButton.y + 75,
-			"This is where things start to heat up. The NHS\n"+
-			"does its best to serve the people, but can\n" +
-			"they handle an outbreak like this?",
+			"This is where things start to heat up. The\n" +
+			"bridges that span the river can make or break\n" +
+			"the fight against the virus. If you blockade\n"+
+			"the bridges, maybe you'll buy yourself some\n"+
+			"time to research the cure....",
 			{fontFamily: '"Courier New"', fontSize: '16px', fontWeight: 900})
 			.setOrigin(0, 0.5);
 
