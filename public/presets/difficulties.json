@@ -1,18 +1,18 @@
 {
     "easy" : {
-        "infectivity" : 0.03,
+        "infectivity" : 0.15,
         "severity" : 0.01,
-        "lethality" : 0,
+        "lethality" : 0.05,
         "cureProgressPerDay" : 0.01,
-        "energyPerDay": [1, 3, 5, 7, 9, 11, 13]
+        "energyPerDay": [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45]
     },
 
     "medium" : {
-        "infectivity" : 0.14,
+        "infectivity" : 0.2,
         "severity" : 0.2,
         "lethality" : 0.1,
         "cureProgressPerDay" : 0.01,
-        "energyPerDay": [1, 4, 7, 10, 13, 16, 19]
+        "energyPerDay": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]
     },
 
     "hard" : {
@@ -20,6 +20,6 @@
         "severity" : 0.3,
         "lethality" : 0.24,
         "cureProgressPerDay" : 0.005,
-        "energyPerDay": [1, 5, 9, 13, 17, 21, 25]
+        "energyPerDay": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23]
     }
 }

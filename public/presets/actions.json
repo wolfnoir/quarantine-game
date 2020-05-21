@@ -61,8 +61,8 @@
         "lethality": 0,
         "recovery": 0,
         "morale": 0,
-        "cureProgress": 0.02,
-        "cost": 12
+        "cureProgress": 0.01,
+        "cost": 32
     },
 
     "6":{

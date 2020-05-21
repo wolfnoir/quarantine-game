@@ -369,7 +369,7 @@ class GameScreen extends Phaser.Scene {
 		boostCureButton.title.setScrollFactor(0);
 		boostCureButton.energyText.setScrollFactor(0);
 		boostCureButton.text.setScrollFactor(0);
-		boostCureButton.setEnergyCost(12);
+		boostCureButton.setEnergyCost(32);
 		boostCureButton.on('pointerdown', () => this.takeAction(5, boostCureButton));
 		this.fadeGlobalActionButton(5, boostCureButton);
 
